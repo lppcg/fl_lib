@@ -63,8 +63,8 @@ abstract final class SystemUIs {
       size: size,
     );
     await windowManager.waitUntilReadyToShow(windowOptions, () async {
+      await windowManager.show();
       await windowManager.focus();
-      if (BuildMode.isRelease) await windowManager.show();
       if (listener != null) {
         windowManager.addListener(listener);
       }
