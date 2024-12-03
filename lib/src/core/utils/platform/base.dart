@@ -148,8 +148,7 @@ enum Pfs {
 
   static void copy(dynamic data) => switch (data.runtimeType) {
         const (String) => Clipboard.setData(ClipboardData(text: data)),
-        final val => throw UnimplementedError(
-            'Not supported type: $val(${val.runtimeType})'),
+        final val => throw UnimplementedError('Not supported type: $val(${val.runtimeType})'),
       };
 
   static Future<String?> paste() async {
@@ -167,8 +166,7 @@ enum Pfs {
           await Process.run('open', ['--reveal', path]);
           break;
         case Pfs.windows:
-          await Process.run(
-              'explorer', ['/select,"${path.replaceAll('"', '""')}"']);
+          await Process.run('explorer', ['/select,', path.replaceAll('"', '""')]);
           break;
         case Pfs.linux:
           await Process.run('xdg-open', [path]);
@@ -189,5 +187,4 @@ final isMacOS = Pfs.type == Pfs.macos;
 final isWindows = Pfs.type == Pfs.windows;
 final isWeb = Pfs.type == Pfs.web;
 final isMobile = Pfs.type == Pfs.ios || Pfs.type == Pfs.android;
-final isDesktop =
-    Pfs.type == Pfs.linux || Pfs.type == Pfs.macos || Pfs.type == Pfs.windows;
+final isDesktop = Pfs.type == Pfs.linux || Pfs.type == Pfs.macos || Pfs.type == Pfs.windows;
