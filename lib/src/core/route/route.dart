@@ -83,7 +83,7 @@ final class AppRouteArg<Ret, Arg extends Object> extends AppRouteIface {
 
     final route_ = route ??
         MaterialPageRoute<Ret>(
-          builder: (_) => page(key: key, args: args),
+          builder: (_) => VirtualWindowFrame(child: page(key: key, args: args)),
           settings: RouteSettings(name: path),
         );
     return Navigator.push<Ret>(context, route_);
@@ -115,7 +115,7 @@ final class AppRouteNoArg<Ret> extends AppRouteIface {
 
     final route_ = route ??
         MaterialPageRoute<Ret>(
-          builder: (_) => page(key: key),
+          builder: (_) => VirtualWindowFrame(child: page(key: key)),
           settings: RouteSettings(name: path),
         );
     return Navigator.push<Ret>(context, route_);
