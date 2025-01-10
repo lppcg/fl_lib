@@ -44,8 +44,9 @@ final class AppRoute<Ret, Arg extends Object> extends AppRouteIface {
     final ret = middlewares?.any((e) => !e((context: context, route: this)));
     if (ret == true) return Future.value(null);
 
-    Widget builder(BuildContext context) =>
-        args != null ? page(key: key, args: args) : page(key: key);
+    Widget builder(BuildContext context) => VirtualWindowFrame(
+          child: args != null ? page(key: key, args: args) : page(key: key),
+        );
 
     final route_ = route ??
         MaterialPageRoute<Ret>(
