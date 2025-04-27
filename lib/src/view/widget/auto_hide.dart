@@ -16,7 +16,7 @@ final class AutoHide extends StatefulWidget {
     this.hideController,
     this.offset = 55,
   })  : assert(offset >= 0, 'Offset must be greater than or equal to 0'),
-        assert(key is GlobalKey, 'GlobalKey is not recommended, use hideController instead');
+        assert(key is! GlobalKey, 'GlobalKey is not recommended, use hideController instead');
 
   @override
   State<AutoHide> createState() => AutoHideState();
