@@ -80,6 +80,9 @@ class LibLocalizationsTr extends LibLocalizations {
   String get copy => 'kopyala';
 
   @override
+  String get custom => 'Özel';
+
+  @override
   String get cut => 'Kes';
 
   @override
@@ -250,6 +253,9 @@ class LibLocalizationsTr extends LibLocalizations {
   String get redo => 'Yeniden Yap';
 
   @override
+  String get refresh => 'Yenile';
+
+  @override
   String get register => 'Kaydol';
 
   @override
@@ -263,6 +269,9 @@ class LibLocalizationsTr extends LibLocalizations {
 
   @override
   String get restore => 'Geri Yükleme';
+
+  @override
+  String get retry => 'Yeniden Dene';
 
   @override
   String get save => 'Kaydet';

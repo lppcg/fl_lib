@@ -251,6 +251,12 @@ abstract class LibLocalizations {
   /// **'Copy'**
   String get copy;
 
+  /// No description provided for @custom.
+  ///
+  /// In en, this message translates to:
+  /// **'Custom'**
+  String get custom;
+
   /// No description provided for @cut.
   ///
   /// In en, this message translates to:
@@ -581,6 +587,12 @@ abstract class LibLocalizations {
   /// **'Redo'**
   String get redo;
 
+  /// No description provided for @refresh.
+  ///
+  /// In en, this message translates to:
+  /// **'Refresh'**
+  String get refresh;
+
   /// No description provided for @register.
   ///
   /// In en, this message translates to:
@@ -610,6 +622,12 @@ abstract class LibLocalizations {
   /// In en, this message translates to:
   /// **'Restore'**
   String get restore;
+
+  /// No description provided for @retry.
+  ///
+  /// In en, this message translates to:
+  /// **'Retry'**
+  String get retry;
 
   /// No description provided for @save.
   ///

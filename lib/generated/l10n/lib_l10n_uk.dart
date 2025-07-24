@@ -80,6 +80,9 @@ class LibLocalizationsUk extends LibLocalizations {
   String get copy => 'Скопіювати';
 
   @override
+  String get custom => 'Користувацьке';
+
+  @override
   String get cut => 'Вирізати';
 
   @override
@@ -250,6 +253,9 @@ class LibLocalizationsUk extends LibLocalizations {
   String get redo => 'Повторити';
 
   @override
+  String get refresh => 'Оновити';
+
+  @override
   String get register => 'Зареєструватися';
 
   @override
@@ -263,6 +269,9 @@ class LibLocalizationsUk extends LibLocalizations {
 
   @override
   String get restore => 'Відновити';
+
+  @override
+  String get retry => 'Повторити';
 
   @override
   String get save => 'Зберегти';

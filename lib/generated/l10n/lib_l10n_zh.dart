@@ -79,6 +79,9 @@ class LibLocalizationsZh extends LibLocalizations {
   String get copy => '复制';
 
   @override
+  String get custom => '自定义';
+
+  @override
   String get cut => '剪切';
 
   @override
@@ -248,6 +251,9 @@ class LibLocalizationsZh extends LibLocalizations {
   String get redo => '重做';
 
   @override
+  String get refresh => '刷新';
+
+  @override
   String get register => '注册';
 
   @override
@@ -261,6 +267,9 @@ class LibLocalizationsZh extends LibLocalizations {
 
   @override
   String get restore => '恢复';
+
+  @override
+  String get retry => '重试';
 
   @override
   String get save => '保存';
@@ -413,6 +422,9 @@ class LibLocalizationsZhTw extends LibLocalizationsZh {
 
   @override
   String get copy => '複製';
+
+  @override
+  String get custom => '自訂';
 
   @override
   String get cut => '剪下';
@@ -584,6 +596,9 @@ class LibLocalizationsZhTw extends LibLocalizationsZh {
   String get redo => '重做';
 
   @override
+  String get refresh => '刷新';
+
+  @override
   String get register => '註冊';
 
   @override
@@ -597,6 +612,9 @@ class LibLocalizationsZhTw extends LibLocalizationsZh {
 
   @override
   String get restore => '恢復';
+
+  @override
+  String get retry => '重試';
 
   @override
   String get save => '儲存';

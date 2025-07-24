@@ -79,6 +79,9 @@ class LibLocalizationsJa extends LibLocalizations {
   String get copy => 'コピーする';
 
   @override
+  String get custom => 'カスタム';
+
+  @override
   String get cut => '切り取り';
 
   @override
@@ -248,6 +251,9 @@ class LibLocalizationsJa extends LibLocalizations {
   String get redo => 'やり直す';
 
   @override
+  String get refresh => '更新';
+
+  @override
   String get register => '登録';
 
   @override
@@ -261,6 +267,9 @@ class LibLocalizationsJa extends LibLocalizations {
 
   @override
   String get restore => 'リストア';
+
+  @override
+  String get retry => '再試行';
 
   @override
   String get save => '保存';

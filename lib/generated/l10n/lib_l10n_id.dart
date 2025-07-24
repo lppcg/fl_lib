@@ -80,6 +80,9 @@ class LibLocalizationsId extends LibLocalizations {
   String get copy => 'Salin';
 
   @override
+  String get custom => 'Kustom';
+
+  @override
   String get cut => 'Potong';
 
   @override
@@ -251,6 +254,9 @@ class LibLocalizationsId extends LibLocalizations {
   String get redo => 'Ulangi';
 
   @override
+  String get refresh => 'Segarkan';
+
+  @override
   String get register => 'Daftar';
 
   @override
@@ -264,6 +270,9 @@ class LibLocalizationsId extends LibLocalizations {
 
   @override
   String get restore => 'Pulihkan';
+
+  @override
+  String get retry => 'Coba Lagi';
 
   @override
   String get save => 'Simpan';

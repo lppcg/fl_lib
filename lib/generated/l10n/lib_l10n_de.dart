@@ -80,6 +80,9 @@ class LibLocalizationsDe extends LibLocalizations {
   String get copy => 'Kopieren';
 
   @override
+  String get custom => 'Benutzerdefiniert';
+
+  @override
   String get cut => 'Ausschneiden';
 
   @override
@@ -252,6 +255,9 @@ class LibLocalizationsDe extends LibLocalizations {
   String get redo => 'Wiederholen';
 
   @override
+  String get refresh => 'Aktualisieren';
+
+  @override
   String get register => 'Registrieren';
 
   @override
@@ -265,6 +271,9 @@ class LibLocalizationsDe extends LibLocalizations {
 
   @override
   String get restore => 'Wiederherstellen';
+
+  @override
+  String get retry => 'Erneut versuchen';
 
   @override
   String get save => 'Speichern';

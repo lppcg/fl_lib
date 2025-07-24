@@ -80,6 +80,9 @@ class LibLocalizationsPt extends LibLocalizations {
   String get copy => 'Copiar';
 
   @override
+  String get custom => 'Personalizado';
+
+  @override
   String get cut => 'Cortar';
 
   @override
@@ -250,6 +253,9 @@ class LibLocalizationsPt extends LibLocalizations {
   String get redo => 'Refazer';
 
   @override
+  String get refresh => 'Atualizar';
+
+  @override
   String get register => 'Cadastrar';
 
   @override
@@ -263,6 +269,9 @@ class LibLocalizationsPt extends LibLocalizations {
 
   @override
   String get restore => 'Restaurar';
+
+  @override
+  String get retry => 'Tentar novamente';
 
   @override
   String get save => 'Salvar';

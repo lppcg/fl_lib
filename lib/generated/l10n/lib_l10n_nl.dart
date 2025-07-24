@@ -80,6 +80,9 @@ class LibLocalizationsNl extends LibLocalizations {
   String get copy => 'Kopiëren';
 
   @override
+  String get custom => 'Aangepast';
+
+  @override
   String get cut => 'Knippen';
 
   @override
@@ -251,6 +254,9 @@ class LibLocalizationsNl extends LibLocalizations {
   String get redo => 'Opnieuw';
 
   @override
+  String get refresh => 'Vernieuwen';
+
+  @override
   String get register => 'Registreren';
 
   @override
@@ -264,6 +270,9 @@ class LibLocalizationsNl extends LibLocalizations {
 
   @override
   String get restore => 'Herstellen';
+
+  @override
+  String get retry => 'Opnieuw proberen';
 
   @override
   String get save => 'Opslaan';
