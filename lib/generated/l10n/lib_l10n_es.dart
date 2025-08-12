@@ -24,14 +24,14 @@ class LibLocalizationsEs extends LibLocalizations {
 
   @override
   String get anonLoseDataTip =>
-      'Actualmente se ha iniciado sesión de forma anónima, continuar con las operaciones provocará la pérdida de datos.';
+      'Actualmente has iniciado sesión de forma anónima. Si continuas, podrías perder tus datos.';
 
   @override
   String get app => 'Aplicación';
 
   @override
   String askContinue(Object msg) {
-    return '$msg, ¿continuar?';
+    return '$msg, ¿deseas continuar?';
   }
 
   @override
@@ -136,7 +136,7 @@ class LibLocalizationsEs extends LibLocalizations {
   String get exit => 'Salir';
 
   @override
-  String get exitConfirmTip => 'Presiona atrás nuevamente para salir';
+  String get exitConfirmTip => 'Presiona Atrás nuevamente para salir';
 
   @override
   String get exitDirectly => 'Salir directamente';
@@ -145,16 +145,16 @@ class LibLocalizationsEs extends LibLocalizations {
   String get export => 'Exportar';
 
   @override
-  String get fail => 'Fracaso';
+  String get fail => 'Error';
 
   @override
-  String get feedback => 'Retroalimentación';
+  String get feedback => 'Comentarios';
 
   @override
   String get file => 'Archivo';
 
   @override
-  String get fold => 'Doblar';
+  String get fold => 'Contraer';
 
   @override
   String get folder => 'Carpeta';
@@ -184,7 +184,7 @@ class LibLocalizationsEs extends LibLocalizations {
   String get login => 'Iniciar sesión';
 
   @override
-  String get loginTip => 'Sin necesidad de registro, uso gratuito.';
+  String get loginTip => 'No es necesario registrarse, es gratuito.';
 
   @override
   String get logout => 'Cerrar sesión';
@@ -194,7 +194,7 @@ class LibLocalizationsEs extends LibLocalizations {
 
   @override
   String get migrateCfgTip =>
-      'Para adaptarse a la nueva configuración requerida';
+      'Para adaptarse a la nueva configuración necesaria';
 
   @override
   String get minute => 'Minutos';
@@ -223,7 +223,7 @@ class LibLocalizationsEs extends LibLocalizations {
   String get note => 'Nota';
 
   @override
-  String get ok => 'Bien';
+  String get ok => 'OK';
 
   @override
   String get opacity => 'Opacidad';
@@ -241,14 +241,14 @@ class LibLocalizationsEs extends LibLocalizations {
   String get previous => 'Anterior';
 
   @override
-  String get primaryColorSeed => 'Semilla de color primario';
+  String get primaryColorSeed => 'Color principal base';
 
   @override
   String get pwd => 'Contraseña';
 
   @override
   String get pwdTip =>
-      'Longitud de 6 a 32, puede contener letras en inglés, números y signos de puntuación';
+      'Longitud de 6 a 32 caracteres, puede contener letras, números y signos de puntuación';
 
   @override
   String get redo => 'Rehacer';
@@ -307,7 +307,7 @@ class LibLocalizationsEs extends LibLocalizations {
   String get tag => 'Etiqueta';
 
   @override
-  String get tapToAuth => 'Haga clic para verificar';
+  String get tapToAuth => 'Toca para autenticarte';
 
   @override
   String get themeMode => 'Modo de tema';
@@ -335,17 +335,17 @@ class LibLocalizationsEs extends LibLocalizations {
 
   @override
   String versionHasUpdate(Object build) {
-    return 'Nueva versión encontrada: v1.0.$build, haz clic para actualizar';
+    return 'Nueva versión disponible: v1.0.$build, toca para actualizar';
   }
 
   @override
   String versionUnknownUpdate(Object build) {
-    return 'Actual: v1.0.$build, haz clic para verificar actualizaciones';
+    return 'Versión actual: v1.0.$build, toca para buscar actualizaciones';
   }
 
   @override
   String versionUpdated(Object build) {
-    return 'Actual: v1.0.$build, ya estás en la última versión';
+    return 'Versión actual: v1.0.$build, ya tienes la última versión';
   }
 
   @override

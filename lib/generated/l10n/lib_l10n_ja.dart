@@ -9,11 +9,11 @@ class LibLocalizationsJa extends LibLocalizations {
   LibLocalizationsJa([String locale = 'ja']) : super(locale);
 
   @override
-  String get about => '約';
+  String get about => 'について';
 
   @override
   String actionAndAction(Object action1, Object action2) {
-    return '$action1してから$action2？';
+    return '$action1した後、$action2しますか？';
   }
 
   @override
@@ -23,14 +23,14 @@ class LibLocalizationsJa extends LibLocalizations {
   String get all => '全て';
 
   @override
-  String get anonLoseDataTip => '現在匿名でログインしています。操作を続行するとデータが失われます。';
+  String get anonLoseDataTip => '現在匿名でログイン中です。操作を続けるとデータが失われます。';
 
   @override
   String get app => 'アプリケーション';
 
   @override
   String askContinue(Object msg) {
-    return '$msg、続行しますか？';
+    return '$msg。続行しますか？';
   }
 
   @override
@@ -99,16 +99,16 @@ class LibLocalizationsJa extends LibLocalizations {
   String get delete => '削除';
 
   @override
-  String get device => '装置';
+  String get device => 'デバイス';
 
   @override
-  String get disabled => '無効';
+  String get disabled => '無効化';
 
   @override
   String get doc => 'ドキュメント';
 
   @override
-  String get dontShowAgain => '今後表示しない';
+  String get dontShowAgain => '再度表示しない';
 
   @override
   String get download => 'ダウンロード';
@@ -153,7 +153,7 @@ class LibLocalizationsJa extends LibLocalizations {
   String get file => 'ファイル';
 
   @override
-  String get fold => '折る';
+  String get fold => '折りたたむ';
 
   @override
   String get folder => 'フォルダ';
@@ -221,10 +221,10 @@ class LibLocalizationsJa extends LibLocalizations {
   String get note => 'メモ';
 
   @override
-  String get ok => 'いいです';
+  String get ok => 'OK';
 
   @override
-  String get opacity => '不透明度';
+  String get opacity => '透明度';
 
   @override
   String get open => '開く';
@@ -239,13 +239,13 @@ class LibLocalizationsJa extends LibLocalizations {
   String get previous => '前へ';
 
   @override
-  String get primaryColorSeed => 'プライマリーカラーシード';
+  String get primaryColorSeed => '基本カラーの種';
 
   @override
   String get pwd => 'パスワード';
 
   @override
-  String get pwdTip => '長さ6〜32文字、英語の文字、数字、句読点が使用可能';
+  String get pwdTip => '6〜32文字で、英字、数字、句読点を使用できます';
 
   @override
   String get redo => 'やり直す';
@@ -310,7 +310,7 @@ class LibLocalizationsJa extends LibLocalizations {
   String get themeMode => 'テーマモード';
 
   @override
-  String get thinking => '考え中';
+  String get thinking => '考え中です';
 
   @override
   String get undo => '元に戻す';
@@ -332,17 +332,17 @@ class LibLocalizationsJa extends LibLocalizations {
 
   @override
   String versionHasUpdate(Object build) {
-    return '新しいバージョンが見つかりました：v1.0.$build、クリックして更新';
+    return '新しいバージョンが見つかりました：v1.0.$build、クリックして更新する';
   }
 
   @override
   String versionUnknownUpdate(Object build) {
-    return 'Huidig: v1.0.$build, klik om te kijken naar een nieuwere versie';
+    return '現在のバージョン：v1.0.$build、クリックして更新を確認';
   }
 
   @override
   String versionUpdated(Object build) {
-    return '現在：v1.0.$build、最新バージョンです';
+    return '現在のバージョン：v1.0.$build、最新です';
   }
 
   @override

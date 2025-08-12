@@ -70,10 +70,9 @@ final class AppRouteObserver extends NavigatorObserver {
 interface class AppRouteObserverFunc {
   const AppRouteObserverFunc._();
 
-  /// Log the route changes.
+  /// Log the route changes only in debug mode.
   static void logUrl(RouteSettings? settings, RouteType type) {
     final url = settings?.name;
-    // ignore: avoid_print
-    print('[Route] ${type.name} $url');
+    dprint('[Route] ${type.name} $url');
   }
 }

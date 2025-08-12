@@ -9,7 +9,7 @@ class LibLocalizationsRu extends LibLocalizations {
   LibLocalizationsRu([String locale = 'ru']) : super(locale);
 
   @override
-  String get about => 'о';
+  String get about => 'О';
 
   @override
   String actionAndAction(Object action1, Object action2) {
@@ -71,7 +71,7 @@ class LibLocalizationsRu extends LibLocalizations {
   String get clipboard => 'Буфер обмена';
 
   @override
-  String get close => 'закрыть';
+  String get close => 'Закрыть';
 
   @override
   String get content => 'Содержимое';
@@ -142,13 +142,13 @@ class LibLocalizationsRu extends LibLocalizations {
   String get exitDirectly => 'Выйти сразу';
 
   @override
-  String get export => 'экспорт';
+  String get export => 'Экспорт';
 
   @override
   String get fail => 'Неудача';
 
   @override
-  String get feedback => 'обратная связь';
+  String get feedback => 'Обратная связь';
 
   @override
   String get file => 'Файл';
@@ -199,7 +199,7 @@ class LibLocalizationsRu extends LibLocalizations {
   String get minute => 'Минуты';
 
   @override
-  String get moveDown => 'Отменить';
+  String get moveDown => 'Вниз';
 
   @override
   String get moveUp => 'Вверх';
@@ -219,7 +219,7 @@ class LibLocalizationsRu extends LibLocalizations {
   }
 
   @override
-  String get note => 'заметка';
+  String get note => 'Заметка';
 
   @override
   String get ok => 'Хорошо';
@@ -234,13 +234,13 @@ class LibLocalizationsRu extends LibLocalizations {
   String get paste => 'Вставить';
 
   @override
-  String get path => 'путь';
+  String get path => 'Путь';
 
   @override
   String get previous => 'Назад';
 
   @override
-  String get primaryColorSeed => 'основной цветовой тон';
+  String get primaryColorSeed => 'Основной цвет';
 
   @override
   String get pwd => 'Пароль';
@@ -286,7 +286,7 @@ class LibLocalizationsRu extends LibLocalizations {
   String get select => 'Выбрать';
 
   @override
-  String get setting => 'настройки';
+  String get setting => 'Настройки';
 
   @override
   String get share => 'Поделиться';
@@ -327,10 +327,10 @@ class LibLocalizationsRu extends LibLocalizations {
   String get update => 'Обновить';
 
   @override
-  String get user => 'пользователь';
+  String get user => 'Пользователь';
 
   @override
-  String get value => 'значение';
+  String get value => 'Значение';
 
   @override
   String versionHasUpdate(Object build) {

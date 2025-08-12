@@ -56,7 +56,7 @@ class LibLocalizationsNl extends LibLocalizations {
   String get blurRadius => 'Vervagingradius';
 
   @override
-  String get bright => 'nl: Donker, Licht\n';
+  String get bright => 'Helder';
 
   @override
   String get cancel => 'Annuleren';
@@ -93,7 +93,7 @@ class LibLocalizationsNl extends LibLocalizations {
 
   @override
   String delFmt(Object id, Object type) {
-    return '$type ($id) verwijderen?';
+    return '$type ($id) echt verwijderen?';
   }
 
   @override
@@ -145,7 +145,7 @@ class LibLocalizationsNl extends LibLocalizations {
   String get export => 'Exporteren';
 
   @override
-  String get fail => 'Mislukking';
+  String get fail => 'Mislukt';
 
   @override
   String get feedback => 'Feedback';
@@ -154,7 +154,7 @@ class LibLocalizationsNl extends LibLocalizations {
   String get file => 'Bestand';
 
   @override
-  String get fold => 'Vouwen';
+  String get fold => 'Invouwen';
 
   @override
   String get folder => 'Map';
@@ -241,7 +241,7 @@ class LibLocalizationsNl extends LibLocalizations {
   String get previous => 'Vorige';
 
   @override
-  String get primaryColorSeed => 'Basis kleurzaad';
+  String get primaryColorSeed => 'Basiskleur';
 
   @override
   String get pwd => 'Wachtwoord';
@@ -307,7 +307,7 @@ class LibLocalizationsNl extends LibLocalizations {
   String get tag => 'Tag';
 
   @override
-  String get tapToAuth => 'Klik om te verifiëren';
+  String get tapToAuth => 'Tik om te authentiseren';
 
   @override
   String get themeMode => 'Themamodus';
@@ -335,17 +335,17 @@ class LibLocalizationsNl extends LibLocalizations {
 
   @override
   String versionHasUpdate(Object build) {
-    return 'Gevonden: v1.0.$build, klik om bij te werken';
+    return 'Nieuwe versie gevonden: v1.0.$build, tik om bij te werken';
   }
 
   @override
   String versionUnknownUpdate(Object build) {
-    return 'Huidig: v1.0.$build, klik om te kijken naar een nieuwere versie';
+    return 'Huidige versie: v1.0.$build, tik om te controleren op updates';
   }
 
   @override
   String versionUpdated(Object build) {
-    return 'Huidig: v1.0.$build, is bijgewerkt naar de laatste versie';
+    return 'Huidige versie: v1.0.$build, is al bijgewerkt';
   }
 
   @override

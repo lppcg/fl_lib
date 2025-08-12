@@ -103,7 +103,7 @@ class LibLocalizationsId extends LibLocalizations {
   String get device => 'Perangkat';
 
   @override
-  String get disabled => 'Dengan disabilitas';
+  String get disabled => 'Nonaktif';
 
   @override
   String get doc => 'Dokumentasi';
@@ -136,7 +136,7 @@ class LibLocalizationsId extends LibLocalizations {
   String get exit => 'Keluar';
 
   @override
-  String get exitConfirmTip => 'Tekan kembali lagi untuk keluar';
+  String get exitConfirmTip => 'Tekan Kembali sekali lagi untuk keluar';
 
   @override
   String get exitDirectly => 'Keluar langsung';
@@ -157,7 +157,7 @@ class LibLocalizationsId extends LibLocalizations {
   String get fold => 'Lipat';
 
   @override
-  String get folder => 'Folder';
+  String get folder => 'Map';
 
   @override
   String get hideTitleBar => 'Sembunyikan bilah judul';
@@ -223,7 +223,7 @@ class LibLocalizationsId extends LibLocalizations {
   String get note => 'Catatan';
 
   @override
-  String get ok => 'Baik';
+  String get ok => 'OK';
 
   @override
   String get opacity => 'Opasitas';
@@ -241,7 +241,7 @@ class LibLocalizationsId extends LibLocalizations {
   String get previous => 'Sebelumnya';
 
   @override
-  String get primaryColorSeed => 'Warna utama';
+  String get primaryColorSeed => 'Dasar warna utama';
 
   @override
   String get pwd => 'Kata sandi';
@@ -340,12 +340,12 @@ class LibLocalizationsId extends LibLocalizations {
 
   @override
   String versionUnknownUpdate(Object build) {
-    return '現在：v1.0.$build、更新をチェックするためにクリック';
+    return 'Versi saat ini: v1.0.$build, klik untuk memeriksa pembaruan';
   }
 
   @override
   String versionUpdated(Object build) {
-    return 'Saat ini: v1.0.$build, mutakhir';
+    return 'Versi saat ini: v1.0.$build, sudah terbaru';
   }
 
   @override

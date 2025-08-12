@@ -368,21 +368,21 @@ class LibLocalizationsZhTw extends LibLocalizationsZh {
   String get all => '所有';
 
   @override
-  String get anonLoseDataTip => '目前以匿名方式登入，繼續操作將導致資料遺失。';
+  String get anonLoseDataTip => '目前為匿名登入，繼續操作可能會導致資料遺失。';
 
   @override
   String get app => '應用';
 
   @override
   String askContinue(Object msg) {
-    return '$msg，繼續嗎？';
+    return '$msg，是否繼續？';
   }
 
   @override
   String get attention => '注意';
 
   @override
-  String get authRequired => '需要認證';
+  String get authRequired => '需要身份驗證';
 
   @override
   String get auto => '自動';
@@ -394,7 +394,7 @@ class LibLocalizationsZhTw extends LibLocalizationsZh {
   String get backup => '備份';
 
   @override
-  String get bioAuth => '生物認證';
+  String get bioAuth => '生物識別驗證';
 
   @override
   String get blurRadius => '模糊半徑';
@@ -437,14 +437,14 @@ class LibLocalizationsZhTw extends LibLocalizationsZh {
 
   @override
   String delFmt(Object id, Object type) {
-    return '刪除 $type（$id）？';
+    return '確定要刪除 $type（$id）嗎？';
   }
 
   @override
   String get delete => '刪除';
 
   @override
-  String get device => 'Cihaz';
+  String get device => '裝置';
 
   @override
   String get disabled => '已禁用';
@@ -480,7 +480,7 @@ class LibLocalizationsZhTw extends LibLocalizationsZh {
   String get exit => '退出';
 
   @override
-  String get exitConfirmTip => '再次返回以退出';
+  String get exitConfirmTip => '再按一次返回鍵以退出應用程式';
 
   @override
   String get exitDirectly => '直接退出';
@@ -537,7 +537,7 @@ class LibLocalizationsZhTw extends LibLocalizationsZh {
   String get migrateCfg => '配置遷移';
 
   @override
-  String get migrateCfgTip => '为了適應所需的新配置';
+  String get migrateCfgTip => '為了適應所需的新設定';
 
   @override
   String get minute => '分';
@@ -555,7 +555,7 @@ class LibLocalizationsZhTw extends LibLocalizationsZh {
   String get network => '網絡';
 
   @override
-  String get next => '下一個';
+  String get next => '下一項';
 
   @override
   String notExistFmt(Object file) {
@@ -581,7 +581,7 @@ class LibLocalizationsZhTw extends LibLocalizationsZh {
   String get path => '路徑';
 
   @override
-  String get previous => '上一個';
+  String get previous => '上一項';
 
   @override
   String get primaryColorSeed => '主要色調種子';
@@ -590,7 +590,7 @@ class LibLocalizationsZhTw extends LibLocalizationsZh {
   String get pwd => '密碼';
 
   @override
-  String get pwdTip => '長度6-32，可以是英文字母、數字、標點符號';
+  String get pwdTip => '密碼長度6-32位，支援英文字母、數字及標點符號';
 
   @override
   String get redo => '重做';
@@ -629,7 +629,7 @@ class LibLocalizationsZhTw extends LibLocalizationsZh {
   String get select => '選擇';
 
   @override
-  String get setting => '設置';
+  String get setting => '設定';
 
   @override
   String get share => '分享';
@@ -649,10 +649,10 @@ class LibLocalizationsZhTw extends LibLocalizationsZh {
   String get tag => '標籤';
 
   @override
-  String get tapToAuth => '點擊以認證';
+  String get tapToAuth => '點擊進行身份驗證';
 
   @override
-  String get themeMode => '主題模式';
+  String get themeMode => '主題風格';
 
   @override
   String get thinking => '思考中';
@@ -677,17 +677,17 @@ class LibLocalizationsZhTw extends LibLocalizationsZh {
 
   @override
   String versionHasUpdate(Object build) {
-    return '找到新版本：v1.0.$build, 點擊更新';
+    return '發現新版本：v1.0.$build，點擊更新';
   }
 
   @override
   String versionUnknownUpdate(Object build) {
-    return '當前：v1.0.$build，點擊檢查更新';
+    return '目前版本：v1.0.$build，點擊檢查更新';
   }
 
   @override
   String versionUpdated(Object build) {
-    return '當前：v1.0.$build, 已是最新版本';
+    return '目前版本：v1.0.$build，已是最新版本';
   }
 
   @override

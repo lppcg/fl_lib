@@ -17,10 +17,10 @@ class LibLocalizationsTr extends LibLocalizations {
   }
 
   @override
-  String get add => 'ekle';
+  String get add => 'Ekle';
 
   @override
-  String get all => 'tümü';
+  String get all => 'Tümü';
 
   @override
   String get anonLoseDataTip =>
@@ -38,7 +38,7 @@ class LibLocalizationsTr extends LibLocalizations {
   String get attention => 'Dikkat';
 
   @override
-  String get authRequired => 'kimlik doğrulaması gerekiyor';
+  String get authRequired => 'Kimlik doğrulaması gerekiyor';
 
   @override
   String get auto => 'Otomatik';
@@ -50,7 +50,7 @@ class LibLocalizationsTr extends LibLocalizations {
   String get backup => 'Yedekleme';
 
   @override
-  String get bioAuth => 'biyometrik doğrulama';
+  String get bioAuth => 'Biyometrik doğrulama';
 
   @override
   String get blurRadius => 'Bulanıklık Yarıçapı';
@@ -59,13 +59,13 @@ class LibLocalizationsTr extends LibLocalizations {
   String get bright => 'Açık';
 
   @override
-  String get cancel => 'iptal';
+  String get cancel => 'İptal';
 
   @override
   String get checkUpdate => 'Güncellemeleri kontrol et';
 
   @override
-  String get clear => 'temizle';
+  String get clear => 'Temizle';
 
   @override
   String get clipboard => 'Pano';
@@ -77,7 +77,7 @@ class LibLocalizationsTr extends LibLocalizations {
   String get content => 'İçerik';
 
   @override
-  String get copy => 'kopyala';
+  String get copy => 'Kopyala';
 
   @override
   String get custom => 'Özel';
@@ -115,13 +115,13 @@ class LibLocalizationsTr extends LibLocalizations {
   String get download => 'İndir';
 
   @override
-  String get edit => 'düzenle';
+  String get edit => 'Düzenle';
 
   @override
   String get editor => 'Düzenleyici';
 
   @override
-  String get empty => 'boş';
+  String get empty => 'Boş';
 
   @override
   String get error => 'Hata';
@@ -133,10 +133,10 @@ class LibLocalizationsTr extends LibLocalizations {
   String get execute => 'Yürüt';
 
   @override
-  String get exit => 'çıkış';
+  String get exit => 'Çıkış';
 
   @override
-  String get exitConfirmTip => 'çıkmak için tekrar geri dön';
+  String get exitConfirmTip => 'Çıkmak için tekrar geri basın';
 
   @override
   String get exitDirectly => 'Doğrudan çık';
@@ -145,13 +145,13 @@ class LibLocalizationsTr extends LibLocalizations {
   String get export => 'Dışa aktar';
 
   @override
-  String get fail => 'başarısız';
+  String get fail => 'Başarısız';
 
   @override
   String get feedback => 'Geri bildirim';
 
   @override
-  String get file => 'dosya';
+  String get file => 'Dosya';
 
   @override
   String get fold => 'Katmak';
@@ -172,7 +172,7 @@ class LibLocalizationsTr extends LibLocalizations {
   String get import => 'İçe Aktar';
 
   @override
-  String get key => 'anahtar';
+  String get key => 'Anahtar';
 
   @override
   String get language => 'Dil';
@@ -205,7 +205,7 @@ class LibLocalizationsTr extends LibLocalizations {
   String get moveUp => 'Yukarı Taşı';
 
   @override
-  String get name => 'ad';
+  String get name => 'Ad';
 
   @override
   String get network => 'Ağ';
@@ -222,7 +222,7 @@ class LibLocalizationsTr extends LibLocalizations {
   String get note => 'Not';
 
   @override
-  String get ok => 'tamam';
+  String get ok => 'Tamam';
 
   @override
   String get opacity => 'Opaklık';
@@ -240,10 +240,10 @@ class LibLocalizationsTr extends LibLocalizations {
   String get previous => 'Önceki';
 
   @override
-  String get primaryColorSeed => 'Birincil renk tohumu';
+  String get primaryColorSeed => 'Ana renk';
 
   @override
-  String get pwd => 'şifre';
+  String get pwd => 'Şifre';
 
   @override
   String get pwdTip =>
@@ -259,7 +259,7 @@ class LibLocalizationsTr extends LibLocalizations {
   String get register => 'Kaydol';
 
   @override
-  String get rename => 'yeniden adlandır';
+  String get rename => 'Yeniden adlandır';
 
   @override
   String get replace => 'Değiştir';
@@ -283,7 +283,7 @@ class LibLocalizationsTr extends LibLocalizations {
   String get second => 'saniye';
 
   @override
-  String get select => 'seç';
+  String get select => 'Seç';
 
   @override
   String get setting => 'Ayarlar';
@@ -297,16 +297,16 @@ class LibLocalizationsTr extends LibLocalizations {
   }
 
   @override
-  String get success => 'başarılı';
+  String get success => 'Başarılı';
 
   @override
-  String get sync => 'Senkronize etmek';
+  String get sync => 'Senkronize et';
 
   @override
-  String get tag => 'etiket';
+  String get tag => 'Etiket';
 
   @override
-  String get tapToAuth => 'doğrulamak için dokunun';
+  String get tapToAuth => 'Doğrulamak için dokunun';
 
   @override
   String get themeMode => 'Tema modu';
@@ -324,13 +324,13 @@ class LibLocalizationsTr extends LibLocalizations {
   String get unsupported => 'Desteklenmiyor';
 
   @override
-  String get update => 'güncelle';
+  String get update => 'Güncelle';
 
   @override
   String get user => 'Kullanıcı';
 
   @override
-  String get value => 'değer';
+  String get value => 'Değer';
 
   @override
   String versionHasUpdate(Object build) {
@@ -348,5 +348,5 @@ class LibLocalizationsTr extends LibLocalizations {
   }
 
   @override
-  String get yesterday => 'dün';
+  String get yesterday => 'Dün';
 }

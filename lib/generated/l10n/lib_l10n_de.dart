@@ -24,14 +24,14 @@ class LibLocalizationsDe extends LibLocalizations {
 
   @override
   String get anonLoseDataTip =>
-      'Der aktuelle Zugriff erfolgt anonym. Weiteres Vorgehen führt zu Datenverlust.';
+      'Sie sind derzeit anonym angemeldet. Bei Fortsetzung der Aktion gehen Daten verloren.';
 
   @override
   String get app => 'Anwendung';
 
   @override
   String askContinue(Object msg) {
-    return '$msg. Weiter?';
+    return '$msg. Möchten Sie fortfahren?';
   }
 
   @override
@@ -93,7 +93,7 @@ class LibLocalizationsDe extends LibLocalizations {
 
   @override
   String delFmt(Object id, Object type) {
-    return '$type ($id) löschen?';
+    return '$type ($id) wirklich löschen?';
   }
 
   @override
@@ -103,13 +103,13 @@ class LibLocalizationsDe extends LibLocalizations {
   String get device => 'Gerät';
 
   @override
-  String get disabled => 'Behinderte';
+  String get disabled => 'Deaktiviert';
 
   @override
   String get doc => 'Dokumentation';
 
   @override
-  String get dontShowAgain => 'Nicht mehr zeigen';
+  String get dontShowAgain => 'Nicht erneut anzeigen';
 
   @override
   String get download => 'Download';
@@ -136,7 +136,7 @@ class LibLocalizationsDe extends LibLocalizations {
   String get exit => 'Beenden';
 
   @override
-  String get exitConfirmTip => 'Noch einmal zurück, um zu beenden';
+  String get exitConfirmTip => 'Erneut Zurück drücken, um die App zu beenden';
 
   @override
   String get exitDirectly => 'Direkt beenden';
@@ -154,7 +154,7 @@ class LibLocalizationsDe extends LibLocalizations {
   String get file => 'Datei';
 
   @override
-  String get fold => 'Falten';
+  String get fold => 'Einklappen';
 
   @override
   String get folder => 'Ordner';
@@ -195,7 +195,7 @@ class LibLocalizationsDe extends LibLocalizations {
 
   @override
   String get migrateCfgTip =>
-      'Um die erforderliche neue Konfiguration anzupassen';
+      'Um die neue Konfiguration zu übernehmen und anzupassen';
 
   @override
   String get minute => 'Minuten';
@@ -224,7 +224,7 @@ class LibLocalizationsDe extends LibLocalizations {
   String get note => 'Hinweis';
 
   @override
-  String get ok => 'Gut';
+  String get ok => 'OK';
 
   @override
   String get opacity => 'Transparenz';
@@ -242,14 +242,14 @@ class LibLocalizationsDe extends LibLocalizations {
   String get previous => 'Zurück';
 
   @override
-  String get primaryColorSeed => 'Farbschema';
+  String get primaryColorSeed => 'Grundfarbe';
 
   @override
   String get pwd => 'Passwort';
 
   @override
   String get pwdTip =>
-      'Länge 6-32, kann aus englischen Buchstaben, Zahlen und Satzzeichen bestehen';
+      'Länge 6-32 Zeichen, kann englische Buchstaben, Zahlen und Satzzeichen enthalten';
 
   @override
   String get redo => 'Wiederholen';
@@ -308,13 +308,13 @@ class LibLocalizationsDe extends LibLocalizations {
   String get tag => 'Etikett';
 
   @override
-  String get tapToAuth => 'Zum Bestätigen klicken';
+  String get tapToAuth => 'Tippen zur Authentifizierung';
 
   @override
   String get themeMode => 'Themen-Modus';
 
   @override
-  String get thinking => 'Am Nachdenken';
+  String get thinking => 'Denkt nach';
 
   @override
   String get undo => 'Rückgängig';
@@ -341,12 +341,12 @@ class LibLocalizationsDe extends LibLocalizations {
 
   @override
   String versionUnknownUpdate(Object build) {
-    return 'Aktuell: v1.0.$build. Klicken Sie hier, um nach Updates zu suchen';
+    return 'Aktuelle Version: v1.0.$build. Tippen, um nach Updates zu suchen';
   }
 
   @override
   String versionUpdated(Object build) {
-    return 'v1.0.$build ist bereits die neueste Version';
+    return 'v1.0.$build ist bereits die aktuellste Version';
   }
 
   @override
