@@ -68,6 +68,9 @@ class LibLocalizationsPt extends LibLocalizations {
   String get clear => 'Limpar';
 
   @override
+  String get click => 'Clique';
+
+  @override
   String get clipboard => 'Área de transferência';
 
   @override
@@ -310,6 +313,9 @@ class LibLocalizationsPt extends LibLocalizations {
 
   @override
   String get themeMode => 'Modo do tema';
+
+  @override
+  String get system => 'Sistema';
 
   @override
   String get thinking => 'Pensando';

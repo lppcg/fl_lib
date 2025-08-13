@@ -68,6 +68,9 @@ class LibLocalizationsUk extends LibLocalizations {
   String get clear => 'Очистити';
 
   @override
+  String get click => 'Натиснути';
+
+  @override
   String get clipboard => 'Буфер обміну';
 
   @override
@@ -310,6 +313,9 @@ class LibLocalizationsUk extends LibLocalizations {
 
   @override
   String get themeMode => 'Тема';
+
+  @override
+  String get system => 'Система';
 
   @override
   String get thinking => 'Обмірковую';

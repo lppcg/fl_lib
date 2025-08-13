@@ -227,6 +227,12 @@ abstract class LibLocalizations {
   /// **'Clear'**
   String get clear;
 
+  /// No description provided for @click.
+  ///
+  /// In en, this message translates to:
+  /// **'Click'**
+  String get click;
+
   /// No description provided for @clipboard.
   ///
   /// In en, this message translates to:
@@ -700,6 +706,12 @@ abstract class LibLocalizations {
   /// In en, this message translates to:
   /// **'Theme mode'**
   String get themeMode;
+
+  /// No description provided for @system.
+  ///
+  /// In en, this message translates to:
+  /// **'System'**
+  String get system;
 
   /// No description provided for @thinking.
   ///

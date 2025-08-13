@@ -68,6 +68,9 @@ class LibLocalizationsRu extends LibLocalizations {
   String get clear => 'Очистить';
 
   @override
+  String get click => 'Нажать';
+
+  @override
   String get clipboard => 'Буфер обмена';
 
   @override
@@ -310,6 +313,9 @@ class LibLocalizationsRu extends LibLocalizations {
 
   @override
   String get themeMode => 'режим темы';
+
+  @override
+  String get system => 'Система';
 
   @override
   String get thinking => 'Думаю';

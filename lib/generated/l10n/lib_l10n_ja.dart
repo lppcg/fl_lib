@@ -67,6 +67,9 @@ class LibLocalizationsJa extends LibLocalizations {
   String get clear => 'クリア';
 
   @override
+  String get click => 'クリック';
+
+  @override
   String get clipboard => 'クリップボード';
 
   @override
@@ -308,6 +311,9 @@ class LibLocalizationsJa extends LibLocalizations {
 
   @override
   String get themeMode => 'テーマモード';
+
+  @override
+  String get system => 'システム';
 
   @override
   String get thinking => '考え中です';

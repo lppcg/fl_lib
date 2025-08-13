@@ -67,6 +67,9 @@ class LibLocalizationsZh extends LibLocalizations {
   String get clear => '清除';
 
   @override
+  String get click => '点击';
+
+  @override
   String get clipboard => '剪切板';
 
   @override
@@ -310,6 +313,9 @@ class LibLocalizationsZh extends LibLocalizations {
   String get themeMode => '主题模式';
 
   @override
+  String get system => '系统';
+
+  @override
   String get thinking => '思考中';
 
   @override
@@ -410,6 +416,9 @@ class LibLocalizationsZhTw extends LibLocalizationsZh {
 
   @override
   String get clear => '清除';
+
+  @override
+  String get click => '點擊';
 
   @override
   String get clipboard => '剪貼簿';
@@ -653,6 +662,9 @@ class LibLocalizationsZhTw extends LibLocalizationsZh {
 
   @override
   String get themeMode => '主題風格';
+
+  @override
+  String get system => '系統';
 
   @override
   String get thinking => '思考中';

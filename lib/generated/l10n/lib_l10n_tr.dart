@@ -68,6 +68,9 @@ class LibLocalizationsTr extends LibLocalizations {
   String get clear => 'Temizle';
 
   @override
+  String get click => 'Tıkla';
+
+  @override
   String get clipboard => 'Pano';
 
   @override
@@ -310,6 +313,9 @@ class LibLocalizationsTr extends LibLocalizations {
 
   @override
   String get themeMode => 'Tema modu';
+
+  @override
+  String get system => 'Sistem';
 
   @override
   String get thinking => 'Düşünüyor';

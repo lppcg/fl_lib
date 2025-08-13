@@ -68,6 +68,9 @@ class LibLocalizationsId extends LibLocalizations {
   String get clear => 'Bersihkan';
 
   @override
+  String get click => 'Klik';
+
+  @override
   String get clipboard => 'Papan klip';
 
   @override
@@ -311,6 +314,9 @@ class LibLocalizationsId extends LibLocalizations {
 
   @override
   String get themeMode => 'Mode tema';
+
+  @override
+  String get system => 'Sistem';
 
   @override
   String get thinking => 'Sedang berpikir';

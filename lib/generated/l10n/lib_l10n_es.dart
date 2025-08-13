@@ -68,6 +68,9 @@ class LibLocalizationsEs extends LibLocalizations {
   String get clear => 'Limpiar';
 
   @override
+  String get click => 'Clic';
+
+  @override
   String get clipboard => 'Portapapeles';
 
   @override
@@ -311,6 +314,9 @@ class LibLocalizationsEs extends LibLocalizations {
 
   @override
   String get themeMode => 'Modo de tema';
+
+  @override
+  String get system => 'Sistema';
 
   @override
   String get thinking => 'Pensando';
