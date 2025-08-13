@@ -17,19 +17,19 @@ final class SizedLoading extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: SizedBox(
-        width: size - 2 * padding,
-        height: size - 2 * padding,
+    return SizedBox(
+      width: size - 2 * padding,
+      height: size - 2 * padding,
+      child: Center(
         child: CircularProgressIndicator(
           strokeWidth: strokeWidth,
           valueColor: valueColor ?? AlwaysStoppedAnimation(UIs.primaryColor),
         ),
       ).paddingAll(padding),
-    );
+    ).paddingAll(3);
   }
 
-  static const small = SizedLoading(30);
-  static const medium = SizedLoading(50);
-  static const large = SizedLoading(70);
+  static const small = SizedLoading(25);
+  static const medium = SizedLoading(45);
+  static const large = SizedLoading(65);
 }
