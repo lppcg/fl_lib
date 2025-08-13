@@ -27,6 +27,15 @@ abstract final class PrefProps {
 
   /// iCloud sync
   static const icloudSync = PrefPropDefault('icloud_sync', false, updateLastUpdateTsOnSetProp: false);
+
+  /// GitHub token used for Gist access
+  static const githubToken = PrefProp<String>('github_token');
+
+  /// Gist id holding backup file(s)
+  static const gistId = PrefProp<String>('gist_id');
+
+  /// Enable GitHub Gist sync
+  static const gistSync = PrefPropDefault('gist_sync', false, updateLastUpdateTsOnSetProp: false);
 }
 
 /// The listener of the SharedPreferences.
