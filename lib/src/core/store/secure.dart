@@ -3,6 +3,15 @@ import 'dart:convert';
 import 'package:fl_lib/fl_lib.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
+/// Secure Store Properties
+abstract final class SecureStoreProps {
+  /// Password for the backup.
+  static const bakPwd = SecureProp('bakPwd');
+
+  /// Password of [HiveStore].
+  static const hivePwd = SecureProp('hivePwd'); 
+}
+
 /// The secure store.
 ///
 /// It uses system built-in vault to store the data.
@@ -109,7 +118,7 @@ final class SecureProp {
   final String key;
 
   /// Creates a [SecureProp] with the given [key] and optional [storage].
-  SecureProp(this.key, {this.storage = SecureStore.storage});
+  const SecureProp(this.key, {this.storage = SecureStore.storage});
 
   /// Reads the value of the property.
   Future<String?> read() async {

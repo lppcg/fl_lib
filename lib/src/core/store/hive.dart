@@ -372,9 +372,13 @@ extension _HiveEnc on HiveStore {
 
   /// The encryption key of the [HiveStore].
   static Future<String?> get _encryptionKey async {
-    final hiveKey = PrefStore.shared.get<String>(_hiveEncKey);
-    if (hiveKey != null) return hiveKey;
-    return PrefStore.shared.get<String>('flutter.$_hiveEncKey');
+    final secureStoreHiveKey = await SecureStoreProps.hivePwd.read();
+    if (secureStoreHiveKey != null) return secureStoreHiveKey;
+    final hiveKey = PrefStore.shared.get<String>(_hiveEncKey) ?? PrefStore.shared.get<String>('flutter.$_hiveEncKey');
+    if (hiveKey != null) {
+      SecureStoreProps.hivePwd.write(hiveKey);
+    }
+    return hiveKey;
   }
 
   /// Initialize the [SecureStore].
@@ -382,7 +386,7 @@ extension _HiveEnc on HiveStore {
     final encryptionKeyString = await _encryptionKey;
     if (encryptionKeyString == null) {
       final key = Hive.generateSecureKey();
-      await PrefStore.shared.set(_hiveEncKey, base64UrlEncode(key));
+      await SecureStoreProps.hivePwd.write(base64UrlEncode(key));
     }
     final key = await _encryptionKey;
     if (key == null) {
