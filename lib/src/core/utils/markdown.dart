@@ -1,13 +1,12 @@
 import 'package:fl_lib/fl_lib.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_markdown_latex/flutter_markdown_latex.dart';
-import 'package:url_launcher/url_launcher_string.dart';
 import 'package:markdown/markdown.dart' as md;
 
 abstract final class MarkdownUtils {
   static void onLinkTap(String? text, String? href, String title) {
     if (href == null) return;
-    launchUrlString(href);
+    href.launchUrl();
   }
 
   static final extensionSet = md.ExtensionSet(
@@ -15,11 +14,7 @@ abstract final class MarkdownUtils {
       LatexBlockSyntax(),
       ...md.ExtensionSet.gitHubFlavored.blockSyntaxes,
     ],
-    [
-      LatexInlineSyntax(),
-      md.EmojiSyntax(),
-      ...md.ExtensionSet.gitHubFlavored.inlineSyntaxes
-    ],
+    [LatexInlineSyntax(), md.EmojiSyntax(), ...md.ExtensionSet.gitHubFlavored.inlineSyntaxes],
   );
 
   static final extensionSetWithoutCode = md.ExtensionSet(

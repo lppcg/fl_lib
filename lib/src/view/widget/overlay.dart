@@ -24,8 +24,7 @@ class OverlayWidget extends StatefulWidget {
   State<OverlayWidget> createState() => _OverlayWidgetState();
 }
 
-class _OverlayWidgetState extends State<OverlayWidget>
-    with SingleTickerProviderStateMixin {
+class _OverlayWidgetState extends State<OverlayWidget> with SingleTickerProviderStateMixin {
   OverlayEntry? _overlayEntry;
 
   /// Can't use `late` because it's not initialized in [dispose]
@@ -39,9 +38,9 @@ class _OverlayWidgetState extends State<OverlayWidget>
 
   @override
   void dispose() {
+    _removeOverlaySafe();
     _animeCtrl?.dispose();
     super.dispose();
-    _removeOverlay();
   }
 
   void _showOverlay(BuildContext context) async {
@@ -67,17 +66,28 @@ class _OverlayWidgetState extends State<OverlayWidget>
     _isShowingOverlay.value = true;
   }
 
-  void _removeOverlay() async {
-    await _animeCtrl!.reverse();
-    _overlayEntry!.remove();
-    _overlayEntry = null;
-    _isShowingOverlay.value = false;
+  void _removeOverlaySafe() async {
+    // No overlay or controller created yet
+    if (_overlayEntry == null || _animeCtrl == null) {
+      _overlayEntry = null;
+      _isShowingOverlay.value = false;
+      return;
+    }
+    try {
+      if (mounted) {
+        await _animeCtrl!.reverse();
+      }
+      _overlayEntry?.remove();
+    } finally {
+      _overlayEntry = null;
+      _isShowingOverlay.value = false;
+    }
   }
 
   OverlayEntry _createOverlayEntry(BuildContext context) {
     return OverlayEntry(
       builder: (context) => GestureDetector(
-        onTap: _removeOverlay,
+        onTap: _removeOverlaySafe,
         behavior: HitTestBehavior.opaque,
         child: _buildOverlayWidget(),
       ),
@@ -117,7 +127,7 @@ class _OverlayWidgetState extends State<OverlayWidget>
           canPop: !isShowing,
           onPopInvokedWithResult: (didPop, _) {
             if (_overlayEntry == null) return;
-            _removeOverlay();
+            _removeOverlaySafe();
           },
           child: InkWell(
             borderRadius: BorderRadius.circular(7),
