@@ -95,6 +95,9 @@ class LibLocalizationsNl extends LibLocalizations {
   String get day => 'Dagen';
 
   @override
+  String get delay => 'Vertraging';
+
+  @override
   String delFmt(Object id, Object type) {
     return '$type ($id) echt verwijderen?';
   }
@@ -302,6 +305,12 @@ class LibLocalizationsNl extends LibLocalizations {
 
   @override
   String get success => 'Succes';
+
+  @override
+  String get switch_ => 'Schakelaar';
+
+  @override
+  String get switcher => 'Omschakelaar';
 
   @override
   String get sync => 'Synchroniseren';

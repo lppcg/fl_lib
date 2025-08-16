@@ -5,7 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:window_manager/window_manager.dart';
 
+/// Utility class for font-related operations.
 abstract final class FontUtils {
+  /// Loads a font from a local file path.
+  ///
+  /// - [localPath] is the path to the font file.
+  ///
+  /// The font name will be derived from the file name.
+  /// If the file doesn't exist or the name can't be extracted, the operation is silently skipped.
   static Future<void> loadFrom(String localPath) async {
     final name = localPath.getFileName();
     if (name == null) return;
@@ -17,7 +24,12 @@ abstract final class FontUtils {
   }
 }
 
+/// Utility class for system UI related operations.
 abstract final class SystemUIs {
+  /// Sets transparent navigation bar on Android devices.
+  ///
+  /// Only takes effect on Android platform. On other platforms, this method does nothing.
+  /// Uses edge-to-edge system UI mode with transparent navigation bar.
   static void setTransparentNavigationBar(BuildContext context) {
     if (isAndroid) {
       SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
@@ -27,6 +39,10 @@ abstract final class SystemUIs {
     }
   }
 
+  /// Shows or hides the system status bar.
+  ///
+  /// - [hide] if true, hides the status bar using immersive sticky mode.
+  /// If false, shows the status bar using edge-to-edge mode.
   static void switchStatusBar({required bool hide}) {
     if (hide) {
       SystemChrome.setEnabledSystemUIMode(
@@ -41,6 +57,14 @@ abstract final class SystemUIs {
     }
   }
 
+  /// Initializes desktop window configuration.
+  ///
+  /// Only works on desktop platforms. On mobile platforms, this method does nothing.
+  ///
+  /// - [hideTitleBar] whether to hide the window title bar
+  /// - [size] initial window size, if not provided uses default
+  /// - [position] initial window position, if not provided centers the window
+  /// - [listener] optional window event listener
   static Future<void> initDesktopWindow({
     required bool hideTitleBar,
     Size? size,

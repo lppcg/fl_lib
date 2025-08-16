@@ -1,7 +1,12 @@
 import 'package:flutter/foundation.dart';
 import 'package:image/image.dart';
 
+/// Extensions on `package:image`'s [Image] type for simple transforms.
 extension ImgX on Image {
+  /// Returns a new image with uniform [padding] around all sides.
+  ///
+  /// - [padding] the number of pixels to add on each side
+  /// - [paddingColor] the color used to fill the padding area
   Image addPadding(
     int padding, {
     Color? paddingColor,
@@ -27,9 +32,19 @@ extension ImgX on Image {
   }
 }
 
+/// Image utilities for type detection and compression.
 abstract final class ImageUtil {
+  /// Returns true if the given MIME string represents an image.
   static bool isImage(String mime) => mime.startsWith('image');
 
+  /// Compresses [data] as JPEG with [quality].
+  ///
+  /// - [decoder] optional decoder override. If not provided, it is
+  ///   selected automatically based on [mime].
+  /// - [mime] used to auto-select a decoder when [decoder] is null.
+  ///
+  /// Returns the compressed bytes. Throws if no decoder is available
+  /// or the data is not a valid image.
   static Future<Uint8List> compress(
     Uint8List data, {
     int quality = 80,

@@ -1,7 +1,20 @@
 import 'package:flutter/material.dart';
 
-const _interactiveStates = <WidgetState>{WidgetState.pressed, WidgetState.hovered, WidgetState.focused, WidgetState.selected};
+/// Color related extensions and helpers.
+///
+/// This file adds utilities to convert between ARGB values and hex strings,
+/// estimate brightness, lighten/darken colors, and build Material theming
+/// helpers like `WidgetStateProperty<Color?>` and `MaterialColor`.
 
+/// A set of interactive widget states used to resolve [materialStateColor].
+const _interactiveStates = <WidgetState>{
+  WidgetState.pressed,
+  WidgetState.hovered,
+  WidgetState.focused,
+  WidgetState.selected,
+};
+
+/// Extensions on [Color] with common conversions and Material helpers.
 extension ColorX on Color {
   /// {@template color_argb_255}
   /// Get the alpha, red, green, blue channels in 0-255.

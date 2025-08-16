@@ -281,6 +281,12 @@ abstract class LibLocalizations {
   /// **'Days'**
   String get day;
 
+  /// No description provided for @delay.
+  ///
+  /// In en, this message translates to:
+  /// **'Delay'**
+  String get delay;
+
   /// No description provided for @delFmt.
   ///
   /// In en, this message translates to:
@@ -682,6 +688,18 @@ abstract class LibLocalizations {
   /// In en, this message translates to:
   /// **'Success'**
   String get success;
+
+  /// No description provided for @switch_.
+  ///
+  /// In en, this message translates to:
+  /// **'Switch'**
+  String get switch_;
+
+  /// No description provided for @switcher.
+  ///
+  /// In en, this message translates to:
+  /// **'Switcher'**
+  String get switcher;
 
   /// No description provided for @sync.
   ///

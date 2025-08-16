@@ -95,6 +95,9 @@ class LibLocalizationsRu extends LibLocalizations {
   String get day => 'Дни';
 
   @override
+  String get delay => 'Задержка';
+
+  @override
   String delFmt(Object id, Object type) {
     return 'Удалить $type ($id)?';
   }
@@ -301,6 +304,12 @@ class LibLocalizationsRu extends LibLocalizations {
 
   @override
   String get success => 'Успех';
+
+  @override
+  String get switch_ => 'Переключатель';
+
+  @override
+  String get switcher => 'Переключатель';
 
   @override
   String get sync => 'Синхронизировать';

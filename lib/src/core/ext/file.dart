@@ -2,7 +2,11 @@ import 'dart:io';
 
 import 'package:mime/mime.dart';
 
+/// Extensions on [File] for metadata helpers.
 extension FileX on File {
+  /// Detects the file's MIME type by sampling the first ~100 bytes.
+  ///
+  /// Returns null if the file doesn't exist or cannot be identified.
   Future<String?> get mimeType async {
     if (!await exists()) return null;
 

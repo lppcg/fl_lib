@@ -95,6 +95,9 @@ class LibLocalizationsId extends LibLocalizations {
   String get day => 'Hari';
 
   @override
+  String get delay => 'Penundaan';
+
+  @override
   String delFmt(Object id, Object type) {
     return 'Hapus $type ($id)?';
   }
@@ -302,6 +305,12 @@ class LibLocalizationsId extends LibLocalizations {
 
   @override
   String get success => 'Sukses';
+
+  @override
+  String get switch_ => 'Saklar';
+
+  @override
+  String get switcher => 'Pengalih';
 
   @override
   String get sync => 'Sinkronisasi';

@@ -1,10 +1,16 @@
 import 'package:fl_lib/src/res/l10n.dart';
 
+/// Extensions on [DateTime] for common string formats and utilities.
+
 extension DateTimeX on DateTime {
+  /// Returns time formatted as `HH:mm` with zero padding.
   String get hourMinute {
     return '${hour.toString().padLeft(2, '0')}:${minute.toString().padLeft(2, '0')}';
   }
 
+  /// Returns date formatted as `yyyy{sep}MM{sep}dd`.
+  ///
+  /// - [sep] separator between year, month and day, defaults to `-`.
   String ymd([String? sep]) {
     sep ??= '-';
     final month = this.month.toString().padLeft(2, '0');
@@ -12,6 +18,9 @@ extension DateTimeX on DateTime {
     return '$year$sep$month$sep$day';
   }
 
+  /// Returns time formatted as `HH{sep}mm{sep}ss`.
+  ///
+  /// - [sep] separator between hour, minute and second, defaults to `:`.
   String hms([String? sep]) {
     sep ??= ':';
     final hour = this.hour.toString().padLeft(2, '0');
@@ -20,6 +29,9 @@ extension DateTimeX on DateTime {
     return '$hour$sep$minute$sep$second';
   }
 
+  /// Returns time formatted as `HH{sep}mm`.
+  ///
+  /// - [sep] separator between hour and minute, defaults to `:`.
   String hm([String? sep]) {
     sep ??= ':';
     final hour = this.hour.toString().padLeft(2, '0');
@@ -27,6 +39,11 @@ extension DateTimeX on DateTime {
     return '$hour$sep$minute';
   }
 
+  /// Returns `ymd(ymdSep) + sep + hms(hmsSep)`.
+  ///
+  /// - [ymdSep] separator for the date part.
+  /// - [hmsSep] separator for the time part.
+  /// - [sep] separator between date and time, defaults to a space.
   String ymdhms({String? ymdSep, String? hmsSep, String sep = ' '}) {
     return '${ymd(ymdSep)}$sep${hms(hmsSep)}';
   }
@@ -59,5 +76,6 @@ extension DateTimeX on DateTime {
     return ymd(ymdSep);
   }
 
+  /// Current timestamp in milliseconds since epoch.
   static int get timestamp => DateTime.now().millisecondsSinceEpoch;
 }

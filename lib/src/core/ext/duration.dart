@@ -1,6 +1,11 @@
 import 'package:fl_lib/src/res/l10n.dart';
 
+/// Extensions on [Duration] for localized formatting.
+
 extension DurationX on Duration {
+  /// Returns a concise localized string for this duration's absolute value.
+  ///
+  /// Example outputs: `2 day`, `3 hour`, `15 minute`, `42 second`.
   String get toAgoStr {
     final abs_ = abs();
     final days = abs_.inDays;

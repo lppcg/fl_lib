@@ -94,6 +94,9 @@ class LibLocalizationsZh extends LibLocalizations {
   String get day => '天';
 
   @override
+  String get delay => '延迟';
+
+  @override
   String delFmt(Object id, Object type) {
     return '删除 $type（$id）？';
   }
@@ -301,6 +304,12 @@ class LibLocalizationsZh extends LibLocalizations {
   String get success => '成功';
 
   @override
+  String get switch_ => '切换';
+
+  @override
+  String get switcher => '切换器';
+
+  @override
   String get sync => '同步';
 
   @override
@@ -443,6 +452,9 @@ class LibLocalizationsZhTw extends LibLocalizationsZh {
 
   @override
   String get day => '天';
+
+  @override
+  String get delay => '延遲';
 
   @override
   String delFmt(Object id, Object type) {
@@ -650,6 +662,12 @@ class LibLocalizationsZhTw extends LibLocalizationsZh {
 
   @override
   String get success => '成功';
+
+  @override
+  String get switch_ => '切換';
+
+  @override
+  String get switcher => '切換器';
 
   @override
   String get sync => '同步';

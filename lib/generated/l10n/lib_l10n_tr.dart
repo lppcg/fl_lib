@@ -95,6 +95,9 @@ class LibLocalizationsTr extends LibLocalizations {
   String get day => 'gün';
 
   @override
+  String get delay => 'Gecikme';
+
+  @override
   String delFmt(Object id, Object type) {
     return '$type ($id) silinsin mi?';
   }
@@ -301,6 +304,12 @@ class LibLocalizationsTr extends LibLocalizations {
 
   @override
   String get success => 'Başarılı';
+
+  @override
+  String get switch_ => 'Geçiş';
+
+  @override
+  String get switcher => 'Değiştirici';
 
   @override
   String get sync => 'Senkronize et';
