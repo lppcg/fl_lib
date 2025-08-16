@@ -1,3 +1,4 @@
+/// Lightweight snowflake-like ID generator (timestamp + sequence).
 abstract final class SnowflakeLite {
   static int _lastMs = 0;
   static int _seq = 0; // 12 bit No.

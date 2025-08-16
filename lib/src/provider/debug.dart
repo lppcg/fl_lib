@@ -10,11 +10,17 @@ const _level2Color = {
   'ERROR': Color(0xffbb2d6f),
 };
 
+/// Captures logs and ad-hoc debug messages into in-app widgets and lines.
+///
+/// Maintains a bounded list of rich [widgets] and plain [lines] that you can
+/// render in a debug console page. Integrates with [Logger] records and with
+/// [lprint]/[dprint] via [DebugProvider.addString].
 final class DebugProvider {
   static const int maxLines = 100;
   static final widgets = <Widget>[].vn;
   static final lines = <String>[];
 
+  /// Append a [LogRecord] into the debug console.
   static void addLog(LogRecord record) {
     final color = _level2Color[record.level.name] ?? Colors.blue;
     final title = '[${DateTime.now().hourMinute}][${record.loggerName}]';
@@ -53,6 +59,7 @@ final class DebugProvider {
     }
   }
 
+  /// Append a plain [message] string into the debug console.
   static void addString(String message) {
     final title = '[${DateTime.now().hourMinute}][Debug]';
     lines.add('$title: $message');
@@ -73,11 +80,13 @@ final class DebugProvider {
     }
   }
 
+  /// Clear all cached widgets and lines.
   static void clear() {
     widgets.value.clear();
     lines.clear();
     widgets.notify();
   }
 
+  /// Copy all lines to the clipboard.
   static void copy() => Pfs.copy(lines.join('\n'));
 }

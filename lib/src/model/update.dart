@@ -3,6 +3,10 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:fl_lib/fl_lib.dart';
 
+/// Parse and provide app update metadata from a JSON manifest.
+///
+/// The manifest supports per-channel (stable/beta), per-OS, and per-arch
+/// overrides for build numbers, changelog, and download URLs.
 abstract final class AppUpdate {
   static final _arch = CpuArch.current.name;
   static final _os = Pfs.type.name;
@@ -11,6 +15,7 @@ abstract final class AppUpdate {
   static var _chanOs = '${chan.name}-$_os';
 
   static var _chan = AppUpdateChan.stable;
+  /// Current update channel.
   static AppUpdateChan get chan => _chan;
   static set chan(AppUpdateChan value) {
     _updateChanRelated(value);
@@ -33,6 +38,7 @@ abstract final class AppUpdate {
         .join('\n');
   }
 
+  /// Load and parse the manifest from a remote [url].
   static Future<void> fromUrl({
     required String url,
     required String locale,
@@ -48,6 +54,7 @@ abstract final class AppUpdate {
     _getAll();
   }
 
+  /// Load and parse the manifest from a raw JSON [raw] string.
   static void fromStr({
     required String raw,
     required String locale,
@@ -70,6 +77,7 @@ abstract final class AppUpdate {
   }
 
   static String? _changelog;
+  /// Combined changelog lines for builds newer than [build] in the selected locale.
   static String? get changelog => _changelog;
   static String? _getChangelog() {
     if (_changelog != null) return _changelog;
@@ -100,6 +108,7 @@ abstract final class AppUpdate {
   }
 
   static String? _url;
+  /// Resolved download URL for the current platform/channel.
   static String? get url => _url;
   static String? _getUrl() {
     if (_url != null) return _url;
@@ -131,6 +140,7 @@ abstract final class AppUpdate {
   }
 
   static AppUpdateCheckResult? _version;
+  /// The latest build number with update level for this platform/channel.
   static AppUpdateCheckResult? get version => _version;
   static AppUpdateCheckResult? _getVersion() {
     if (_version != null) return _version;
@@ -215,14 +225,17 @@ abstract final class AppUpdate {
   // }
 }
 
+/// Update channels supported by the app.
 enum AppUpdateChan {
   beta,
   stable,
   ;
 }
 
+/// Result of an update check: latest build and its [AppUpdateLevel].
 typedef AppUpdateCheckResult = (int latest, AppUpdateLevel level);
 
+/// Version thresholds used to compute update level.
 final class AppUpdateVer {
   final int latest;
   final int? min;
@@ -234,6 +247,7 @@ final class AppUpdateVer {
     this.urgent,
   });
 
+  /// Parse from a JSON object: `{ latest, min?, urgent? }`.
   factory AppUpdateVer.fromJson(Map<String, dynamic> data) {
     return AppUpdateVer(
       latest: data['latest'] as int,
@@ -242,6 +256,7 @@ final class AppUpdateVer {
     );
   }
 
+  /// Compute the required [AppUpdateLevel] given current [build].
   AppUpdateCheckResult parse(int build) {
     if (latest <= build) return (latest, AppUpdateLevel.nil);
     if (urgent != null && urgent! > build) {

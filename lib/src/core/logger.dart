@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:fl_lib/fl_lib.dart';
 import 'package:logging/logging.dart';
 
+/// Centralized logger instances and helpers.
 abstract final class Loggers {
   static final root = Logger('Root');
   static final store = Logger('Store');
@@ -40,14 +41,19 @@ abstract final class Loggers {
 }
 
 /// Print [msg]s only in debug mode.
+///
+/// Extra [msg2]/[msg3]/[msg4] are concatenated with tabs. Uses [lprint]
+/// internally with [skipFrames] adjusted for accurate source location.
 void dprint(Object? msg, [Object? msg2, Object? msg3, Object? msg4]) {
   if (!BuildMode.isDebug) return;
   lprint(msg, msg2, msg3, msg4, 3);
 }
 
 /// Print [msg]s to console and debug provider.
-/// 
-/// With [Loggers.log], it will also print the source file and line number.
+///
+/// With [Loggers.log], it also prints the source file and line number when
+/// available. [skipFrames] controls how many stack frames to skip to find the
+/// caller site.
 void lprint(Object? msg, [Object? msg2, Object? msg3, Object? msg4, int skipFrames = 2]) {
   final sb = StringBuffer();
   sb.write(msg.toString()); // Always print the first message

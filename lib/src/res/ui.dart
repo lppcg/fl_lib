@@ -1,6 +1,7 @@
 import 'package:fl_lib/src/model/brightness_related.dart';
 import 'package:flutter/material.dart';
 
+/// Common UI constants and helpers used across widgets/pages.
 abstract final class UIs {
   /// Font style
 
