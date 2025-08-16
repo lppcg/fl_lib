@@ -5,8 +5,8 @@ homepage: https://github.com/lppcg/fl_lib
 publish_to: none
 
 environment:
-  sdk: ">=3.4.0 <4.0.0"
-  flutter: ">=3.28.0"
+  sdk: ">=3.8.0 <4.0.0"
+  flutter: ">=3.35.0"
 
 dependencies:
   animations: ^2.0.11
@@ -47,9 +47,9 @@ dependencies:
   share_plus: ^11.0.0
   shared_preferences: ^2.2.3
   url_launcher: ^6.2.6
-  flutter_riverpod: ^2.6.1
+  flutter_riverpod: ^3.0.0-dev.17
   responsive_framework: ^1.5.1
-  riverpod_annotation: ^2.6.1
+  riverpod_annotation: ^3.0.0-dev.17
   webdav_client_plus: ^1.0.2
   window_manager: ^0.5.0
   computer:
@@ -70,8 +70,8 @@ dev_dependencies:
   flutter_lints: ^6.0.0
   build_runner: ^2.3.2
   json_serializable: ^6.8.0
-  riverpod_generator: ^2.6.1
-  riverpod_lint: ^2.6.1
+  riverpod_generator: ^3.0.0-dev.17
+  riverpod_lint: ^3.0.0-dev.17
 
 flutter:
   # assets:
