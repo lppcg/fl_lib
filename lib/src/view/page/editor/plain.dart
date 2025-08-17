@@ -39,7 +39,7 @@ class _FullscreenEditWidgetState extends State<PlainEditPage> {
   Widget build(BuildContext context) {
     return PopScope(
       canPop: false,
-      onPopInvokedWithResult: (didPop, __) async {
+      onPopInvokedWithResult: (didPop, _) async {
         if (didPop) return;
         final sure = await context.showRoundDialog(
           title: libL10n.attention,

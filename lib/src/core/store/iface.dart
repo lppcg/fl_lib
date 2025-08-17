@@ -264,12 +264,12 @@ abstract class StoreProp<T extends Object> {
   Store get store;
 
   /// Get the value of the key.
-  T? get() => store.get(key, fromObj: this.fromObj);
+  T? get() => store.get(key, fromObj: fromObj);
 
   /// Set the value of the key.
   ///
   /// If you want to set `null`, use `remove()` instead.
-  FutureOr<void> set(T value) => store.set(key, value, toObj: this.toObj, updateLastUpdateTsOnSet: updateLastUpdateTsOnSet);
+  FutureOr<void> set(T value) => store.set(key, value, toObj: toObj, updateLastUpdateTsOnSet: updateLastUpdateTsOnSet);
 
   /// Remove the key.
   FutureOr<void> remove() => store.remove(key);

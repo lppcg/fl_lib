@@ -33,6 +33,14 @@ class StoreField<T extends Object> extends StatefulWidget {
   /// If true, renders the bare input without Card/extra padding.
   final bool noWrap;
 
+  /// If true, display value as text and edit on tap via dialog.
+  /// If false, render an inline `Input` field directly.
+  /// Default is `true`.
+  final bool tapToEdit;
+
+  /// The [TextStyle] for the content.
+  final TextStyle? style;
+
   const StoreField({
     super.key,
     required this.prop,
@@ -43,6 +51,8 @@ class StoreField<T extends Object> extends StatefulWidget {
     this.maxLength,
     this.maxLines = 1,
     this.noWrap = false,
+    this.tapToEdit = true,
+    this.style,
   });
 
   @override
@@ -73,45 +83,75 @@ class _StoreFieldState<T extends Object> extends State<StoreField<T>> {
           _controller.text = strVal;
         }
 
-        final field = Input(
-          controller: _controller,
-          label: widget.label,
-          hint: widget.hint,
-          maxLength: widget.maxLength,
-          maxLines: _keyboardMaxLines,
-          type: _keyboardType,
-          action: TextInputAction.done,
-          node: _focusNode,
-          noWrap: widget.noWrap,
-          onSubmitted: (text) => _handleSubmit(text),
-          // Show a small spinner while saving
-          suffix: isBusy ? SizedLoading.small : null,
-        );
+        if (!widget.tapToEdit) {
+          final field = Input(
+            controller: _controller,
+            label: widget.label,
+            hint: widget.hint,
+            maxLength: widget.maxLength,
+            maxLines: _keyboardMaxLines,
+            type: _keyboardType,
+            action: TextInputAction.done,
+            node: _focusNode,
+            noWrap: widget.noWrap,
+            onSubmitted: (text) => _handleSubmit(text),
+            // Show a small spinner while saving
+            suffix: isBusy ? SizedLoading.small : null,
+          );
 
-        if (wasRecentlyBusy) {
-          wasRecentlyBusy = false;
-          return FadeIn(child: field);
+          if (wasRecentlyBusy) {
+            wasRecentlyBusy = false;
+            return FadeIn(child: field);
+          }
+
+          return field;
         }
 
-        return field;
+        // Tap-to-edit mode: show text then open dialog to edit
+        Widget text = _buildDisplayText(strVal);
+        if (isBusy) {
+          text = Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Expanded(child: text),
+              const SizedBox(width: 7),
+              SizedLoading.small,
+            ],
+          );
+        } else if (wasRecentlyBusy) {
+          wasRecentlyBusy = false;
+          text = FadeIn(child: text);
+        }
+
+        final child = InkWell(
+          borderRadius: BorderRadius.circular(7),
+          onTap: () => _openEditDialog(initial: strVal),
+          child: Padding(padding: const EdgeInsets.symmetric(horizontal: 13, vertical: 5), child: text),
+        );
+
+        return child;
       },
     );
   }
 
   TextInputType get _keyboardType {
-    if (T == int) return TextInputType.number;
-    if (T == double) return const TextInputType.numberWithOptions(decimal: true, signed: true);
+    if (T == int) {
+      return TextInputType.number;
+    }
+    if (T == double) {
+      return const TextInputType.numberWithOptions(decimal: true, signed: true);
+    }
     return TextInputType.text;
   }
 
   int get _keyboardMaxLines => T == String ? widget.maxLines : 1;
 
   String _stringify(T value) => switch (value) {
-        final String v => v,
-        final int v => v.toString(),
-        final double v => v.toString(),
-        _ => value.toString(),
-      };
+    final String v => v,
+    final int v => v.toString(),
+    final double v => v.toString(),
+    _ => value.toString(),
+  };
 
   Future<void> _handleSubmit(String raw) async {
     if (isBusy) return;
@@ -139,6 +179,42 @@ class _StoreFieldState<T extends Object> extends State<StoreField<T>> {
         wasRecentlyBusy = true;
       });
     }
+  }
+
+  Future<void> _openEditDialog({required String initial}) async {
+    final ctrl = TextEditingController(text: initial);
+    String? result;
+    try {
+      result = await context.showRoundDialog<String>(
+        title: widget.label,
+        child: Input(
+          controller: ctrl,
+          hint: widget.hint,
+          maxLength: widget.maxLength,
+          maxLines: _keyboardMaxLines,
+          type: _keyboardType,
+          action: TextInputAction.done,
+          autoFocus: true,
+          noWrap: true,
+          onSubmitted: (text) => context.pop(text),
+        ),
+        actions: [
+          TextButton(onPressed: context.pop, child: Text(libL10n.cancel)),
+          TextButton(onPressed: () => context.pop(ctrl.text), child: Text(libL10n.ok)),
+        ],
+      );
+    } finally {
+      ctrl.dispose();
+    }
+
+    if (result == null) return;
+    await _handleSubmit(result);
+  }
+
+  Widget _buildDisplayText(String strVal) {
+    final display = strVal.isEmpty ? (widget.hint ?? libL10n.empty) : strVal;
+    final style = strVal.isEmpty ? UIs.textGrey : null;
+    return Text(display, maxLines: widget.maxLines, overflow: TextOverflow.ellipsis, style: style);
   }
 
   T? _parse(String text) {
@@ -169,17 +245,18 @@ extension StoreStringWidget on StorePropDefault<String> {
     int? maxLength,
     int maxLines = 1,
     bool noWrap = false,
-  }) =>
-      StoreField<String>(
-        prop: this,
-        callback: callback,
-        validator: validator,
-        label: label,
-        hint: hint,
-        maxLength: maxLength,
-        maxLines: maxLines,
-        noWrap: noWrap,
-      );
+    bool tapToEdit = true,
+  }) => StoreField<String>(
+    prop: this,
+    callback: callback,
+    validator: validator,
+    label: label,
+    hint: hint,
+    maxLength: maxLength,
+    maxLines: maxLines,
+    noWrap: noWrap,
+    tapToEdit: tapToEdit,
+  );
 }
 
 extension StoreIntWidget on StorePropDefault<int> {
@@ -191,16 +268,17 @@ extension StoreIntWidget on StorePropDefault<int> {
     String? hint,
     int? maxLength,
     bool noWrap = false,
-  }) =>
-      StoreField<int>(
-        prop: this,
-        callback: callback,
-        validator: validator,
-        label: label,
-        hint: hint,
-        maxLength: maxLength,
-        noWrap: noWrap,
-      );
+    bool tapToEdit = true,
+  }) => StoreField<int>(
+    prop: this,
+    callback: callback,
+    validator: validator,
+    label: label,
+    hint: hint,
+    maxLength: maxLength,
+    noWrap: noWrap,
+    tapToEdit: tapToEdit,
+  );
 }
 
 extension StoreDoubleWidget on StorePropDefault<double> {
@@ -212,14 +290,15 @@ extension StoreDoubleWidget on StorePropDefault<double> {
     String? hint,
     int? maxLength,
     bool noWrap = false,
-  }) =>
-      StoreField<double>(
-        prop: this,
-        callback: callback,
-        validator: validator,
-        label: label,
-        hint: hint,
-        maxLength: maxLength,
-        noWrap: noWrap,
-      );
+    bool tapToEdit = true,
+  }) => StoreField<double>(
+    prop: this,
+    callback: callback,
+    validator: validator,
+    label: label,
+    hint: hint,
+    maxLength: maxLength,
+    noWrap: noWrap,
+    tapToEdit: tapToEdit,
+  );
 }

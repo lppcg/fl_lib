@@ -80,7 +80,7 @@ final class _MultiListState extends State<MultiList> {
         controller: _horizonScroll,
         scrollDirection: Axis.horizontal,
         itemCount: len,
-        separatorBuilder: (_, __) => SizedBox(width: widget.betweenPadding),
+        separatorBuilder: (_, _) => SizedBox(width: widget.betweenPadding),
         itemBuilder: (_, i) {
           final col = widget.children[i];
 

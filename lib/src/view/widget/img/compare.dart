@@ -313,7 +313,7 @@ final class _ImgSlideAnimCompareState extends State<ImgSlideAnimCompare> with Si
             // Clip the original image based on the drag position
             AnimatedBuilder(
               animation: _curvedAnim,
-              builder: (_, __) {
+              builder: (_, _) {
                 return ClipRect(
                   clipper: _ImageClipper(_windowSize.width * (1 - _curvedAnim.value)),
                   child: Image(

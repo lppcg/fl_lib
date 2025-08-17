@@ -8,7 +8,7 @@ final class ValBuilder<T> extends ValueListenableBuilder<T> {
     super.key,
     required this.listenable,
     required Widget Function(T) builder,
-  }) : super(valueListenable: listenable, builder: (_, val, __) => builder(val));
+  }) : super(valueListenable: listenable, builder: (_, val, _) => builder(val));
 
   ValBuilder.child({
     super.key,
@@ -23,7 +23,7 @@ final class ListenBuilder extends ListenableBuilder {
     super.key,
     required super.listenable,
     required Widget Function() builder,
-  }) : super(builder: (_, __) => builder());
+  }) : super(builder: (_, _) => builder());
 
   ListenBuilder.child({
     super.key,

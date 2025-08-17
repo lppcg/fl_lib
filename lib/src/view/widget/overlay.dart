@@ -97,7 +97,7 @@ class _OverlayWidgetState extends State<OverlayWidget> with SingleTickerProvider
   Widget _buildOverlayWidget() {
     return AnimatedBuilder(
       animation: _animeCtrl!,
-      builder: (_, __) {
+      builder: (_, _) {
         final fadeTransition = Container(
           alignment: Alignment.center,
           padding: const EdgeInsets.symmetric(horizontal: 11),
