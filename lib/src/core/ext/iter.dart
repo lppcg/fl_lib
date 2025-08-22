@@ -64,3 +64,13 @@ extension IterX<T> on Iterable<T> {
     }
   }
 }
+
+/// Extension methods for nullable [Iterable] to provide null-safe operations.
+extension IterXNull<T> on Iterable<T>? {
+  /// Return true if the iterable is null or empty.
+  bool get nullOrEmpty {
+    if (this == null) return true;
+    if (this!.isEmpty) return true;
+    return false;
+  }
+}

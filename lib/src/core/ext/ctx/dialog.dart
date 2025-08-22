@@ -49,7 +49,7 @@ extension DialogX on BuildContext {
           title: title_,
           content: child_,
           actions: actions_,
-          actionsPadding: actionsPadding,
+          actionsPadding: actions_.nullOrEmpty ? actionsPadding : EdgeInsets.zero,
           contentPadding: contentPadding,
         );
       },
