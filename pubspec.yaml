@@ -38,7 +38,7 @@ dependencies:
   markdown: ^7.2.2
   mime: ^2.0.0
   multi_split_view: ^3.6.0
-  path_provider: ^2.1.3
+  path_provider: ^2.1.4
   pointycastle: ^4.0.0
   pretty_qr_code: ^3.3.0
   qr_code_dart_scan: ^0.11.1
@@ -47,9 +47,9 @@ dependencies:
   share_plus: ^11.0.0
   shared_preferences: ^2.2.3
   url_launcher: ^6.2.6
-  flutter_riverpod: ^3.0.0-dev.17
+  flutter_riverpod: ^2.6.1
   responsive_framework: ^1.5.1
-  riverpod_annotation: ^3.0.0-dev.17
+  riverpod_annotation: ^2.6.1
   webdav_client_plus: ^1.0.2
   window_manager: ^0.5.0
   computer:
@@ -68,10 +68,10 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^6.0.0
-  build_runner: ^2.3.2
+  build_runner: ^2.4.13
   json_serializable: ^6.8.0
-  riverpod_generator: ^3.0.0-dev.17
-  riverpod_lint: ^3.0.0-dev.17
+  riverpod_generator: ^2.6.1
+  riverpod_lint: ^2.6.1
 
 flutter:
   # assets:
