@@ -29,7 +29,7 @@ extension DialogX on BuildContext {
     bool barrierDismiss = true,
     int? titleMaxLines,
     EdgeInsetsGeometry actionsPadding = const EdgeInsets.only(left: 13, right: 13, bottom: 7),
-    EdgeInsetsGeometry? contentPadding,
+    EdgeInsetsGeometry contentPadding = const EdgeInsets.all(24),
     Widget? Function(BuildContext ctx)? titleBuilder,
     Widget? Function(BuildContext ctx)? childBuilder,
     List<Widget>? Function(BuildContext ctx)? actionsBuilder,
@@ -68,23 +68,23 @@ extension DialogX on BuildContext {
     FutureOr<void> Function(Object e, StackTrace s)? onErr,
     Duration? timeout = const Duration(seconds: 17),
   }) async {
-    showRoundDialog(
-      child: SizedLoading.medium,
-      barrierDismiss: barrierDismiss,
-    );
+    showRoundDialog(child: SizedLoading.medium, barrierDismiss: barrierDismiss);
 
-    return Resx.tryCatch(() async {
-      final ret = switch (timeout) {
-        null => await fn(),
-        _ => await fn().timeout(timeout),
-      };
-      pop();
-      return ret;
-    }, onErr: (e, s) {
-      pop();
-      showErrDialog(e, s);
-      onErr?.call(e, s);
-    });
+    return Resx.tryCatch(
+      () async {
+        final ret = switch (timeout) {
+          null => await fn(),
+          _ => await fn().timeout(timeout),
+        };
+        pop();
+        return ret;
+      },
+      onErr: (e, s) {
+        pop();
+        showErrDialog(e, s);
+        onErr?.call(e, s);
+      },
+    );
   }
 
   static final _recoredPwd = <String, String>{};
@@ -93,12 +93,7 @@ extension DialogX on BuildContext {
   ///
   /// - [id] is the key to record the password.
   /// - [remember] if true, the password will be recorded. Only works when [id] is not null.
-  Future<String?> showPwdDialog({
-    String? title,
-    String? label,
-    String? id,
-    bool remember = true,
-  }) async {
+  Future<String?> showPwdDialog({String? title, String? label, String? id, bool remember = true}) async {
     if (!mounted) return null;
     return await showRoundDialog<String>(
       title: title,
@@ -204,9 +199,7 @@ extension DialogX on BuildContext {
 
     final sure = await showRoundDialog<bool>(
       titleBuilder: buildTitle,
-      child: SingleChildScrollView(
-        child: showLoading.listenVal(buildBody),
-      ),
+      child: SingleChildScrollView(child: showLoading.listenVal(buildBody)),
       actions: btns.isEmpty ? null : btns,
     );
     if (sure == true) return vals;
@@ -277,33 +270,24 @@ extension DialogX on BuildContext {
     var vals = initial ?? <T>[];
     final tag = ''.vn;
     final size = MediaQuery.sizeOf(this);
-    final choices = tag.listenVal(
-      (tVal) {
-        return Choice<T>(
-          onChanged: (value) => vals = value,
-          multiple: multi,
-          clearable: clearable,
-          value: vals,
-          builder: (state, _) {
-            final items = itemsBuilder(tVal);
-            return Wrap(
-              children: List<Widget>.generate(
-                items.length,
-                (index) {
-                  final item = items[index];
-                  if (item == null) return UIs.placeholder;
-                  return ChoiceChipX<T>(
-                    label: display?.call(item) ?? item.toString(),
-                    state: state,
-                    value: item,
-                  );
-                },
-              ),
-            );
-          },
-        );
-      },
-    );
+    final choices = tag.listenVal((tVal) {
+      return Choice<T>(
+        onChanged: (value) => vals = value,
+        multiple: multi,
+        clearable: clearable,
+        value: vals,
+        builder: (state, _) {
+          final items = itemsBuilder(tVal);
+          return Wrap(
+            children: List<Widget>.generate(items.length, (index) {
+              final item = items[index];
+              if (item == null) return UIs.placeholder;
+              return ChoiceChipX<T>(label: display?.call(item) ?? item.toString(), state: state, value: item);
+            }),
+          );
+        },
+      );
+    });
 
     final sure = await showRoundDialog<bool>(
       title: title,
@@ -311,11 +295,7 @@ extension DialogX on BuildContext {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          TagSwitcher(
-            tags: tags,
-            initTag: tag.value,
-            onTagChanged: (e) => tag.value = e,
-          ),
+          TagSwitcher(tags: tags, initTag: tag.value, onTagChanged: (e) => tag.value = e),
           const Divider(color: Color.fromARGB(30, 158, 158, 158)),
           ConstrainedBox(
             constraints: BoxConstraints(maxHeight: size.height * 0.5),
@@ -325,10 +305,7 @@ extension DialogX on BuildContext {
       ),
       actions: [
         if (actions != null) ...actions,
-        TextButton(
-          onPressed: () => pop(true),
-          child: Text(l10n.ok),
-        ),
+        TextButton(onPressed: () => pop(true), child: Text(l10n.ok)),
       ],
     );
     if (sure == true && vals.isNotEmpty) {
@@ -342,20 +319,11 @@ extension DialogX on BuildContext {
   /// - [e] is the error.
   /// - [s] is the stack trace.
   /// - [operation] is the operation of the error.
-  void showErrDialog([
-    Object? e,
-    StackTrace? s,
-    String? operation,
-  ]) {
+  void showErrDialog([Object? e, StackTrace? s, String? operation]) {
     showRoundDialog(
       title: operation ?? l10n.fail,
       child: ErrorView.es(e, s),
-      actions: [
-        TextButton(
-          onPressed: () => Pfs.copy('$e\n$s'),
-          child: Text(l10n.copy),
-        ),
-      ],
+      actions: [TextButton(onPressed: () => Pfs.copy('$e\n$s'), child: Text(l10n.copy))],
     );
   }
 
@@ -365,31 +333,16 @@ extension DialogX on BuildContext {
   ///   ```jsonc
   ///   {"name": "", "age": 0}
   ///   ```
-  Future<Uint8List?> showImportDialog({
-    required String title,
-    Map<String, dynamic>? modelDef,
-  }) async {
+  Future<Uint8List?> showImportDialog({required String title, Map<String, dynamic>? modelDef}) async {
     title = '$title - ${l10n.import}';
     final from = await showRoundDialog<_ImportFrom>(
       title: title,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Btn.tile(
-            onTap: () => pop(_ImportFrom.file),
-            text: l10n.file,
-            icon: const Icon(MingCute.file_line),
-          ),
-          Btn.tile(
-            onTap: () => pop(_ImportFrom.network),
-            text: l10n.network,
-            icon: const Icon(ZondIcons.network),
-          ),
-          Btn.tile(
-            onTap: () => pop(_ImportFrom.clipboard),
-            text: l10n.clipboard,
-            icon: const Icon(MingCute.clipboard_line),
-          ),
+          Btn.tile(onTap: () => pop(_ImportFrom.file), text: l10n.file, icon: const Icon(MingCute.file_line)),
+          Btn.tile(onTap: () => pop(_ImportFrom.network), text: l10n.network, icon: const Icon(ZondIcons.network)),
+          Btn.tile(onTap: () => pop(_ImportFrom.clipboard), text: l10n.clipboard, icon: const Icon(MingCute.clipboard_line)),
           if (modelDef != null)
             Btn.tile(
               text: l10n.example,
@@ -399,19 +352,16 @@ extension DialogX on BuildContext {
                 showRoundDialog(
                   title: l10n.example,
                   child: SingleChildScrollView(
-                      child: SimpleMarkdown(
-                    data: '''
+                    child: SimpleMarkdown(
+                      data:
+                          '''
 ```json
 $content
 ```''',
-                    selectable: true,
-                  )),
-                  actions: [
-                    TextButton(
-                      onPressed: () => Pfs.copy(content),
-                      child: Text(l10n.copy),
+                      selectable: true,
                     ),
-                  ],
+                  ),
+                  actions: [TextButton(onPressed: () => Pfs.copy(content), child: Text(l10n.copy))],
                 );
               },
             ),
@@ -473,10 +423,7 @@ $content
         if (url.isEmpty) return null;
         final resp = await myDio.get(
           url,
-          options: Options(
-            headers: headers.isEmpty ? null : headers,
-            responseType: ResponseType.bytes,
-          ),
+          options: Options(headers: headers.isEmpty ? null : headers, responseType: ResponseType.bytes),
         );
         return resp.data;
       case _ImportFrom.clipboard:
@@ -493,18 +440,16 @@ $content
     return showRoundDialog<bool>(
       title: l10n.migrateCfg,
       child: SingleChildScrollView(
-        child: SimpleMarkdown(data: '''
+        child: SimpleMarkdown(
+          data:
+              '''
 ${libL10n.migrateCfgTip}:\n
-$tip'''),
+$tip''',
+        ),
       ),
       actions: Btnx.oks,
     );
   }
 }
 
-enum _ImportFrom {
-  file,
-  network,
-  clipboard,
-  ;
-}
+enum _ImportFrom { file, network, clipboard }

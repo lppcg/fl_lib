@@ -36,7 +36,6 @@ class _State extends State<PreviewLoadingWidget> with SingleTickerProviderStateM
                 return SizedLoading(
                   150,
                   padding: 10,
-                  strokeWidth: 5,
                   valueColor: AlwaysStoppedAnimation<Color>(
                     Color.lerp(Colors.blue, Colors.red, _controller.value) ?? Colors.blue,
                   ),
