@@ -21,7 +21,7 @@ abstract class Err<T extends Enum> {
   String? get solution;
 
   /// {@macro fllib_err}
-  Err({required this.type, this.message});
+  const Err({required this.type, this.message});
 
   @override
   String toString() {

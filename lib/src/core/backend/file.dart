@@ -42,8 +42,9 @@ abstract final class FileApi {
         responseType: ResponseType.json,
       ),
     );
-    final rPaths = _getRespData<List<dynamic>>(resp.data)?.cast<String>();
-    if (rPaths == null) throw 'Invalid resp: ${resp.data}';
+    final Object? data = resp.data;
+    final rPaths = _getRespData<List<dynamic>>(data)?.cast<String>();
+    if (rPaths == null) throw Exception('Invalid resp: $data');
     final urls = rPaths.map((rPath) => nameToUrl(rPath)).toList();
     return urls;
   }
@@ -70,9 +71,12 @@ abstract final class FileApi {
     );
     final contentTypes = resp.headers['content-type'];
     if (contentTypes != null && contentTypes.contains('application/json')) {
-      throw 'Failed to download $name: ${resp.data}';
+      throw Exception('Failed to download $name: ${resp.data}');
     }
-    return resp.data;
+    final Object? data = resp.data;
+    if (data is Uint8List) return data;
+    if (data is List<int>) return Uint8List.fromList(data);
+    throw Exception('Invalid resp data: ${data.runtimeType}, $data');
   }
 
   /// Delete a file from the server.
@@ -92,11 +96,12 @@ abstract final class FileApi {
       data: body,
       options: Options(headers: UserApi.authHeaders),
     );
-    final data = _getRespData<List<dynamic>>(resp.data)?.cast<String>();
-    if (data == null) throw 'Invalid resp: ${resp.data}';
+    final Object? respData = resp.data;
+    final data = _getRespData<List<dynamic>>(respData)?.cast<String>();
+    if (data == null) throw Exception('Invalid resp: $respData');
     final diffs = names.toSet().difference(data.toSet());
     if (diffs.isNotEmpty) {
-      throw 'Failed to delete: $diffs';
+      throw Exception('Failed to delete: $diffs');
     }
   }
 }
@@ -106,10 +111,11 @@ abstract final class FileApi {
 /// eg.: {'code': 0, 'msg': 'ok', 'data': {...}}
 ///
 /// The code and data are optional.
-T? _getRespData<T extends Object>(Object resp) {
+T? _getRespData<T extends Object>(Object? resp) {
   return switch (resp) {
     final Map<dynamic, dynamic> m => extractData(m),
-    _ => throw 'Invalid response: ${resp.runtimeType}, $resp',
+    null => null,
+    _ => throw Exception('Invalid response: ${resp.runtimeType}, $resp'),
   };
 }
 
@@ -117,9 +123,9 @@ T? extractData<T>(Map<dynamic, dynamic> m) {
   final code = m['code'];
   if (code != null && code != 0) {
     final msg = m['msg'] ?? 'Unknown error';
-    throw 'Error: $code, $msg';
+    throw Exception('Error: $code, $msg');
   }
   final data = m['data'];
-  if (data is! T?) throw 'Invalid data type: $data';
+  if (data is! T?) throw Exception('Invalid data type: $data');
   return data;
 }
