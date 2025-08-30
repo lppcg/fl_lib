@@ -6,6 +6,7 @@ import 'package:fl_lib/fl_lib.dart';
 import 'package:flutter/foundation.dart';
 
 import 'package:dio/dio.dart';
+import 'package:flutter/services.dart';
 import 'package:icloud_storage/icloud_storage.dart';
 import 'package:webdav_client_plus/webdav_client_plus.dart';
 
@@ -43,20 +44,12 @@ abstract class SyncIface<T extends Mergeable, I> {
   }
 
   /// Sync data with remote storage.
-  FutureOr<void> sync({
-    int throttleMilli = 5000,
-    RemoteStorage<I>? rs,
-    int milliDelay = 0,
-  }) async {
+  FutureOr<void> sync({int throttleMilli = 5000, RemoteStorage<I>? rs, int milliDelay = 0}) async {
     if (milliDelay > 0) {
       await Future.delayed(Duration(milliseconds: milliDelay));
     }
     if (throttleMilli == 0) return await _sync(rs);
-    Fns.throttle(
-      () => _sync(rs),
-      id: 'SyncIface.sync',
-      duration: throttleMilli,
-    );
+    Fns.throttle(() => _sync(rs), id: 'SyncIface.sync', duration: throttleMilli);
   }
 
   FutureOr<void> _sync([RemoteStorage<I>? rs]) async {
@@ -78,7 +71,15 @@ abstract class SyncIface<T extends Mergeable, I> {
       }
 
       try {
-        final dlBak = await compute(fromFile, Paths.bak);
+        final isoToken = RootIsolateToken.instance;
+        final dlBak = await compute((args) {
+          final isoToken = args.$2;
+          if (isoToken == null) {
+            throw Exception('Isolate token is null');
+          }
+          BackgroundIsolateBinaryMessenger.ensureInitialized(isoToken);
+          return fromFile(args.$1);
+        }, (Paths.bak, isoToken));
         await dlBak.merge();
       } catch (e, s) {
         Loggers.app.warning('Merge backup', e, s);
