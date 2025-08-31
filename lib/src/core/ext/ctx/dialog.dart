@@ -10,6 +10,9 @@ import 'package:flutter/material.dart';
 import 'package:icons_plus/icons_plus.dart';
 
 extension DialogX on BuildContext {
+  static const _actionsPadding = EdgeInsets.only(left: 13, right: 13, bottom: 7);
+  static const _contentPadding = EdgeInsets.all(24);
+
   /// Show a dialog with a title, a child and actions.
   ///
   /// - [child] is the content of the dialog.
@@ -28,12 +31,14 @@ extension DialogX on BuildContext {
     String? title,
     bool barrierDismiss = true,
     int? titleMaxLines,
-    EdgeInsetsGeometry actionsPadding = const EdgeInsets.only(left: 13, right: 13, bottom: 7),
-    EdgeInsetsGeometry contentPadding = const EdgeInsets.all(24),
+    EdgeInsetsGeometry? actionsPadding = _actionsPadding,
+    EdgeInsetsGeometry? contentPadding = _contentPadding,
     Widget? Function(BuildContext ctx)? titleBuilder,
     Widget? Function(BuildContext ctx)? childBuilder,
     List<Widget>? Function(BuildContext ctx)? actionsBuilder,
   }) async {
+    if (!mounted) return null;
+
     return await showDialog<T>(
       context: this,
       barrierDismissible: barrierDismiss,
@@ -49,7 +54,7 @@ extension DialogX on BuildContext {
           title: title_,
           content: child_,
           actions: actions_,
-          actionsPadding: actions_.nullOrEmpty ? actionsPadding : EdgeInsets.zero,
+          actionsPadding: actions_.nullOrEmpty ? EdgeInsets.zero : actionsPadding,
           contentPadding: contentPadding,
         );
       },
