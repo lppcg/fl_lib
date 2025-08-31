@@ -41,11 +41,15 @@ abstract class Mergeable {
   /// Merge backup with current data
   Future<void> merge({bool force = false});
 
-  static Future<void> mergeStore({
+  /// Merge store with backup data.
+  /// 
+  /// Returns true if any changes were made to the store.
+  static Future<bool> mergeStore({
     required Map<String, Object?> backupData,
     required Store store,
     required bool force,
   }) async {
+    bool hasChanges = false;
     // Extract the timestamps from the backup data
     final rawLastModTs = backupData[store.lastUpdateTsKey];
     late final Map<String, dynamic> lastModTimeMap;
@@ -100,12 +104,18 @@ abstract class Mergeable {
             if (value != null) {
               await store.set(key, value, updateLastUpdateTsOnSet: false);
               await store.updateLastUpdateTs(ts: bakTs, key: key);
+              if (!store.isInternalKey(key)) {
+                hasChanges = true;
+              }
             }
           }
         } else if (!bakHasKey && curHasKey) {
           if (force || bakTs > curTs) {
             await store.remove(key, updateLastUpdateTsOnRemove: false);
             await store.updateLastUpdateTs(ts: curTs, key: key);
+            if (!store.isInternalKey(key)) {
+              hasChanges = true;
+            }
           }
         } else if (bakHasKey && curHasKey) {
           if (force || bakTs > curTs) {
@@ -119,6 +129,9 @@ abstract class Mergeable {
                 await store.remove(key, updateLastUpdateTsOnRemove: false);
               }
               await store.updateLastUpdateTs(ts: bakTs, key: key);
+              if (!store.isInternalKey(key)) {
+                hasChanges = true;
+              }
             }
           }
         }
@@ -138,7 +151,10 @@ abstract class Mergeable {
 
       if (maxBakTs > 0) {
         await store.updateLastUpdateTs(ts: maxBakTs, key: null);
+        hasChanges = true;
       }
     }
+
+    return hasChanges;
   }
 }
