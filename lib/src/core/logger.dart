@@ -59,13 +59,13 @@ void lprint(Object? msg, [Object? msg2, Object? msg3, Object? msg4, int skipFram
   sb.write(msg.toString()); // Always print the first message
 
   if (msg2 != null) {
-    sb.write('\t$msg2');
-  }
-  if (msg3 != null) {
-    sb.write('\t$msg3');
-  }
-  if (msg4 != null) {
-    sb.write('\t$msg4');
+    sb.write('\n$msg2');
+    if (msg3 != null) {
+      sb.write('\n$msg3');
+      if (msg4 != null) {
+        sb.write('\n$msg4');
+      }
+    }
   }
   final str = sb.toString();
   Loggers.log(str, skipFrames: skipFrames);

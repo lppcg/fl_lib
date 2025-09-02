@@ -95,12 +95,12 @@ class LibLocalizationsRu extends LibLocalizations {
   String get day => 'Дни';
 
   @override
-  String get delay => 'Задержка';
-
-  @override
   String delFmt(Object id, Object type) {
     return 'Удалить $type ($id)?';
   }
+
+  @override
+  String get delay => 'Задержка';
 
   @override
   String get delete => 'Удалить';
@@ -274,6 +274,9 @@ class LibLocalizationsRu extends LibLocalizations {
   String get replaceAll => 'Заменить всё';
 
   @override
+  String get reset => 'Сброс';
+
+  @override
   String get restore => 'Восстановление';
 
   @override
@@ -315,6 +318,9 @@ class LibLocalizationsRu extends LibLocalizations {
   String get sync => 'Синхронизировать';
 
   @override
+  String get system => 'Система';
+
+  @override
   String get tag => 'Тег';
 
   @override
@@ -322,9 +328,6 @@ class LibLocalizationsRu extends LibLocalizations {
 
   @override
   String get themeMode => 'режим темы';
-
-  @override
-  String get system => 'Система';
 
   @override
   String get thinking => 'Думаю';

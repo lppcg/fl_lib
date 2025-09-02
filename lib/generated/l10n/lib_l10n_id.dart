@@ -95,12 +95,12 @@ class LibLocalizationsId extends LibLocalizations {
   String get day => 'Hari';
 
   @override
-  String get delay => 'Penundaan';
-
-  @override
   String delFmt(Object id, Object type) {
     return 'Hapus $type ($id)?';
   }
+
+  @override
+  String get delay => 'Penundaan';
 
   @override
   String get delete => 'Hapus';
@@ -275,6 +275,9 @@ class LibLocalizationsId extends LibLocalizations {
   String get replaceAll => 'Ganti semua';
 
   @override
+  String get reset => 'Atur Ulang';
+
+  @override
   String get restore => 'Pulihkan';
 
   @override
@@ -316,6 +319,9 @@ class LibLocalizationsId extends LibLocalizations {
   String get sync => 'Sinkronisasi';
 
   @override
+  String get system => 'Sistem';
+
+  @override
   String get tag => 'Label';
 
   @override
@@ -323,9 +329,6 @@ class LibLocalizationsId extends LibLocalizations {
 
   @override
   String get themeMode => 'Mode tema';
-
-  @override
-  String get system => 'Sistem';
 
   @override
   String get thinking => 'Sedang berpikir';

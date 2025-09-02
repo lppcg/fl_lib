@@ -95,12 +95,12 @@ class LibLocalizationsTr extends LibLocalizations {
   String get day => 'gün';
 
   @override
-  String get delay => 'Gecikme';
-
-  @override
   String delFmt(Object id, Object type) {
     return '$type ($id) silinsin mi?';
   }
+
+  @override
+  String get delay => 'Gecikme';
 
   @override
   String get delete => 'Sil';
@@ -274,6 +274,9 @@ class LibLocalizationsTr extends LibLocalizations {
   String get replaceAll => 'Tümünü değiştir';
 
   @override
+  String get reset => 'Sıfırla';
+
+  @override
   String get restore => 'Geri Yükleme';
 
   @override
@@ -315,6 +318,9 @@ class LibLocalizationsTr extends LibLocalizations {
   String get sync => 'Senkronize et';
 
   @override
+  String get system => 'Sistem';
+
+  @override
   String get tag => 'Etiket';
 
   @override
@@ -322,9 +328,6 @@ class LibLocalizationsTr extends LibLocalizations {
 
   @override
   String get themeMode => 'Tema modu';
-
-  @override
-  String get system => 'Sistem';
 
   @override
   String get thinking => 'Düşünüyor';

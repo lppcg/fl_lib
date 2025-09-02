@@ -13,25 +13,15 @@ final class KvEditorArgs {
   /// displayed. When saved, it will be saved as 'a_key'.
   final String? prefix;
 
-  const KvEditorArgs({
-    required this.data,
-    this.entryBuilder,
-    this.prefix,
-  });
+  const KvEditorArgs({required this.data, this.entryBuilder, this.prefix});
 }
 
 final class KvEditor extends StatefulWidget {
   final KvEditorArgs args;
 
-  const KvEditor({
-    super.key,
-    required this.args,
-  });
+  const KvEditor({super.key, required this.args});
 
-  static const route = AppRouteArg<Map<String, String>, KvEditorArgs>(
-    page: KvEditor.new,
-    path: '/kv_editor',
-  );
+  static const route = AppRouteArg<Map<String, String>, KvEditorArgs>(page: KvEditor.new, path: '/kv_editor');
 
   @override
   State<KvEditor> createState() => _KvEditorState();
@@ -41,12 +31,12 @@ class _KvEditorState extends State<KvEditor> {
   late final _args = widget.args;
   late final Map<String, String> _map = _loadMap();
   final _listKey = GlobalKey<AnimatedListState>();
-  late MediaQueryData _media;
+  late Size _media;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _media = MediaQuery.of(context);
+    _media = MediaQuery.sizeOf(context);
   }
 
   @override
@@ -59,10 +49,7 @@ class _KvEditorState extends State<KvEditor> {
         final k = _map.keys.elementAt(idx);
         final v = _map[k];
         if (v == null) return UIs.placeholder;
-        return FadeTransition(
-          opacity: animation,
-          child: _buildItem(k, v, idx, animation),
-        );
+        return FadeTransition(opacity: animation, child: _buildItem(k, v, idx, animation));
       },
     );
 
@@ -71,10 +58,7 @@ class _KvEditorState extends State<KvEditor> {
         title: Text(l10n.edit),
         actions: [
           IconButton(onPressed: _onTapAdd, icon: const Icon(Icons.add)),
-          IconButton(
-            onPressed: () => context.pop(_saveMap()),
-            icon: const Icon(Icons.save),
-          ),
+          IconButton(onPressed: () => context.pop(_saveMap()), icon: const Icon(Icons.save)),
         ],
       ),
       body: animatedList,
@@ -88,15 +72,13 @@ class _KvEditorState extends State<KvEditor> {
     };
   }
 
-  Widget _buildDefaultItem(
-    String k,
-    String v,
-    int index,
-    Animation<double> animation,
-  ) {
-    final title = SizedBox(width: _media.size.width * 0.5, child: Text(k));
+  Widget _buildDefaultItem(String k, String v, int index, Animation<double> animation) {
+    final title = SizedBox(width: _media.width * 0.5, child: Text(k));
 
-    final subtitle = SizedBox(width: _media.size.width * 0.5, child: Text(v, style: UIs.textGrey));
+    final subtitle = SizedBox(
+      width: _media.width * 0.5,
+      child: Text(v, style: UIs.textGrey),
+    );
 
     final tile = ListTile(
       title: title,
@@ -105,25 +87,14 @@ class _KvEditorState extends State<KvEditor> {
       trailing: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Btn.icon(
-            text: l10n.edit,
-            icon: const Icon(Icons.edit),
-            onTap: () => _onTapEdit(k, index),
-          ),
-          Btn.icon(
-            text: l10n.delete,
-            icon: const Icon(Icons.delete),
-            onTap: () => _onTapDelete(k, index),
-          ),
+          Btn.icon(text: l10n.edit, icon: const Icon(Icons.edit), onTap: () => _onTapEdit(k, index)),
+          Btn.icon(text: l10n.delete, icon: const Icon(Icons.delete), onTap: () => _onTapDelete(k, index)),
         ],
       ),
     ).cardx;
 
     return SizeTransition(
-      sizeFactor: CurvedAnimation(
-        parent: animation,
-        curve: Curves.easeInOutCubic,
-      ),
+      sizeFactor: CurvedAnimation(parent: animation, curve: Curves.easeInOutCubic),
       axisAlignment: 0.0,
       child: tile,
     );
@@ -131,10 +102,7 @@ class _KvEditorState extends State<KvEditor> {
 
   void _onTapDelete(String k, int idx) {
     final v = _map.remove(k);
-    _listKey.currentState?.removeItem(
-      idx,
-      (context, animation) => _buildItem(k, v ?? '', idx, animation),
-    );
+    _listKey.currentState?.removeItem(idx, (context, animation) => _buildItem(k, v ?? '', idx, animation));
   }
 
   void _onTapEdit(String k, int idx) async {
@@ -147,10 +115,7 @@ class _KvEditorState extends State<KvEditor> {
       final newV = ctrlV.text;
       if (newK.isEmpty || newV.isEmpty) {
         context.pop();
-        await context.showRoundDialog(
-          title: l10n.fail,
-          child: Text(l10n.empty),
-        );
+        await context.showRoundDialog(title: l10n.fail, child: Text(l10n.empty));
       }
       _map.remove(k);
       _map[newK] = newV;
@@ -162,36 +127,19 @@ class _KvEditorState extends State<KvEditor> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Input(
-            controller: ctrlK,
-            hint: l10n.key,
-          ),
+          Input(controller: ctrlK, hint: l10n.key),
           UIs.height7,
-          Input(
-            controller: ctrlV,
-            hint: l10n.value,
-            maxLines: 5,
-            minLines: 1,
-          ),
+          Input(controller: ctrlV, hint: l10n.value, maxLines: 5, minLines: 1),
         ],
       ),
       actions: [
-        TextButton(
-          onPressed: context.pop,
-          child: Text(l10n.cancel),
-        ),
-        TextButton(
-          onPressed: onSave,
-          child: Text(l10n.ok),
-        ),
+        TextButton(onPressed: context.pop, child: Text(l10n.cancel)),
+        TextButton(onPressed: onSave, child: Text(l10n.ok)),
       ],
     );
     if (result == true) {
       await Future.delayed(Durations.short3);
-      _listKey.currentState?.removeItem(
-        idx,
-        (context, animation) => _buildItem(k, oldV, idx, animation),
-      );
+      _listKey.currentState?.removeItem(idx, (context, animation) => _buildItem(k, oldV, idx, animation));
       final newIdx = _map.keys.toList().indexOf(ctrlK.text);
       _listKey.currentState?.insertItem(newIdx, duration: Durations.medium1);
     }
@@ -206,10 +154,7 @@ class _KvEditorState extends State<KvEditor> {
       final v = ctrlV.text;
       if (k.isEmpty || v.isEmpty) {
         context.pop();
-        context.showRoundDialog(
-          title: l10n.fail,
-          child: Text(l10n.empty),
-        );
+        context.showRoundDialog(title: l10n.fail, child: Text(l10n.empty));
         return;
       }
       _map[k] = v;
@@ -221,26 +166,14 @@ class _KvEditorState extends State<KvEditor> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Input(
-            controller: ctrlK,
-            hint: l10n.key,
-          ),
+          Input(controller: ctrlK, hint: l10n.key),
           UIs.height7,
-          Input(
-            controller: ctrlV,
-            hint: l10n.value,
-          ),
+          Input(controller: ctrlV, hint: l10n.value),
         ],
       ),
       actions: [
-        TextButton(
-          onPressed: context.pop,
-          child: Text(l10n.cancel),
-        ),
-        TextButton(
-          onPressed: onSave,
-          child: Text(l10n.ok),
-        ),
+        TextButton(onPressed: context.pop, child: Text(l10n.cancel)),
+        TextButton(onPressed: onSave, child: Text(l10n.ok)),
       ],
     );
 

@@ -120,6 +120,7 @@ export 'src/model/update.dart';
 // Complete page implementations for common use cases
 export 'src/view/page/debug.dart';
 export 'src/view/page/editor/code.dart';
+export 'src/view/page/editor/json_list.dart';
 export 'src/view/page/editor/kv.dart';
 export 'src/view/page/editor/plain.dart';
 export 'src/view/page/file.dart';

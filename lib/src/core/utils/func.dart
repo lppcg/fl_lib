@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 
 /// Function utilities.
 abstract final class Fns {
@@ -23,6 +24,47 @@ abstract final class Fns {
       return await func();
     } else {
       continueClick?.call();
+      return null;
+    }
+  }
+
+  /// Parse a string with priority: JSON -> bool -> num -> string
+  ///
+  /// Attempts to parse the input string in the following order:
+  /// 1. JSON (objects, arrays, null)
+  /// 2. Boolean (true/false)
+  /// 3. Number (int/double)
+  /// 4. String (original input)
+  ///
+  /// Returns the parsed value or throws FormatException if all parsing attempts fail
+  static Object? parseWithPriority(String input) {
+    if (input.trim().isEmpty) return input;
+
+    // Try JSON first (handles objects, arrays, null, strings, numbers, booleans)
+    try {
+      return json.decode(input);
+    } catch (_) {
+      // Continue to next parsing method
+    }
+
+    // Try boolean parsing
+    final lowerInput = input.toLowerCase().trim();
+    if (lowerInput == 'true') return true;
+    if (lowerInput == 'false') return false;
+
+    // Try number parsing
+    final parsedNum = num.tryParse(input);
+    if (parsedNum != null) return parsedNum;
+
+    // Fall back to original string
+    return input;
+  }
+
+  /// Safe version of parseWithPriority that returns null instead of throwing
+  static Object? tryParseWithPriority(String input) {
+    try {
+      return parseWithPriority(input);
+    } catch (_) {
       return null;
     }
   }

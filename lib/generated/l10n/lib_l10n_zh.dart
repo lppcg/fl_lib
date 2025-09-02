@@ -94,12 +94,12 @@ class LibLocalizationsZh extends LibLocalizations {
   String get day => '天';
 
   @override
-  String get delay => '延迟';
-
-  @override
   String delFmt(Object id, Object type) {
     return '删除 $type（$id）？';
   }
+
+  @override
+  String get delay => '延迟';
 
   @override
   String get delete => '删除';
@@ -272,6 +272,9 @@ class LibLocalizationsZh extends LibLocalizations {
   String get replaceAll => '替换全部';
 
   @override
+  String get reset => '重置';
+
+  @override
   String get restore => '恢复';
 
   @override
@@ -313,6 +316,9 @@ class LibLocalizationsZh extends LibLocalizations {
   String get sync => '同步';
 
   @override
+  String get system => '系统';
+
+  @override
   String get tag => '标签';
 
   @override
@@ -320,9 +326,6 @@ class LibLocalizationsZh extends LibLocalizations {
 
   @override
   String get themeMode => '主题模式';
-
-  @override
-  String get system => '系统';
 
   @override
   String get thinking => '思考中';
@@ -454,12 +457,12 @@ class LibLocalizationsZhTw extends LibLocalizationsZh {
   String get day => '天';
 
   @override
-  String get delay => '延遲';
-
-  @override
   String delFmt(Object id, Object type) {
     return '確定要刪除 $type（$id）嗎？';
   }
+
+  @override
+  String get delay => '延遲';
 
   @override
   String get delete => '刪除';
@@ -632,6 +635,9 @@ class LibLocalizationsZhTw extends LibLocalizationsZh {
   String get replaceAll => '全部替換';
 
   @override
+  String get reset => '重設';
+
+  @override
   String get restore => '恢復';
 
   @override
@@ -673,6 +679,9 @@ class LibLocalizationsZhTw extends LibLocalizationsZh {
   String get sync => '同步';
 
   @override
+  String get system => '系統';
+
+  @override
   String get tag => '標籤';
 
   @override
@@ -680,9 +689,6 @@ class LibLocalizationsZhTw extends LibLocalizationsZh {
 
   @override
   String get themeMode => '主題風格';
-
-  @override
-  String get system => '系統';
 
   @override
   String get thinking => '思考中';

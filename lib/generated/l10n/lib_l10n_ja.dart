@@ -94,12 +94,12 @@ class LibLocalizationsJa extends LibLocalizations {
   String get day => '日';
 
   @override
-  String get delay => '遅延';
-
-  @override
   String delFmt(Object id, Object type) {
     return '$type（$id）を削除しますか？';
   }
+
+  @override
+  String get delay => '遅延';
 
   @override
   String get delete => '削除';
@@ -272,6 +272,9 @@ class LibLocalizationsJa extends LibLocalizations {
   String get replaceAll => 'すべて置換';
 
   @override
+  String get reset => 'リセット';
+
+  @override
   String get restore => 'リストア';
 
   @override
@@ -313,6 +316,9 @@ class LibLocalizationsJa extends LibLocalizations {
   String get sync => '同期';
 
   @override
+  String get system => 'システム';
+
+  @override
   String get tag => 'タグ';
 
   @override
@@ -320,9 +326,6 @@ class LibLocalizationsJa extends LibLocalizations {
 
   @override
   String get themeMode => 'テーマモード';
-
-  @override
-  String get system => 'システム';
 
   @override
   String get thinking => '考え中です';

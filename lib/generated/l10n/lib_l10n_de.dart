@@ -95,12 +95,12 @@ class LibLocalizationsDe extends LibLocalizations {
   String get day => 'Tage';
 
   @override
-  String get delay => 'Verzögerung';
-
-  @override
   String delFmt(Object id, Object type) {
     return '$type ($id) wirklich löschen?';
   }
+
+  @override
+  String get delay => 'Verzögerung';
 
   @override
   String get delete => 'Löschen';
@@ -276,6 +276,9 @@ class LibLocalizationsDe extends LibLocalizations {
   String get replaceAll => 'Alle ersetzen';
 
   @override
+  String get reset => 'Zurücksetzen';
+
+  @override
   String get restore => 'Wiederherstellen';
 
   @override
@@ -317,6 +320,9 @@ class LibLocalizationsDe extends LibLocalizations {
   String get sync => 'Synchronisieren';
 
   @override
+  String get system => 'System';
+
+  @override
   String get tag => 'Etikett';
 
   @override
@@ -324,9 +330,6 @@ class LibLocalizationsDe extends LibLocalizations {
 
   @override
   String get themeMode => 'Themen-Modus';
-
-  @override
-  String get system => 'System';
 
   @override
   String get thinking => 'Denkt nach';
