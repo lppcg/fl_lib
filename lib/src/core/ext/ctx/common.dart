@@ -24,13 +24,13 @@ extension ContextX on BuildContext {
   ThemeData get theme => Theme.of(this);
 
   /// Whether the current theme brightness is dark
-  bool get isDark => theme.brightness == Brightness.dark;
+  bool get isDark => MediaQuery.platformBrightnessOf(this) == Brightness.dark;
 
   /// Current route settings from the closest ModalRoute ancestor
-  RouteSettings? get route => ModalRoute.of(this)?.settings;
+  RouteSettings? get route => ModalRoute.settingsOf(this);
 
   /// Whether the current page (context's page) is the current visible route
-  bool? get stillOnPage => ModalRoute.of(this)?.isCurrent;
+  bool? get stillOnPage => ModalRoute.isCurrentOf(this);
 
   /// MediaQuery data from the closest MediaQuery widget ancestor
   /// Consider using [windowSize] if only the size is needed
