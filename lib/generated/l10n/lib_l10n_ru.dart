@@ -121,6 +121,9 @@ class LibLocalizationsRu extends LibLocalizations {
   String get download => 'скачать';
 
   @override
+  String get duration => 'Длительность';
+
+  @override
   String get edit => 'Редактировать';
 
   @override
@@ -166,6 +169,12 @@ class LibLocalizationsRu extends LibLocalizations {
   String get folder => 'Папка';
 
   @override
+  String get font => 'Шрифт';
+
+  @override
+  String get found => 'Найдено';
+
+  @override
   String get hideTitleBar => 'Скрыть строку заголовка';
 
   @override
@@ -178,10 +187,16 @@ class LibLocalizationsRu extends LibLocalizations {
   String get import => 'Импортировать';
 
   @override
+  String get init => 'Инициализировать';
+
+  @override
   String get key => 'Ключ';
 
   @override
   String get language => 'язык';
+
+  @override
+  String get license => 'Лицензия';
 
   @override
   String get log => 'лог';
@@ -194,6 +209,9 @@ class LibLocalizationsRu extends LibLocalizations {
 
   @override
   String get logout => 'Выйти';
+
+  @override
+  String get mannual => 'Руководство';
 
   @override
   String get migrateCfg => 'Миграция конфигурации';
@@ -243,6 +261,9 @@ class LibLocalizationsRu extends LibLocalizations {
   String get path => 'Путь';
 
   @override
+  String get preview => 'Предпросмотр';
+
+  @override
   String get previous => 'Назад';
 
   @override
@@ -280,6 +301,9 @@ class LibLocalizationsRu extends LibLocalizations {
   String get restore => 'Восстановление';
 
   @override
+  String get result => 'Результат';
+
+  @override
   String get retry => 'Повторить';
 
   @override
@@ -301,9 +325,18 @@ class LibLocalizationsRu extends LibLocalizations {
   String get share => 'Поделиться';
 
   @override
+  String get size => 'Размер';
+
+  @override
   String sizeTooLargeOnlyPrefix(Object bytes) {
     return 'Содержимое слишком большое, отображаются только первые $bytes';
   }
+
+  @override
+  String get start => 'Начать';
+
+  @override
+  String get stop => 'Стоп';
 
   @override
   String get success => 'Успех';
@@ -333,6 +366,9 @@ class LibLocalizationsRu extends LibLocalizations {
   String get thinking => 'Думаю';
 
   @override
+  String get timeout => 'Тайм-аут';
+
+  @override
   String get undo => 'Отменить';
 
   @override
@@ -343,6 +379,9 @@ class LibLocalizationsRu extends LibLocalizations {
 
   @override
   String get update => 'Обновить';
+
+  @override
+  String get upload => 'Загрузить';
 
   @override
   String get user => 'Пользователь';

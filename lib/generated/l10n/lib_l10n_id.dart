@@ -121,6 +121,9 @@ class LibLocalizationsId extends LibLocalizations {
   String get download => 'Unduh';
 
   @override
+  String get duration => 'Durasi';
+
+  @override
   String get edit => 'Edit';
 
   @override
@@ -166,6 +169,12 @@ class LibLocalizationsId extends LibLocalizations {
   String get folder => 'Map';
 
   @override
+  String get font => 'Font';
+
+  @override
+  String get found => 'Ditemukan';
+
+  @override
   String get hideTitleBar => 'Sembunyikan bilah judul';
 
   @override
@@ -178,10 +187,16 @@ class LibLocalizationsId extends LibLocalizations {
   String get import => 'Impor';
 
   @override
+  String get init => 'Inisialisasi';
+
+  @override
   String get key => 'Kunci';
 
   @override
   String get language => 'Bahasa';
+
+  @override
+  String get license => 'Lisensi';
 
   @override
   String get log => 'Catatan';
@@ -194,6 +209,9 @@ class LibLocalizationsId extends LibLocalizations {
 
   @override
   String get logout => 'Keluar';
+
+  @override
+  String get mannual => 'Manual';
 
   @override
   String get migrateCfg => 'Migrasi konfigurasi';
@@ -244,6 +262,9 @@ class LibLocalizationsId extends LibLocalizations {
   String get path => 'Jalur';
 
   @override
+  String get preview => 'Pratinjau';
+
+  @override
   String get previous => 'Sebelumnya';
 
   @override
@@ -281,6 +302,9 @@ class LibLocalizationsId extends LibLocalizations {
   String get restore => 'Pulihkan';
 
   @override
+  String get result => 'Hasil';
+
+  @override
   String get retry => 'Coba Lagi';
 
   @override
@@ -302,9 +326,18 @@ class LibLocalizationsId extends LibLocalizations {
   String get share => 'Bagikan';
 
   @override
+  String get size => 'Ukuran';
+
+  @override
   String sizeTooLargeOnlyPrefix(Object bytes) {
     return 'Konten terlalu besar, hanya menampilkan $bytes pertama';
   }
+
+  @override
+  String get start => 'Mulai';
+
+  @override
+  String get stop => 'Berhenti';
 
   @override
   String get success => 'Sukses';
@@ -334,6 +367,9 @@ class LibLocalizationsId extends LibLocalizations {
   String get thinking => 'Sedang berpikir';
 
   @override
+  String get timeout => 'Waktu habis';
+
+  @override
   String get undo => 'Batalkan';
 
   @override
@@ -344,6 +380,9 @@ class LibLocalizationsId extends LibLocalizations {
 
   @override
   String get update => 'Perbarui';
+
+  @override
+  String get upload => 'Unggah';
 
   @override
   String get user => 'Username';

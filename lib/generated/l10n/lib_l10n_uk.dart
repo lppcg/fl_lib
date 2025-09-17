@@ -121,6 +121,9 @@ class LibLocalizationsUk extends LibLocalizations {
   String get download => 'Завантажити';
 
   @override
+  String get duration => 'Тривалість';
+
+  @override
   String get edit => 'Редагувати';
 
   @override
@@ -166,6 +169,12 @@ class LibLocalizationsUk extends LibLocalizations {
   String get folder => 'Директорія';
 
   @override
+  String get font => 'Шрифт';
+
+  @override
+  String get found => 'Знайдено';
+
+  @override
   String get hideTitleBar => 'Приховати рядок заголовка';
 
   @override
@@ -178,10 +187,16 @@ class LibLocalizationsUk extends LibLocalizations {
   String get import => 'Імпорт';
 
   @override
+  String get init => 'Ініціалізувати';
+
+  @override
   String get key => 'Ключ';
 
   @override
   String get language => 'Мова';
+
+  @override
+  String get license => 'Ліцензія';
 
   @override
   String get log => 'Лог';
@@ -194,6 +209,9 @@ class LibLocalizationsUk extends LibLocalizations {
 
   @override
   String get logout => 'Вихід';
+
+  @override
+  String get mannual => 'Посібник';
 
   @override
   String get migrateCfg => 'Міграція конфігурації';
@@ -243,6 +261,9 @@ class LibLocalizationsUk extends LibLocalizations {
   String get path => 'Шлях';
 
   @override
+  String get preview => 'Попередній перегляд';
+
+  @override
   String get previous => 'Попередній';
 
   @override
@@ -280,6 +301,9 @@ class LibLocalizationsUk extends LibLocalizations {
   String get restore => 'Відновити';
 
   @override
+  String get result => 'Результат';
+
+  @override
   String get retry => 'Повторити';
 
   @override
@@ -301,9 +325,18 @@ class LibLocalizationsUk extends LibLocalizations {
   String get share => 'Поділіться';
 
   @override
+  String get size => 'Розмір';
+
+  @override
   String sizeTooLargeOnlyPrefix(Object bytes) {
     return 'Вміст занадто великий, відображаються лише перші $bytes';
   }
+
+  @override
+  String get start => 'Почати';
+
+  @override
+  String get stop => 'Зупинити';
 
   @override
   String get success => 'Успішно';
@@ -333,6 +366,9 @@ class LibLocalizationsUk extends LibLocalizations {
   String get thinking => 'Обмірковую';
 
   @override
+  String get timeout => 'Тайм-аут';
+
+  @override
   String get undo => 'Скасувати';
 
   @override
@@ -343,6 +379,9 @@ class LibLocalizationsUk extends LibLocalizations {
 
   @override
   String get update => 'Оновити';
+
+  @override
+  String get upload => 'Завантажити';
 
   @override
   String get user => 'Користувач';

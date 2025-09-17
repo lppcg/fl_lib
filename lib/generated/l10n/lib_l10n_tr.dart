@@ -121,6 +121,9 @@ class LibLocalizationsTr extends LibLocalizations {
   String get download => 'İndir';
 
   @override
+  String get duration => 'Süre';
+
+  @override
   String get edit => 'Düzenle';
 
   @override
@@ -166,6 +169,12 @@ class LibLocalizationsTr extends LibLocalizations {
   String get folder => 'Klasör';
 
   @override
+  String get font => 'Yazı Tipi';
+
+  @override
+  String get found => 'Bulundu';
+
+  @override
   String get hideTitleBar => 'Başlık çubuğunu gizle';
 
   @override
@@ -178,10 +187,16 @@ class LibLocalizationsTr extends LibLocalizations {
   String get import => 'İçe Aktar';
 
   @override
+  String get init => 'Başlat';
+
+  @override
   String get key => 'Anahtar';
 
   @override
   String get language => 'Dil';
+
+  @override
+  String get license => 'Lisans';
 
   @override
   String get log => 'Kayıt';
@@ -194,6 +209,9 @@ class LibLocalizationsTr extends LibLocalizations {
 
   @override
   String get logout => 'Çıkış yap';
+
+  @override
+  String get mannual => 'Kılavuz';
 
   @override
   String get migrateCfg => 'Yapılandırma geçişi';
@@ -243,6 +261,9 @@ class LibLocalizationsTr extends LibLocalizations {
   String get path => 'Yol';
 
   @override
+  String get preview => 'Önizleme';
+
+  @override
   String get previous => 'Önceki';
 
   @override
@@ -280,6 +301,9 @@ class LibLocalizationsTr extends LibLocalizations {
   String get restore => 'Geri Yükleme';
 
   @override
+  String get result => 'Sonuç';
+
+  @override
   String get retry => 'Yeniden Dene';
 
   @override
@@ -301,9 +325,18 @@ class LibLocalizationsTr extends LibLocalizations {
   String get share => 'Paylaş';
 
   @override
+  String get size => 'Boyut';
+
+  @override
   String sizeTooLargeOnlyPrefix(Object bytes) {
     return 'İçerik çok büyük, yalnızca ilk $bytes gösteriliyor';
   }
+
+  @override
+  String get start => 'Başlat';
+
+  @override
+  String get stop => 'Durdur';
 
   @override
   String get success => 'Başarılı';
@@ -333,6 +366,9 @@ class LibLocalizationsTr extends LibLocalizations {
   String get thinking => 'Düşünüyor';
 
   @override
+  String get timeout => 'Zaman Aşımı';
+
+  @override
   String get undo => 'Geri Al';
 
   @override
@@ -343,6 +379,9 @@ class LibLocalizationsTr extends LibLocalizations {
 
   @override
   String get update => 'Güncelle';
+
+  @override
+  String get upload => 'Yükle';
 
   @override
   String get user => 'Kullanıcı';

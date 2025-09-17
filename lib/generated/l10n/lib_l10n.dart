@@ -329,6 +329,12 @@ abstract class LibLocalizations {
   /// **'Download'**
   String get download;
 
+  /// No description provided for @duration.
+  ///
+  /// In en, this message translates to:
+  /// **'Duration'**
+  String get duration;
+
   /// No description provided for @edit.
   ///
   /// In en, this message translates to:
@@ -419,6 +425,18 @@ abstract class LibLocalizations {
   /// **'Folder'**
   String get folder;
 
+  /// No description provided for @font.
+  ///
+  /// In en, this message translates to:
+  /// **'Font'**
+  String get font;
+
+  /// No description provided for @found.
+  ///
+  /// In en, this message translates to:
+  /// **'Found'**
+  String get found;
+
   /// No description provided for @hideTitleBar.
   ///
   /// In en, this message translates to:
@@ -443,6 +461,12 @@ abstract class LibLocalizations {
   /// **'Import'**
   String get import;
 
+  /// No description provided for @init.
+  ///
+  /// In en, this message translates to:
+  /// **'Initialize'**
+  String get init;
+
   /// No description provided for @key.
   ///
   /// In en, this message translates to:
@@ -454,6 +478,12 @@ abstract class LibLocalizations {
   /// In en, this message translates to:
   /// **'Language'**
   String get language;
+
+  /// No description provided for @license.
+  ///
+  /// In en, this message translates to:
+  /// **'License'**
+  String get license;
 
   /// No description provided for @log.
   ///
@@ -478,6 +508,12 @@ abstract class LibLocalizations {
   /// In en, this message translates to:
   /// **'Logout'**
   String get logout;
+
+  /// No description provided for @mannual.
+  ///
+  /// In en, this message translates to:
+  /// **'Manual'**
+  String get mannual;
 
   /// No description provided for @migrateCfg.
   ///
@@ -569,6 +605,12 @@ abstract class LibLocalizations {
   /// **'Path'**
   String get path;
 
+  /// No description provided for @preview.
+  ///
+  /// In en, this message translates to:
+  /// **'Preview'**
+  String get preview;
+
   /// No description provided for @previous.
   ///
   /// In en, this message translates to:
@@ -641,6 +683,12 @@ abstract class LibLocalizations {
   /// **'Restore'**
   String get restore;
 
+  /// No description provided for @result.
+  ///
+  /// In en, this message translates to:
+  /// **'Result'**
+  String get result;
+
   /// No description provided for @retry.
   ///
   /// In en, this message translates to:
@@ -683,11 +731,29 @@ abstract class LibLocalizations {
   /// **'Share'**
   String get share;
 
+  /// No description provided for @size.
+  ///
+  /// In en, this message translates to:
+  /// **'Size'**
+  String get size;
+
   /// No description provided for @sizeTooLargeOnlyPrefix.
   ///
   /// In en, this message translates to:
   /// **'Content too large, displaying only the first {bytes}'**
   String sizeTooLargeOnlyPrefix(Object bytes);
+
+  /// No description provided for @start.
+  ///
+  /// In en, this message translates to:
+  /// **'Start'**
+  String get start;
+
+  /// No description provided for @stop.
+  ///
+  /// In en, this message translates to:
+  /// **'Stop'**
+  String get stop;
 
   /// No description provided for @success.
   ///
@@ -743,6 +809,12 @@ abstract class LibLocalizations {
   /// **'Thinking'**
   String get thinking;
 
+  /// No description provided for @timeout.
+  ///
+  /// In en, this message translates to:
+  /// **'Timeout'**
+  String get timeout;
+
   /// No description provided for @undo.
   ///
   /// In en, this message translates to:
@@ -766,6 +838,12 @@ abstract class LibLocalizations {
   /// In en, this message translates to:
   /// **'Update'**
   String get update;
+
+  /// No description provided for @upload.
+  ///
+  /// In en, this message translates to:
+  /// **'Upload'**
+  String get upload;
 
   /// No description provided for @user.
   ///

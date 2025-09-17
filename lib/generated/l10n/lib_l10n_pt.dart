@@ -121,6 +121,9 @@ class LibLocalizationsPt extends LibLocalizations {
   String get download => 'Baixar';
 
   @override
+  String get duration => 'Duração';
+
+  @override
   String get edit => 'Editar';
 
   @override
@@ -166,6 +169,12 @@ class LibLocalizationsPt extends LibLocalizations {
   String get folder => 'Pasta';
 
   @override
+  String get font => 'Fonte';
+
+  @override
+  String get found => 'Encontrado';
+
+  @override
   String get hideTitleBar => 'Ocultar barra de título';
 
   @override
@@ -178,10 +187,16 @@ class LibLocalizationsPt extends LibLocalizations {
   String get import => 'Importar';
 
   @override
+  String get init => 'Inicializar';
+
+  @override
   String get key => 'Chave';
 
   @override
   String get language => 'Idioma';
+
+  @override
+  String get license => 'Licença';
 
   @override
   String get log => 'Log';
@@ -194,6 +209,9 @@ class LibLocalizationsPt extends LibLocalizations {
 
   @override
   String get logout => 'Sair';
+
+  @override
+  String get mannual => 'Manual';
 
   @override
   String get migrateCfg => 'Migração de configuração';
@@ -243,6 +261,9 @@ class LibLocalizationsPt extends LibLocalizations {
   String get path => 'Caminho';
 
   @override
+  String get preview => 'Visualização';
+
+  @override
   String get previous => 'Anterior';
 
   @override
@@ -280,6 +301,9 @@ class LibLocalizationsPt extends LibLocalizations {
   String get restore => 'Restaurar';
 
   @override
+  String get result => 'Resultado';
+
+  @override
   String get retry => 'Tentar novamente';
 
   @override
@@ -301,9 +325,18 @@ class LibLocalizationsPt extends LibLocalizations {
   String get share => 'Compartilhar';
 
   @override
+  String get size => 'Tamanho';
+
+  @override
   String sizeTooLargeOnlyPrefix(Object bytes) {
     return 'Conteúdo muito grande, exibindo apenas os primeiros $bytes';
   }
+
+  @override
+  String get start => 'Iniciar';
+
+  @override
+  String get stop => 'Parar';
 
   @override
   String get success => 'Sucesso';
@@ -333,6 +366,9 @@ class LibLocalizationsPt extends LibLocalizations {
   String get thinking => 'Pensando';
 
   @override
+  String get timeout => 'Timeout';
+
+  @override
   String get undo => 'Desfazer';
 
   @override
@@ -343,6 +379,9 @@ class LibLocalizationsPt extends LibLocalizations {
 
   @override
   String get update => 'Atualizar';
+
+  @override
+  String get upload => 'Enviar';
 
   @override
   String get user => 'Usuário';

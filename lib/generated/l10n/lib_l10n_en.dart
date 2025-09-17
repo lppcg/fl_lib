@@ -121,6 +121,9 @@ class LibLocalizationsEn extends LibLocalizations {
   String get download => 'Download';
 
   @override
+  String get duration => 'Duration';
+
+  @override
   String get edit => 'Edit';
 
   @override
@@ -166,6 +169,12 @@ class LibLocalizationsEn extends LibLocalizations {
   String get folder => 'Folder';
 
   @override
+  String get font => 'Font';
+
+  @override
+  String get found => 'Found';
+
+  @override
   String get hideTitleBar => 'Hide title bar';
 
   @override
@@ -178,10 +187,16 @@ class LibLocalizationsEn extends LibLocalizations {
   String get import => 'Import';
 
   @override
+  String get init => 'Initialize';
+
+  @override
   String get key => 'Key';
 
   @override
   String get language => 'Language';
+
+  @override
+  String get license => 'License';
 
   @override
   String get log => 'Log';
@@ -194,6 +209,9 @@ class LibLocalizationsEn extends LibLocalizations {
 
   @override
   String get logout => 'Logout';
+
+  @override
+  String get mannual => 'Manual';
 
   @override
   String get migrateCfg => 'Configuration migration';
@@ -243,6 +261,9 @@ class LibLocalizationsEn extends LibLocalizations {
   String get path => 'Path';
 
   @override
+  String get preview => 'Preview';
+
+  @override
   String get previous => 'Previous';
 
   @override
@@ -280,6 +301,9 @@ class LibLocalizationsEn extends LibLocalizations {
   String get restore => 'Restore';
 
   @override
+  String get result => 'Result';
+
+  @override
   String get retry => 'Retry';
 
   @override
@@ -301,9 +325,18 @@ class LibLocalizationsEn extends LibLocalizations {
   String get share => 'Share';
 
   @override
+  String get size => 'Size';
+
+  @override
   String sizeTooLargeOnlyPrefix(Object bytes) {
     return 'Content too large, displaying only the first $bytes';
   }
+
+  @override
+  String get start => 'Start';
+
+  @override
+  String get stop => 'Stop';
 
   @override
   String get success => 'Success';
@@ -333,6 +366,9 @@ class LibLocalizationsEn extends LibLocalizations {
   String get thinking => 'Thinking';
 
   @override
+  String get timeout => 'Timeout';
+
+  @override
   String get undo => 'Undo';
 
   @override
@@ -343,6 +379,9 @@ class LibLocalizationsEn extends LibLocalizations {
 
   @override
   String get update => 'Update';
+
+  @override
+  String get upload => 'Upload';
 
   @override
   String get user => 'User';

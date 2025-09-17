@@ -121,6 +121,9 @@ class LibLocalizationsDe extends LibLocalizations {
   String get download => 'Download';
 
   @override
+  String get duration => 'Dauer';
+
+  @override
   String get edit => 'Bearbeiten';
 
   @override
@@ -166,6 +169,12 @@ class LibLocalizationsDe extends LibLocalizations {
   String get folder => 'Ordner';
 
   @override
+  String get font => 'Schriftart';
+
+  @override
+  String get found => 'Gefunden';
+
+  @override
   String get hideTitleBar => 'Titelleiste ausblenden';
 
   @override
@@ -178,10 +187,16 @@ class LibLocalizationsDe extends LibLocalizations {
   String get import => 'Importieren';
 
   @override
+  String get init => 'Initialisieren';
+
+  @override
   String get key => 'Schlüssel';
 
   @override
   String get language => 'Sprache';
+
+  @override
+  String get license => 'Lizenz';
 
   @override
   String get log => 'Log';
@@ -195,6 +210,9 @@ class LibLocalizationsDe extends LibLocalizations {
 
   @override
   String get logout => 'Abmelden';
+
+  @override
+  String get mannual => 'Manuell';
 
   @override
   String get migrateCfg => 'Konfigurationsmigration';
@@ -245,6 +263,9 @@ class LibLocalizationsDe extends LibLocalizations {
   String get path => 'Pfad';
 
   @override
+  String get preview => 'Vorschau';
+
+  @override
   String get previous => 'Zurück';
 
   @override
@@ -282,6 +303,9 @@ class LibLocalizationsDe extends LibLocalizations {
   String get restore => 'Wiederherstellen';
 
   @override
+  String get result => 'Ergebnis';
+
+  @override
   String get retry => 'Erneut versuchen';
 
   @override
@@ -303,9 +327,18 @@ class LibLocalizationsDe extends LibLocalizations {
   String get share => 'Teilen';
 
   @override
+  String get size => 'Größe';
+
+  @override
   String sizeTooLargeOnlyPrefix(Object bytes) {
     return 'Inhalt zu groß, es werden nur die ersten $bytes angezeigt';
   }
+
+  @override
+  String get start => 'Start';
+
+  @override
+  String get stop => 'Stop';
 
   @override
   String get success => 'Erfolg';
@@ -335,6 +368,9 @@ class LibLocalizationsDe extends LibLocalizations {
   String get thinking => 'Denkt nach';
 
   @override
+  String get timeout => 'Zeitüberschreitung';
+
+  @override
   String get undo => 'Rückgängig';
 
   @override
@@ -345,6 +381,9 @@ class LibLocalizationsDe extends LibLocalizations {
 
   @override
   String get update => 'Aktualisieren';
+
+  @override
+  String get upload => 'Hochladen';
 
   @override
   String get user => 'Benutzer';

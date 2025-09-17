@@ -120,6 +120,9 @@ class LibLocalizationsZh extends LibLocalizations {
   String get download => '下载';
 
   @override
+  String get duration => '持续时间';
+
+  @override
   String get edit => '编辑';
 
   @override
@@ -165,6 +168,12 @@ class LibLocalizationsZh extends LibLocalizations {
   String get folder => '文件夹';
 
   @override
+  String get font => '字体';
+
+  @override
+  String get found => '已找到';
+
+  @override
   String get hideTitleBar => '隐藏标题栏';
 
   @override
@@ -177,10 +186,16 @@ class LibLocalizationsZh extends LibLocalizations {
   String get import => '导入';
 
   @override
+  String get init => '初始化';
+
+  @override
   String get key => '键';
 
   @override
   String get language => '语言';
+
+  @override
+  String get license => '许可证';
 
   @override
   String get log => '日志';
@@ -193,6 +208,9 @@ class LibLocalizationsZh extends LibLocalizations {
 
   @override
   String get logout => '登出';
+
+  @override
+  String get mannual => '手动';
 
   @override
   String get migrateCfg => '配置迁移';
@@ -242,6 +260,9 @@ class LibLocalizationsZh extends LibLocalizations {
   String get path => '路径';
 
   @override
+  String get preview => '预览';
+
+  @override
   String get previous => '上一个';
 
   @override
@@ -278,6 +299,9 @@ class LibLocalizationsZh extends LibLocalizations {
   String get restore => '恢复';
 
   @override
+  String get result => '结果';
+
+  @override
   String get retry => '重试';
 
   @override
@@ -299,9 +323,18 @@ class LibLocalizationsZh extends LibLocalizations {
   String get share => '分享';
 
   @override
+  String get size => '大小';
+
+  @override
   String sizeTooLargeOnlyPrefix(Object bytes) {
     return '内容过大，仅显示前 $bytes';
   }
+
+  @override
+  String get start => '开始';
+
+  @override
+  String get stop => '停止';
 
   @override
   String get success => '成功';
@@ -331,6 +364,9 @@ class LibLocalizationsZh extends LibLocalizations {
   String get thinking => '思考中';
 
   @override
+  String get timeout => '超时';
+
+  @override
   String get undo => '撤销';
 
   @override
@@ -341,6 +377,9 @@ class LibLocalizationsZh extends LibLocalizations {
 
   @override
   String get update => '更新';
+
+  @override
+  String get upload => '上传';
 
   @override
   String get user => '用户';
@@ -483,6 +522,9 @@ class LibLocalizationsZhTw extends LibLocalizationsZh {
   String get download => '下載';
 
   @override
+  String get duration => '持續時間';
+
+  @override
   String get edit => '編輯';
 
   @override
@@ -528,6 +570,12 @@ class LibLocalizationsZhTw extends LibLocalizationsZh {
   String get folder => '資料夾';
 
   @override
+  String get font => '字體';
+
+  @override
+  String get found => '找到';
+
+  @override
   String get hideTitleBar => '隱藏標題欄';
 
   @override
@@ -540,10 +588,16 @@ class LibLocalizationsZhTw extends LibLocalizationsZh {
   String get import => '導入';
 
   @override
+  String get init => '初始化';
+
+  @override
   String get key => '鍵';
 
   @override
   String get language => '語言';
+
+  @override
+  String get license => '授權';
 
   @override
   String get log => '日誌';
@@ -556,6 +610,9 @@ class LibLocalizationsZhTw extends LibLocalizationsZh {
 
   @override
   String get logout => '登出';
+
+  @override
+  String get mannual => '手冊';
 
   @override
   String get migrateCfg => '配置遷移';
@@ -605,6 +662,9 @@ class LibLocalizationsZhTw extends LibLocalizationsZh {
   String get path => '路徑';
 
   @override
+  String get preview => '預覽';
+
+  @override
   String get previous => '上一項';
 
   @override
@@ -641,6 +701,9 @@ class LibLocalizationsZhTw extends LibLocalizationsZh {
   String get restore => '恢復';
 
   @override
+  String get result => '結果';
+
+  @override
   String get retry => '重試';
 
   @override
@@ -662,9 +725,18 @@ class LibLocalizationsZhTw extends LibLocalizationsZh {
   String get share => '分享';
 
   @override
+  String get size => '大小';
+
+  @override
   String sizeTooLargeOnlyPrefix(Object bytes) {
     return '內容過大，僅顯示前 $bytes';
   }
+
+  @override
+  String get start => '開始';
+
+  @override
+  String get stop => '停止';
 
   @override
   String get success => '成功';
@@ -694,6 +766,9 @@ class LibLocalizationsZhTw extends LibLocalizationsZh {
   String get thinking => '思考中';
 
   @override
+  String get timeout => '超時';
+
+  @override
   String get undo => '復原';
 
   @override
@@ -704,6 +779,9 @@ class LibLocalizationsZhTw extends LibLocalizationsZh {
 
   @override
   String get update => '更新';
+
+  @override
+  String get upload => '上傳';
 
   @override
   String get user => '使用者';

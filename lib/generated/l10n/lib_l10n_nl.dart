@@ -121,6 +121,9 @@ class LibLocalizationsNl extends LibLocalizations {
   String get download => 'Downloaden';
 
   @override
+  String get duration => 'Duur';
+
+  @override
   String get edit => 'Bewerken';
 
   @override
@@ -166,6 +169,12 @@ class LibLocalizationsNl extends LibLocalizations {
   String get folder => 'Map';
 
   @override
+  String get font => 'Lettertype';
+
+  @override
+  String get found => 'Gevonden';
+
+  @override
   String get hideTitleBar => 'Titelbalk verbergen';
 
   @override
@@ -178,10 +187,16 @@ class LibLocalizationsNl extends LibLocalizations {
   String get import => 'Importeren';
 
   @override
+  String get init => 'Initialiseren';
+
+  @override
   String get key => 'Sleutel';
 
   @override
   String get language => 'Taal';
+
+  @override
+  String get license => 'Licentie';
 
   @override
   String get log => 'Logboek';
@@ -194,6 +209,9 @@ class LibLocalizationsNl extends LibLocalizations {
 
   @override
   String get logout => 'Uitloggen';
+
+  @override
+  String get mannual => 'Handleiding';
 
   @override
   String get migrateCfg => 'Configuratiemigratie';
@@ -244,6 +262,9 @@ class LibLocalizationsNl extends LibLocalizations {
   String get path => 'Pad';
 
   @override
+  String get preview => 'Voorbeeld';
+
+  @override
   String get previous => 'Vorige';
 
   @override
@@ -281,6 +302,9 @@ class LibLocalizationsNl extends LibLocalizations {
   String get restore => 'Herstellen';
 
   @override
+  String get result => 'Resultaat';
+
+  @override
   String get retry => 'Opnieuw proberen';
 
   @override
@@ -302,9 +326,18 @@ class LibLocalizationsNl extends LibLocalizations {
   String get share => 'Delen';
 
   @override
+  String get size => 'Grootte';
+
+  @override
   String sizeTooLargeOnlyPrefix(Object bytes) {
     return 'Inhoud te groot, alleen de eerste $bytes worden weergegeven';
   }
+
+  @override
+  String get start => 'Start';
+
+  @override
+  String get stop => 'Stop';
 
   @override
   String get success => 'Succes';
@@ -334,6 +367,9 @@ class LibLocalizationsNl extends LibLocalizations {
   String get thinking => 'Aan het nadenken';
 
   @override
+  String get timeout => 'Timeout';
+
+  @override
   String get undo => 'Ongedaan maken';
 
   @override
@@ -344,6 +380,9 @@ class LibLocalizationsNl extends LibLocalizations {
 
   @override
   String get update => 'Bijwerken';
+
+  @override
+  String get upload => 'Uploaden';
 
   @override
   String get user => 'Gebruiker';

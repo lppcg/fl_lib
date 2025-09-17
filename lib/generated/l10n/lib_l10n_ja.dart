@@ -120,6 +120,9 @@ class LibLocalizationsJa extends LibLocalizations {
   String get download => 'ダウンロード';
 
   @override
+  String get duration => '期間';
+
+  @override
   String get edit => '編集';
 
   @override
@@ -165,6 +168,12 @@ class LibLocalizationsJa extends LibLocalizations {
   String get folder => 'フォルダ';
 
   @override
+  String get font => 'フォント';
+
+  @override
+  String get found => '見つかりました';
+
+  @override
   String get hideTitleBar => 'タイトルバーを非表示にする';
 
   @override
@@ -177,10 +186,16 @@ class LibLocalizationsJa extends LibLocalizations {
   String get import => 'インポート';
 
   @override
+  String get init => '初期化';
+
+  @override
   String get key => 'キー';
 
   @override
   String get language => '言語';
+
+  @override
+  String get license => 'ライセンス';
 
   @override
   String get log => 'ログ';
@@ -193,6 +208,9 @@ class LibLocalizationsJa extends LibLocalizations {
 
   @override
   String get logout => 'ログアウト';
+
+  @override
+  String get mannual => 'マニュアル';
 
   @override
   String get migrateCfg => '設定の移行';
@@ -242,6 +260,9 @@ class LibLocalizationsJa extends LibLocalizations {
   String get path => 'パス';
 
   @override
+  String get preview => 'プレビュー';
+
+  @override
   String get previous => '前へ';
 
   @override
@@ -278,6 +299,9 @@ class LibLocalizationsJa extends LibLocalizations {
   String get restore => 'リストア';
 
   @override
+  String get result => '結果';
+
+  @override
   String get retry => '再試行';
 
   @override
@@ -299,9 +323,18 @@ class LibLocalizationsJa extends LibLocalizations {
   String get share => '共有';
 
   @override
+  String get size => 'サイズ';
+
+  @override
   String sizeTooLargeOnlyPrefix(Object bytes) {
     return 'コンテンツが大きすぎるため、最初の $bytes のみを表示しています';
   }
+
+  @override
+  String get start => '開始';
+
+  @override
+  String get stop => '停止';
 
   @override
   String get success => '成功';
@@ -331,6 +364,9 @@ class LibLocalizationsJa extends LibLocalizations {
   String get thinking => '考え中です';
 
   @override
+  String get timeout => 'タイムアウト';
+
+  @override
   String get undo => '元に戻す';
 
   @override
@@ -341,6 +377,9 @@ class LibLocalizationsJa extends LibLocalizations {
 
   @override
   String get update => '更新';
+
+  @override
+  String get upload => 'アップロード';
 
   @override
   String get user => 'ユーザー';
