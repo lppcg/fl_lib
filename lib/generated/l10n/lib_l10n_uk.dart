@@ -211,7 +211,7 @@ class LibLocalizationsUk extends LibLocalizations {
   String get logout => 'Вихід';
 
   @override
-  String get mannual => 'Посібник';
+  String get manual => 'Посібник';
 
   @override
   String get migrateCfg => 'Міграція конфігурації';
@@ -406,4 +406,70 @@ class LibLocalizationsUk extends LibLocalizations {
 
   @override
   String get yesterday => 'Вчора';
+
+  @override
+  String get addr => 'Адреса';
+
+  @override
+  String get available => 'Доступно';
+
+  @override
+  String get convert => 'Конвертувати';
+
+  @override
+  String get experimentalFeature => 'Експериментальна функція';
+
+  @override
+  String get foregroundService => 'Фонова служба';
+
+  @override
+  String get goto => 'Перейти до';
+
+  @override
+  String get invalid => 'Недійсно';
+
+  @override
+  String get valid => 'Дійсно';
+
+  @override
+  String get max => 'Максимум';
+
+  @override
+  String get min => 'Мінімум';
+
+  @override
+  String get more => 'Більше';
+
+  @override
+  String get milliseconds => 'Мілісекунди';
+
+  @override
+  String get permission => 'Дозвіл';
+
+  @override
+  String get read => 'Читати';
+
+  @override
+  String get write => 'Записувати';
+
+  @override
+  String get done => 'Готово';
+
+  @override
+  String get speed => 'Швидкість';
+
+  @override
+  String get stat => 'Статистика';
+
+  @override
+  String get time => 'Час';
+
+  @override
+  String get times => 'Раз';
+
+  @override
+  String get used => 'Використано';
+
+  @override
+  String get view => 'Перегляд';
 }

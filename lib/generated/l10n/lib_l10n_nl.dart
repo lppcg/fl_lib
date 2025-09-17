@@ -211,7 +211,7 @@ class LibLocalizationsNl extends LibLocalizations {
   String get logout => 'Uitloggen';
 
   @override
-  String get mannual => 'Handleiding';
+  String get manual => 'Handleiding';
 
   @override
   String get migrateCfg => 'Configuratiemigratie';
@@ -407,4 +407,70 @@ class LibLocalizationsNl extends LibLocalizations {
 
   @override
   String get yesterday => 'Gisteren';
+
+  @override
+  String get addr => 'Adres';
+
+  @override
+  String get available => 'Beschikbaar';
+
+  @override
+  String get convert => 'Converteren';
+
+  @override
+  String get experimentalFeature => 'Experimentele functie';
+
+  @override
+  String get foregroundService => 'Voorgrondservice';
+
+  @override
+  String get goto => 'Ga naar';
+
+  @override
+  String get invalid => 'Ongeldig';
+
+  @override
+  String get valid => 'Geldig';
+
+  @override
+  String get max => 'Maximum';
+
+  @override
+  String get min => 'Minimum';
+
+  @override
+  String get more => 'Meer';
+
+  @override
+  String get milliseconds => 'Milliseconden';
+
+  @override
+  String get permission => 'Toestemming';
+
+  @override
+  String get read => 'Lezen';
+
+  @override
+  String get write => 'Schrijven';
+
+  @override
+  String get done => 'Klaar';
+
+  @override
+  String get speed => 'Snelheid';
+
+  @override
+  String get stat => 'Statistieken';
+
+  @override
+  String get time => 'Tijd';
+
+  @override
+  String get times => 'Keren';
+
+  @override
+  String get used => 'Gebruikt';
+
+  @override
+  String get view => 'Bekijken';
 }

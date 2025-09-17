@@ -509,11 +509,11 @@ abstract class LibLocalizations {
   /// **'Logout'**
   String get logout;
 
-  /// No description provided for @mannual.
+  /// No description provided for @manual.
   ///
   /// In en, this message translates to:
   /// **'Manual'**
-  String get mannual;
+  String get manual;
 
   /// No description provided for @migrateCfg.
   ///
@@ -880,6 +880,138 @@ abstract class LibLocalizations {
   /// In en, this message translates to:
   /// **'Yesterday'**
   String get yesterday;
+
+  /// No description provided for @addr.
+  ///
+  /// In en, this message translates to:
+  /// **'Address'**
+  String get addr;
+
+  /// No description provided for @available.
+  ///
+  /// In en, this message translates to:
+  /// **'Available'**
+  String get available;
+
+  /// No description provided for @convert.
+  ///
+  /// In en, this message translates to:
+  /// **'Convert'**
+  String get convert;
+
+  /// No description provided for @experimentalFeature.
+  ///
+  /// In en, this message translates to:
+  /// **'Experimental Feature'**
+  String get experimentalFeature;
+
+  /// No description provided for @foregroundService.
+  ///
+  /// In en, this message translates to:
+  /// **'Foreground Service'**
+  String get foregroundService;
+
+  /// No description provided for @goto.
+  ///
+  /// In en, this message translates to:
+  /// **'Go to'**
+  String get goto;
+
+  /// No description provided for @invalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid'**
+  String get invalid;
+
+  /// No description provided for @valid.
+  ///
+  /// In en, this message translates to:
+  /// **'Valid'**
+  String get valid;
+
+  /// No description provided for @max.
+  ///
+  /// In en, this message translates to:
+  /// **'Maximum'**
+  String get max;
+
+  /// No description provided for @min.
+  ///
+  /// In en, this message translates to:
+  /// **'Minimum'**
+  String get min;
+
+  /// No description provided for @more.
+  ///
+  /// In en, this message translates to:
+  /// **'More'**
+  String get more;
+
+  /// No description provided for @milliseconds.
+  ///
+  /// In en, this message translates to:
+  /// **'Milliseconds'**
+  String get milliseconds;
+
+  /// No description provided for @permission.
+  ///
+  /// In en, this message translates to:
+  /// **'Permission'**
+  String get permission;
+
+  /// No description provided for @read.
+  ///
+  /// In en, this message translates to:
+  /// **'Read'**
+  String get read;
+
+  /// No description provided for @write.
+  ///
+  /// In en, this message translates to:
+  /// **'Write'**
+  String get write;
+
+  /// No description provided for @done.
+  ///
+  /// In en, this message translates to:
+  /// **'Done'**
+  String get done;
+
+  /// No description provided for @speed.
+  ///
+  /// In en, this message translates to:
+  /// **'Speed'**
+  String get speed;
+
+  /// No description provided for @stat.
+  ///
+  /// In en, this message translates to:
+  /// **'Statistics'**
+  String get stat;
+
+  /// No description provided for @time.
+  ///
+  /// In en, this message translates to:
+  /// **'Time'**
+  String get time;
+
+  /// No description provided for @times.
+  ///
+  /// In en, this message translates to:
+  /// **'Times'**
+  String get times;
+
+  /// No description provided for @used.
+  ///
+  /// In en, this message translates to:
+  /// **'Used'**
+  String get used;
+
+  /// No description provided for @view.
+  ///
+  /// In en, this message translates to:
+  /// **'View'**
+  String get view;
 }
 
 class _LibLocalizationsDelegate

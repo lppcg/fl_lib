@@ -210,7 +210,7 @@ class LibLocalizationsJa extends LibLocalizations {
   String get logout => 'ログアウト';
 
   @override
-  String get mannual => 'マニュアル';
+  String get manual => 'マニュアル';
 
   @override
   String get migrateCfg => '設定の移行';
@@ -404,4 +404,70 @@ class LibLocalizationsJa extends LibLocalizations {
 
   @override
   String get yesterday => '昨日';
+
+  @override
+  String get addr => 'アドレス';
+
+  @override
+  String get available => '利用可能';
+
+  @override
+  String get convert => '変換';
+
+  @override
+  String get experimentalFeature => '実験的機能';
+
+  @override
+  String get foregroundService => 'フォアグラウンドサービス';
+
+  @override
+  String get goto => '移動';
+
+  @override
+  String get invalid => '無効';
+
+  @override
+  String get valid => '有効';
+
+  @override
+  String get max => '最大';
+
+  @override
+  String get min => '最小';
+
+  @override
+  String get more => 'もっと';
+
+  @override
+  String get milliseconds => 'ミリ秒';
+
+  @override
+  String get permission => '権限';
+
+  @override
+  String get read => '読み取り';
+
+  @override
+  String get write => '書き込み';
+
+  @override
+  String get done => '完了';
+
+  @override
+  String get speed => '速度';
+
+  @override
+  String get stat => '統計';
+
+  @override
+  String get time => '時間';
+
+  @override
+  String get times => '回';
+
+  @override
+  String get used => '使用済み';
+
+  @override
+  String get view => '表示';
 }

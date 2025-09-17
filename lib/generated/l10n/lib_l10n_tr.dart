@@ -211,7 +211,7 @@ class LibLocalizationsTr extends LibLocalizations {
   String get logout => 'Çıkış yap';
 
   @override
-  String get mannual => 'Kılavuz';
+  String get manual => 'Kılavuz';
 
   @override
   String get migrateCfg => 'Yapılandırma geçişi';
@@ -406,4 +406,70 @@ class LibLocalizationsTr extends LibLocalizations {
 
   @override
   String get yesterday => 'Dün';
+
+  @override
+  String get addr => 'Adres';
+
+  @override
+  String get available => 'Mevcut';
+
+  @override
+  String get convert => 'Dönüştür';
+
+  @override
+  String get experimentalFeature => 'Deneysel Özellik';
+
+  @override
+  String get foregroundService => 'Önplan Hizmeti';
+
+  @override
+  String get goto => 'Git';
+
+  @override
+  String get invalid => 'Geçersiz';
+
+  @override
+  String get valid => 'Geçerli';
+
+  @override
+  String get max => 'Maksimum';
+
+  @override
+  String get min => 'Minimum';
+
+  @override
+  String get more => 'Daha fazla';
+
+  @override
+  String get milliseconds => 'Milisaniye';
+
+  @override
+  String get permission => 'İzin';
+
+  @override
+  String get read => 'Oku';
+
+  @override
+  String get write => 'Yaz';
+
+  @override
+  String get done => 'Tamam';
+
+  @override
+  String get speed => 'Hız';
+
+  @override
+  String get stat => 'İstatistik';
+
+  @override
+  String get time => 'Zaman';
+
+  @override
+  String get times => 'Kez';
+
+  @override
+  String get used => 'Kullanıldı';
+
+  @override
+  String get view => 'Görüntüle';
 }

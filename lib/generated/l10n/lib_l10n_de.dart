@@ -212,7 +212,7 @@ class LibLocalizationsDe extends LibLocalizations {
   String get logout => 'Abmelden';
 
   @override
-  String get mannual => 'Manuell';
+  String get manual => 'Manuell';
 
   @override
   String get migrateCfg => 'Konfigurationsmigration';
@@ -408,4 +408,70 @@ class LibLocalizationsDe extends LibLocalizations {
 
   @override
   String get yesterday => 'Gestern';
+
+  @override
+  String get addr => 'Adresse';
+
+  @override
+  String get available => 'Verfügbar';
+
+  @override
+  String get convert => 'Konvertieren';
+
+  @override
+  String get experimentalFeature => 'Experimentelle Funktion';
+
+  @override
+  String get foregroundService => 'Vordergrunddienst';
+
+  @override
+  String get goto => 'Gehe zu';
+
+  @override
+  String get invalid => 'Ungültig';
+
+  @override
+  String get valid => 'Gültig';
+
+  @override
+  String get max => 'Maximum';
+
+  @override
+  String get min => 'Minimum';
+
+  @override
+  String get more => 'Mehr';
+
+  @override
+  String get milliseconds => 'Millisekunden';
+
+  @override
+  String get permission => 'Berechtigung';
+
+  @override
+  String get read => 'Lesen';
+
+  @override
+  String get write => 'Schreiben';
+
+  @override
+  String get done => 'Fertig';
+
+  @override
+  String get speed => 'Geschwindigkeit';
+
+  @override
+  String get stat => 'Statistiken';
+
+  @override
+  String get time => 'Zeit';
+
+  @override
+  String get times => 'Mal';
+
+  @override
+  String get used => 'Verwendet';
+
+  @override
+  String get view => 'Anzeigen';
 }

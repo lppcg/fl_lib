@@ -211,7 +211,7 @@ class LibLocalizationsId extends LibLocalizations {
   String get logout => 'Keluar';
 
   @override
-  String get mannual => 'Manual';
+  String get manual => 'Manual';
 
   @override
   String get migrateCfg => 'Migrasi konfigurasi';
@@ -407,4 +407,70 @@ class LibLocalizationsId extends LibLocalizations {
 
   @override
   String get yesterday => 'Kemarin';
+
+  @override
+  String get addr => 'Alamat';
+
+  @override
+  String get available => 'Tersedia';
+
+  @override
+  String get convert => 'Konversi';
+
+  @override
+  String get experimentalFeature => 'Fitur Eksperimental';
+
+  @override
+  String get foregroundService => 'Layanan Latar Depan';
+
+  @override
+  String get goto => 'Pergi ke';
+
+  @override
+  String get invalid => 'Tidak valid';
+
+  @override
+  String get valid => 'Valid';
+
+  @override
+  String get max => 'Maksimum';
+
+  @override
+  String get min => 'Minimum';
+
+  @override
+  String get more => 'Lebih banyak';
+
+  @override
+  String get milliseconds => 'Milidetik';
+
+  @override
+  String get permission => 'Izin';
+
+  @override
+  String get read => 'Baca';
+
+  @override
+  String get write => 'Tulis';
+
+  @override
+  String get done => 'Selesai';
+
+  @override
+  String get speed => 'Kecepatan';
+
+  @override
+  String get stat => 'Statistik';
+
+  @override
+  String get time => 'Waktu';
+
+  @override
+  String get times => 'Kali';
+
+  @override
+  String get used => 'Digunakan';
+
+  @override
+  String get view => 'Lihat';
 }

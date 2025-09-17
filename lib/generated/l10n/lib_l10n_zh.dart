@@ -210,7 +210,7 @@ class LibLocalizationsZh extends LibLocalizations {
   String get logout => '登出';
 
   @override
-  String get mannual => '手动';
+  String get manual => '手动';
 
   @override
   String get migrateCfg => '配置迁移';
@@ -404,6 +404,72 @@ class LibLocalizationsZh extends LibLocalizations {
 
   @override
   String get yesterday => '昨天';
+
+  @override
+  String get addr => '地址';
+
+  @override
+  String get available => '可用';
+
+  @override
+  String get convert => '转换';
+
+  @override
+  String get experimentalFeature => '实验功能';
+
+  @override
+  String get foregroundService => '前台服务';
+
+  @override
+  String get goto => '转到';
+
+  @override
+  String get invalid => '无效';
+
+  @override
+  String get valid => '有效';
+
+  @override
+  String get max => '最大';
+
+  @override
+  String get min => '最小';
+
+  @override
+  String get more => '更多';
+
+  @override
+  String get milliseconds => '毫秒';
+
+  @override
+  String get permission => '权限';
+
+  @override
+  String get read => '读取';
+
+  @override
+  String get write => '写入';
+
+  @override
+  String get done => '完成';
+
+  @override
+  String get speed => '速度';
+
+  @override
+  String get stat => '统计';
+
+  @override
+  String get time => '时间';
+
+  @override
+  String get times => '次';
+
+  @override
+  String get used => '已使用';
+
+  @override
+  String get view => '查看';
 }
 
 /// The translations for Chinese, as used in Taiwan (`zh_TW`).
@@ -612,7 +678,7 @@ class LibLocalizationsZhTw extends LibLocalizationsZh {
   String get logout => '登出';
 
   @override
-  String get mannual => '手冊';
+  String get manual => '手冊';
 
   @override
   String get migrateCfg => '配置遷移';
@@ -806,4 +872,70 @@ class LibLocalizationsZhTw extends LibLocalizationsZh {
 
   @override
   String get yesterday => '昨天';
+
+  @override
+  String get addr => '地址';
+
+  @override
+  String get available => '可用';
+
+  @override
+  String get convert => '轉換';
+
+  @override
+  String get experimentalFeature => '實驗功能';
+
+  @override
+  String get foregroundService => '前景服務';
+
+  @override
+  String get goto => '前往';
+
+  @override
+  String get invalid => '無效';
+
+  @override
+  String get valid => '有效';
+
+  @override
+  String get max => '最大';
+
+  @override
+  String get min => '最小';
+
+  @override
+  String get more => '更多';
+
+  @override
+  String get milliseconds => '毫秒';
+
+  @override
+  String get permission => '權限';
+
+  @override
+  String get read => '讀取';
+
+  @override
+  String get write => '寫入';
+
+  @override
+  String get done => '完成';
+
+  @override
+  String get speed => '速度';
+
+  @override
+  String get stat => '統計';
+
+  @override
+  String get time => '時間';
+
+  @override
+  String get times => '次';
+
+  @override
+  String get used => '已使用';
+
+  @override
+  String get view => '檢視';
 }
