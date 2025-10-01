@@ -133,6 +133,7 @@ export 'src/view/page/user.dart';
 
 // --- Widgets ---
 // Reusable UI components and specialized widgets
+export 'src/view/widget/adaptive_reorderable_list.dart';
 export 'src/view/widget/appbar.dart';
 export 'src/view/widget/auto_hide.dart';
 export 'src/view/widget/avg.dart';

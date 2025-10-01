@@ -62,9 +62,11 @@ class AdaptiveSelectionToolbarController extends SelectionToolbarController {
           if (overlayEntry.mounted) {
             overlayEntry.remove();
           }
+          _overlayEntry = null;
         });
+      } else {
+        _overlayEntry = null;
       }
-      _overlayEntry = null;
     }
   }
 
@@ -136,6 +138,7 @@ class _AnimatedCodeLineSelectionToolbarState extends State<_AnimatedCodeLineSele
   }
 
   void _hideWithAnimation() async {
+    await Future.delayed(const Duration(milliseconds: 200));
     await _animationController.reverse();
     widget.onHide();
   }
@@ -207,8 +210,15 @@ class _CodeLineSelectionToolbarState extends State<_CodeLineSelectionToolbar> {
 
     if (hasSelection) {
       items.add(ContextMenuButtonItem(
-        onPressed: () {
-          widget.controller.cut();
+        onPressed: () async {
+          try {
+            // cut() internally calls copy() which is async, but cut() returns void
+            // We need to add a small delay to ensure copy completes before delete
+            widget.controller.cut();
+            await Future.delayed(const Duration(milliseconds: 100));
+          } catch (e) {
+            dprint('Cut operation failed: $e');
+          }
           widget.onHide();
         },
         type: ContextMenuButtonType.cut,
@@ -217,15 +227,26 @@ class _CodeLineSelectionToolbarState extends State<_CodeLineSelectionToolbar> {
 
     items.add(ContextMenuButtonItem(
       onPressed: () async {
-        await widget.controller.copy();
+        try {
+          await widget.controller.copy();
+        } catch (e) {
+          dprint('Copy operation failed: $e');
+        }
         widget.onHide();
       },
       type: ContextMenuButtonType.copy,
     ));
 
     items.add(ContextMenuButtonItem(
-      onPressed: () {
-        widget.controller.paste();
+      onPressed: () async {
+        try {
+          // paste() is internally async but returns void
+          // Add a small delay to ensure paste operation completes
+          widget.controller.paste();
+          await Future.delayed(const Duration(milliseconds: 100));
+        } catch (e) {
+          dprint('Paste operation failed: $e');
+        }
         widget.onHide();
       },
       type: ContextMenuButtonType.paste,
@@ -234,7 +255,11 @@ class _CodeLineSelectionToolbarState extends State<_CodeLineSelectionToolbar> {
     if (!widget.controller.isAllSelected) {
       items.add(ContextMenuButtonItem(
         onPressed: () {
-          widget.controller.selectAll();
+          try {
+            widget.controller.selectAll();
+          } catch (e) {
+            dprint('Select all operation failed: $e');
+          }
           widget.onHide();
         },
         type: ContextMenuButtonType.selectAll,
