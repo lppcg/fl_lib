@@ -117,9 +117,9 @@ final class TagTile extends StatelessWidget {
               vals.isEmpty ? null : Text(vals.join(', '), style: UIs.textGrey),
           trailing: const Icon(Icons.keyboard_arrow_right),
           onTap: () async {
-            final allTags_ = (allTags..addAll(vals)).toList();
+            final allTags_ = {...allTags, ...vals}.toList();
             final res = await context.showPickDialog(
-              items: allTags_.toList(),
+              items: allTags_,
               initial: vals.toList(),
               clearable: true,
               actions: [

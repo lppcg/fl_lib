@@ -24,6 +24,7 @@ dependencies:
   flutter_markdown: ^0.7.1
   flutter_markdown_latex: ^0.3.1
   flutter_secure_storage: ^9.2.4
+  flutter_staggered_grid_view: ^0.7.0
   re_highlight: ^0.0.3
   hive_ce: ^2.11.3
   hive_ce_flutter: ^2.3.1
@@ -63,6 +64,10 @@ dependency_overrides:
 # flutter_markdown_latex:
 #   path: ../flutter_markdown_latex
   flutter_math_fork: ^0.7.4
+  gtk: # TODO: remove it after fixed in upstream
+    git:
+      url: https://github.com/lollipopkit/gtk.dart
+      ref: v0.0.36
 
 dev_dependencies:
   flutter_test:

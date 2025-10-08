@@ -1,5 +1,6 @@
 import 'package:fl_lib/fl_lib.dart';
 import 'package:flutter/material.dart';
+import 'preview/adaptive_reorderable_list_page.dart';
 import 'preview/intro_page.dart';
 import 'preview/file_page.dart';
 import 'preview/search_page.dart';
@@ -20,7 +21,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'fl_lib demo',
-      theme: ThemeData(useMaterial3: true, colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue)),
+      theme: ThemeData(
+        useMaterial3: true,
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
+      ),
       home: const MainPage(),
     );
   }
@@ -42,11 +46,18 @@ class MainPage extends StatelessWidget {
       _PreviewEntry('Scan Page', const BarcodeScannerPage()),
       _PreviewEntry('Editor Code Page', const EditorPage()),
       _PreviewEntry('Editor Plain Page', const PlainEditPage()),
-      _PreviewEntry('Editor KV Page', const KvEditor(args: KvEditorArgs(data: {}))),
+      _PreviewEntry(
+        'Editor KV Page',
+        const KvEditor(args: KvEditorArgs(data: {})),
+      ),
       _PreviewEntry('Loading Widget', const PreviewLoadingWidget()),
       _PreviewEntry('Color Picker Widget', const PreviewColorPickerWidget()),
       _PreviewEntry('Error Widget', const PreviewErrorWidget()),
       _PreviewEntry('Custom App Bar Page', const PreviewCustomAppBarPage()),
+      _PreviewEntry(
+        'Adaptive Reorderable Waterfall',
+        const AdaptiveReorderableListPage(),
+      ),
     ];
     return Scaffold(
       appBar: AppBar(

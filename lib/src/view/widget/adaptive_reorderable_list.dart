@@ -2,6 +2,7 @@ import 'dart:math' as math;
 
 import 'package:fl_lib/fl_lib.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 
 /// Signature for building each item in [AdaptiveReorderableList].
 typedef AdaptiveReorderableItemBuilder<T> =
@@ -63,6 +64,7 @@ class AdaptiveReorderableList<T> extends StatefulWidget {
     required this.items,
     required this.itemBuilder,
     required this.itemKey,
+    this.useMasonry = true,
     this.onReorder,
     this.onReorderComplete,
     this.padding = EdgeInsets.zero,
@@ -80,6 +82,7 @@ class AdaptiveReorderableList<T> extends StatefulWidget {
     this.keyboardDismissBehavior = ScrollViewKeyboardDismissBehavior.manual,
     this.restorationId,
     this.reverse = false,
+    this.rowMajor = false,
   }) : separatorBuilder = null,
        separated = false;
 
@@ -91,6 +94,7 @@ class AdaptiveReorderableList<T> extends StatefulWidget {
     required this.itemBuilder,
     required this.itemKey,
     required this.separatorBuilder,
+    this.useMasonry = true,
     this.onReorder,
     this.onReorderComplete,
     this.padding = EdgeInsets.zero,
@@ -108,6 +112,7 @@ class AdaptiveReorderableList<T> extends StatefulWidget {
     this.keyboardDismissBehavior = ScrollViewKeyboardDismissBehavior.manual,
     this.restorationId,
     this.reverse = false,
+    this.rowMajor = false,
   }) : separated = true;
 
   /// Data backing each item that will be rendered.
@@ -133,6 +138,13 @@ class AdaptiveReorderableList<T> extends StatefulWidget {
   /// The callback receives a snapshot of [items] in their new order after drag
   /// operations have been applied.
   final AdaptiveReorderCompletion<T>? onReorderComplete;
+
+  /// Whether to use a grid layout (waterfall/row-major) instead of Wrap.
+  /// If [rowMajor] is false, uses a waterfall Masonry grid (minimal vertical gaps),
+  /// which places items by shortest column and may not preserve row reading order.
+  /// If [rowMajor] is true, uses an aligned row-major grid that preserves builder order
+  /// left-to-right, top-to-bottom while allowing varying heights.
+  final bool useMasonry;
 
   /// Padding applied to the entire list.
   final EdgeInsetsGeometry padding;
@@ -180,6 +192,11 @@ class AdaptiveReorderableList<T> extends StatefulWidget {
   final bool reverse;
 
   final bool separated;
+
+  /// Selects row-major aligned grid when [useMasonry] is true.
+  /// - false (default): Masonry (waterfall) layout
+  /// - true: Aligned row-major layout
+  final bool rowMajor;
 
   @override
   State<AdaptiveReorderableList<T>> createState() =>
@@ -341,34 +358,42 @@ class _AdaptiveReorderableListState<T> extends State<AdaptiveReorderableList<T>>
         final visibleEntries = _entries.toList(growable: false);
         final visibleCount = _visibleItemCount;
 
-        final tiles = <Widget>[
-          for (final entry in visibleEntries)
-            _buildTile(
+        final sliver = _WaterfallSliver(
+          columnCount: columnCount,
+          tileExtent: tileWidth,
+          mainAxisSpacing: widget.mainAxisSpacing,
+          crossAxisSpacing: widget.crossAxisSpacing,
+          delegate: SliverChildBuilderDelegate((context, index) {
+            if (index == visibleEntries.length) {
+              return _buildTrailingDropZone(tileWidth);
+            }
+            final entry = visibleEntries[index];
+            return _buildTile(
               entry: entry,
               width: tileWidth,
               visibleIndex: _visibleIndexFor(entry),
               visibleCount: visibleCount,
-            ),
-          _buildTrailingDropZone(tileWidth),
+            );
+          }, childCount: visibleEntries.length + 1),
+        );
+
+        final padding = resolvedPadding;
+        final slivers = <Widget>[
+          if (padding != EdgeInsets.zero)
+            SliverPadding(padding: padding, sliver: sliver)
+          else
+            sliver,
         ];
 
-        return SingleChildScrollView(
+        return CustomScrollView(
           controller: widget.scrollController,
           physics: widget.physics,
           primary: widget.primary,
-          padding: widget.padding,
           reverse: widget.reverse,
           keyboardDismissBehavior: widget.keyboardDismissBehavior,
           restorationId: widget.restorationId,
           clipBehavior: widget.clipBehavior,
-          child: Align(
-            alignment: Alignment.topLeft,
-            child: Wrap(
-              spacing: widget.crossAxisSpacing,
-              runSpacing: widget.mainAxisSpacing,
-              children: tiles,
-            ),
-          ),
+          slivers: slivers,
         );
       },
     );
@@ -413,7 +438,7 @@ class _AdaptiveReorderableListState<T> extends State<AdaptiveReorderableList<T>>
             width: width,
             child: LongPressDraggable<Object>(
               data: entry.key,
-              dragAnchorStrategy: pointerDragAnchorStrategy,
+              dragAnchorStrategy: childDragAnchorStrategy,
               feedback: _buildDragFeedback(displayChild, width),
               childWhenDragging: Opacity(opacity: 0.2, child: displayChild),
               child: displayChild,
@@ -641,5 +666,491 @@ class _AnimatedEntry extends StatelessWidget {
       opacity: animation,
       child: ScaleTransition(scale: animation.drive(scaleTween), child: child),
     );
+  }
+}
+
+class _WaterfallSliver extends SliverMultiBoxAdaptorWidget {
+  const _WaterfallSliver({
+    required this.columnCount,
+    required this.tileExtent,
+    required this.mainAxisSpacing,
+    required this.crossAxisSpacing,
+    required super.delegate,
+  }) : assert(columnCount > 0),
+       assert(tileExtent >= 0);
+
+  final int columnCount;
+  final double tileExtent;
+  final double mainAxisSpacing;
+  final double crossAxisSpacing;
+
+  @override
+  RenderSliverWaterfall createRenderObject(BuildContext context) {
+    final SliverMultiBoxAdaptorElement element =
+        context as SliverMultiBoxAdaptorElement;
+    return RenderSliverWaterfall(
+      childManager: element,
+      columnCount: columnCount,
+      tileExtent: tileExtent,
+      mainAxisSpacing: mainAxisSpacing,
+      crossAxisSpacing: crossAxisSpacing,
+    );
+  }
+
+  @override
+  void updateRenderObject(
+    BuildContext context,
+    covariant RenderSliverWaterfall renderObject,
+  ) {
+    renderObject
+      ..columnCount = columnCount
+      ..tileExtent = tileExtent
+      ..mainAxisSpacing = mainAxisSpacing
+      ..crossAxisSpacing = crossAxisSpacing;
+  }
+}
+
+class _WaterfallParentData extends SliverMultiBoxAdaptorParentData {
+  double crossAxisOffset = 0;
+}
+
+class _WaterfallCacheEntry {
+  const _WaterfallCacheEntry({
+    required this.column,
+    required this.mainAxisOffset,
+    required this.mainAxisExtent,
+  });
+
+  final int column;
+  final double mainAxisOffset;
+  final double mainAxisExtent;
+
+  double get trailingOffset => mainAxisOffset + mainAxisExtent;
+}
+
+class _ChildMetrics {
+  const _ChildMetrics({required this.mainAxisStart, required this.mainAxisEnd});
+
+  final double mainAxisStart;
+  final double mainAxisEnd;
+}
+
+class RenderSliverWaterfall extends RenderSliverMultiBoxAdaptor {
+  RenderSliverWaterfall({
+    required super.childManager,
+    required int columnCount,
+    required double tileExtent,
+    required double mainAxisSpacing,
+    required double crossAxisSpacing,
+  }) : _columnCount = columnCount,
+       _tileExtent = tileExtent,
+       _mainAxisSpacing = mainAxisSpacing,
+       _crossAxisSpacing = crossAxisSpacing;
+
+  int get columnCount => _columnCount;
+  int _columnCount;
+  set columnCount(int value) {
+    assert(value > 0);
+    if (value == _columnCount) return;
+    _columnCount = value;
+    markNeedsLayout();
+  }
+
+  double get tileExtent => _tileExtent;
+  double _tileExtent;
+  set tileExtent(double value) {
+    if (value == _tileExtent) return;
+    _tileExtent = value;
+    markNeedsLayout();
+  }
+
+  double get mainAxisSpacing => _mainAxisSpacing;
+  double _mainAxisSpacing;
+  set mainAxisSpacing(double value) {
+    if (value == _mainAxisSpacing) return;
+    _mainAxisSpacing = value;
+    markNeedsLayout();
+  }
+
+  double get crossAxisSpacing => _crossAxisSpacing;
+  double _crossAxisSpacing;
+  set crossAxisSpacing(double value) {
+    if (value == _crossAxisSpacing) return;
+    _crossAxisSpacing = value;
+    markNeedsLayout();
+  }
+
+  final List<_WaterfallCacheEntry?> _cache = <_WaterfallCacheEntry?>[];
+
+  static const double _epsilon = 1e-3;
+
+  @override
+  void setupParentData(RenderObject child) {
+    if (child.parentData is! _WaterfallParentData) {
+      child.parentData = _WaterfallParentData();
+    }
+  }
+
+  @override
+  double childCrossAxisPosition(RenderBox child) {
+    final _WaterfallParentData parentData =
+        child.parentData! as _WaterfallParentData;
+    return parentData.crossAxisOffset;
+  }
+
+  @override
+  void performLayout() {
+    final SliverConstraints constraints = this.constraints;
+    childManager.didStartLayout();
+    childManager.setDidUnderflow(false);
+
+    final int childCount = childManager.childCount;
+    if (childCount == 0) {
+      _cache.clear();
+      geometry = SliverGeometry.zero;
+      childManager.didFinishLayout();
+      return;
+    }
+
+    if (_cache.length > childCount) {
+      _cache.removeRange(childCount, _cache.length);
+    } else if (_cache.length < childCount) {
+      _cache.addAll(
+        List<_WaterfallCacheEntry?>.filled(childCount - _cache.length, null),
+      );
+    }
+
+    final double scrollOffset =
+        constraints.scrollOffset + constraints.cacheOrigin;
+    final double remainingExtent = constraints.remainingCacheExtent;
+    final double targetEnd = scrollOffset + remainingExtent;
+
+    final List<double> columnOffsets = List<double>.filled(
+      _columnCount,
+      0.0,
+      growable: false,
+    );
+
+    final int firstIndex = _resolveFirstIndex(scrollOffset, columnOffsets);
+
+    final int leadingGarbage = firstChild != null
+        ? calculateLeadingGarbage(firstIndex: firstIndex)
+        : 0;
+    collectGarbage(leadingGarbage, 0);
+
+    RenderBox? child = firstChild;
+    if (child == null) {
+      if (!addInitialChild(index: firstIndex, layoutOffset: 0.0)) {
+        geometry = const SliverGeometry(scrollExtent: 0, maxPaintExtent: 0);
+        childManager.didFinishLayout();
+        return;
+      }
+      child = firstChild;
+    }
+
+    // Ensure we have children leading up to the first index when scrolling back.
+    while (true) {
+      final SliverMultiBoxAdaptorParentData parentData =
+          child!.parentData! as SliverMultiBoxAdaptorParentData;
+      if (parentData.index! <= firstIndex) {
+        break;
+      }
+      final RenderBox? previous = insertAndLayoutLeadingChild(
+        _createChildConstraints(constraints),
+      );
+      if (previous == null) {
+        break;
+      }
+      child = previous;
+    }
+
+    // Update column offsets for all items before firstIndex based on cache.
+    _accumulateOffsetsForPrefix(firstIndex, columnOffsets);
+
+    RenderBox? trailingChild = child;
+    while (trailingChild != null && indexOf(trailingChild) < firstIndex) {
+      trailingChild = childAfter(trailingChild);
+    }
+    if (trailingChild == null) {
+      if (!addInitialChild(index: firstIndex, layoutOffset: 0.0)) {
+        geometry = const SliverGeometry(scrollExtent: 0, maxPaintExtent: 0);
+        childManager.didFinishLayout();
+        return;
+      }
+      trailingChild = firstChild;
+    }
+
+    int trailingIndex = trailingChild != null
+        ? indexOf(trailingChild)
+        : firstIndex;
+    double leadingScrollOffset = double.infinity;
+    double trailingScrollOffset = double.negativeInfinity;
+    bool reachedEnd = false;
+
+    while (trailingChild != null) {
+      final int currentIndex = indexOf(trailingChild);
+      final _ChildMetrics metrics = _layoutChild(
+        trailingChild,
+        currentIndex,
+        columnOffsets,
+        constraints,
+      );
+      leadingScrollOffset = math.min(
+        leadingScrollOffset,
+        metrics.mainAxisStart,
+      );
+      trailingScrollOffset = math.max(
+        trailingScrollOffset,
+        metrics.mainAxisEnd,
+      );
+      trailingIndex = currentIndex;
+
+      if (trailingScrollOffset >= targetEnd) {
+        break;
+      }
+
+      final int nextIndex = currentIndex + 1;
+      if (nextIndex >= childCount) {
+        reachedEnd = true;
+        break;
+      }
+
+      RenderBox? nextChild = childAfter(trailingChild);
+      if (nextChild == null || indexOf(nextChild) != nextIndex) {
+        nextChild = insertAndLayoutChild(
+          _createChildConstraints(constraints),
+          after: trailingChild,
+        );
+        if (nextChild == null) {
+          reachedEnd = true;
+          break;
+        }
+        final SliverMultiBoxAdaptorParentData nextParentData =
+            nextChild.parentData! as SliverMultiBoxAdaptorParentData;
+        assert(nextParentData.index == nextIndex);
+      }
+      trailingChild = nextChild;
+    }
+
+    final int lastIndex = trailingChild != null
+        ? indexOf(trailingChild)
+        : trailingIndex;
+    final int trailingGarbage = lastChild != null
+        ? calculateTrailingGarbage(lastIndex: lastIndex)
+        : 0;
+    if (trailingGarbage > 0) {
+      collectGarbage(0, trailingGarbage);
+    }
+
+    final double leadingOffset = leadingScrollOffset.isFinite
+        ? leadingScrollOffset
+        : 0.0;
+    final double trailingOffset = trailingScrollOffset.isFinite
+        ? trailingScrollOffset
+        : leadingOffset;
+
+    final double estimatedMaxScrollExtent = reachedEnd
+        ? trailingOffset
+        : childManager.estimateMaxScrollOffset(
+            constraints,
+            firstIndex: firstIndex,
+            lastIndex: lastIndex,
+            leadingScrollOffset: leadingOffset,
+            trailingScrollOffset: trailingOffset,
+          );
+
+    final double paintExtent = calculatePaintOffset(
+      constraints,
+      from: leadingOffset,
+      to: trailingOffset,
+    );
+    final double cacheExtent = calculateCacheOffset(
+      constraints,
+      from: leadingOffset,
+      to: trailingOffset,
+    );
+
+    final double scrollExtent = math.max(
+      estimatedMaxScrollExtent,
+      trailingOffset,
+    );
+
+    geometry = SliverGeometry(
+      scrollExtent: scrollExtent,
+      paintExtent: paintExtent,
+      maxPaintExtent: math.max(scrollExtent, trailingOffset),
+      cacheExtent: cacheExtent,
+      hasVisualOverflow:
+          scrollExtent > paintExtent ||
+          constraints.scrollOffset > 0.0 ||
+          constraints.overlap != 0.0,
+    );
+
+    if (reachedEnd) {
+      childManager.setDidUnderflow(true);
+    }
+
+    childManager.didFinishLayout();
+  }
+
+  int _resolveFirstIndex(double scrollOffset, List<double> columnOffsets) {
+    final int childCount = _cache.length;
+    int index = 0;
+    for (; index < childCount; index++) {
+      final _WaterfallCacheEntry? entry = _cache[index];
+      if (entry == null) {
+        break;
+      }
+      if (entry.trailingOffset >= scrollOffset) {
+        break;
+      }
+      columnOffsets[entry.column] = math.max(
+        columnOffsets[entry.column],
+        entry.trailingOffset + _mainAxisSpacing,
+      );
+    }
+    if (childCount == 0) {
+      return 0;
+    }
+    return index.clamp(0, childCount - 1);
+  }
+
+  void _accumulateOffsetsForPrefix(int limit, List<double> columnOffsets) {
+    final int capped = limit.clamp(0, _cache.length);
+    for (int i = 0; i < capped; i++) {
+      final _WaterfallCacheEntry? entry = _cache[i];
+      if (entry == null) {
+        return;
+      }
+      columnOffsets[entry.column] = math.max(
+        columnOffsets[entry.column],
+        entry.trailingOffset + _mainAxisSpacing,
+      );
+    }
+  }
+
+  _ChildMetrics _layoutChild(
+    RenderBox child,
+    int index,
+    List<double> columnOffsets,
+    SliverConstraints constraints,
+  ) {
+    final _WaterfallParentData parentData =
+        child.parentData! as _WaterfallParentData;
+
+    final _WaterfallCacheEntry? cached = index < _cache.length
+        ? _cache[index]
+        : null;
+
+    int column = 0;
+    double mainAxisOffset = 0;
+
+    if (cached != null) {
+      column = cached.column.clamp(0, _columnCount - 1);
+      mainAxisOffset = columnOffsets[column];
+      if ((mainAxisOffset - cached.mainAxisOffset).abs() <= _epsilon) {
+        mainAxisOffset = cached.mainAxisOffset;
+      } else {
+        mainAxisOffset = columnOffsets[column];
+      }
+    } else {
+      column = _shortestColumn(columnOffsets);
+      mainAxisOffset = columnOffsets[column];
+    }
+
+    final BoxConstraints childConstraints = _createChildConstraints(
+      constraints,
+    );
+    child.layout(childConstraints, parentUsesSize: true);
+
+    final double extent = _childExtent(child);
+    final double crossAxisOffset = _computeCrossAxisOffset(column, constraints);
+
+    parentData
+      ..layoutOffset = mainAxisOffset
+      ..crossAxisOffset = crossAxisOffset;
+
+    final _WaterfallCacheEntry newEntry = _WaterfallCacheEntry(
+      column: column,
+      mainAxisOffset: mainAxisOffset,
+      mainAxisExtent: extent,
+    );
+
+    final _WaterfallCacheEntry? oldEntry = index < _cache.length
+        ? _cache[index]
+        : null;
+    if (!_sameEntry(oldEntry, newEntry)) {
+      _invalidateCacheAfter(index);
+    }
+    if (index < _cache.length) {
+      _cache[index] = newEntry;
+    }
+
+    columnOffsets[column] = mainAxisOffset + extent + _mainAxisSpacing;
+
+    return _ChildMetrics(
+      mainAxisStart: mainAxisOffset,
+      mainAxisEnd: mainAxisOffset + extent,
+    );
+  }
+
+  bool _sameEntry(_WaterfallCacheEntry? a, _WaterfallCacheEntry b) {
+    if (a == null) {
+      return false;
+    }
+    return a.column == b.column &&
+        (a.mainAxisOffset - b.mainAxisOffset).abs() <= _epsilon &&
+        (a.mainAxisExtent - b.mainAxisExtent).abs() <= _epsilon;
+  }
+
+  void _invalidateCacheAfter(int index) {
+    for (int i = index + 1; i < _cache.length; i++) {
+      if (_cache[i] == null) {
+        break;
+      }
+      _cache[i] = null;
+    }
+  }
+
+  int _shortestColumn(List<double> columnOffsets) {
+    var shortest = columnOffsets[0];
+    var result = 0;
+    for (var i = 1; i < columnOffsets.length; i++) {
+      final value = columnOffsets[i];
+      if (value < shortest) {
+        shortest = value;
+        result = i;
+      }
+    }
+    return result;
+  }
+
+  BoxConstraints _createChildConstraints(SliverConstraints constraints) {
+    switch (constraints.axis) {
+      case Axis.vertical:
+        return BoxConstraints(minWidth: tileExtent, maxWidth: tileExtent);
+      case Axis.horizontal:
+        return BoxConstraints(minHeight: tileExtent, maxHeight: tileExtent);
+    }
+  }
+
+  double _childExtent(RenderBox child) {
+    switch (constraints.axis) {
+      case Axis.vertical:
+        return child.size.height;
+      case Axis.horizontal:
+        return child.size.width;
+    }
+  }
+
+  double _computeCrossAxisOffset(int column, SliverConstraints constraints) {
+    final double delta = tileExtent + crossAxisSpacing;
+    final bool reverse = axisDirectionIsReversed(
+      constraints.crossAxisDirection,
+    );
+    if (reverse) {
+      return constraints.crossAxisExtent - tileExtent - column * delta;
+    }
+    return column * delta;
   }
 }
