@@ -73,6 +73,7 @@ class AdaptiveReorderableList<T> extends StatefulWidget {
     this.mainAxisSpacing = 16,
     this.maxColumns = 6,
     this.animationDuration = const Duration(milliseconds: 220),
+    this.dropAnimationDuration = const Duration(milliseconds: 220),
     this.insertCurve = Curves.easeOutCubic,
     this.removeCurve = Curves.easeInCubic,
     this.scrollController,
@@ -83,7 +84,12 @@ class AdaptiveReorderableList<T> extends StatefulWidget {
     this.restorationId,
     this.reverse = false,
     this.rowMajor = false,
-  }) : separatorBuilder = null,
+    this.draggingChildOpacity = 0.2,
+  }) : assert(
+         draggingChildOpacity >= 0 && draggingChildOpacity <= 1,
+         'draggingChildOpacity must be between 0.0 and 1.0 inclusive.',
+       ),
+       separatorBuilder = null,
        separated = false;
 
   /// Creates a separated adaptive reorderable list where a separator widget is
@@ -103,6 +109,7 @@ class AdaptiveReorderableList<T> extends StatefulWidget {
     this.mainAxisSpacing = 16,
     this.maxColumns = 6,
     this.animationDuration = const Duration(milliseconds: 220),
+    this.dropAnimationDuration = const Duration(milliseconds: 220),
     this.insertCurve = Curves.easeOutCubic,
     this.removeCurve = Curves.easeInCubic,
     this.scrollController,
@@ -113,7 +120,12 @@ class AdaptiveReorderableList<T> extends StatefulWidget {
     this.restorationId,
     this.reverse = false,
     this.rowMajor = false,
-  }) : separated = true;
+    this.draggingChildOpacity = 0.2,
+  }) : assert(
+         draggingChildOpacity >= 0 && draggingChildOpacity <= 1,
+         'draggingChildOpacity must be between 0.0 and 1.0 inclusive.',
+       ),
+       separated = true;
 
   /// Data backing each item that will be rendered.
   final List<T> items;
@@ -164,6 +176,9 @@ class AdaptiveReorderableList<T> extends StatefulWidget {
   /// Duration for insert/remove animations.
   final Duration animationDuration;
 
+  /// Duration for the drag-settle overlay animation when an item is dropped.
+  final Duration dropAnimationDuration;
+
   /// Curve applied when animating newly inserted items.
   final Curve insertCurve;
 
@@ -198,6 +213,13 @@ class AdaptiveReorderableList<T> extends StatefulWidget {
   /// - true: Aligned row-major layout
   final bool rowMajor;
 
+  /// Opacity applied to both the in-list placeholder and the drag feedback while
+  /// an item is being dragged.
+  ///
+  /// Use 1.0 to keep the visuals fully opaque, or any value between 0 and 1 to
+  /// fade them out during drag.
+  final double draggingChildOpacity;
+
   @override
   State<AdaptiveReorderableList<T>> createState() =>
       _AdaptiveReorderableListState<T>();
@@ -207,7 +229,9 @@ class _AdaptiveReorderableListState<T> extends State<AdaptiveReorderableList<T>>
     with TickerProviderStateMixin {
   final List<_AdaptiveEntry<T>> _entries = [];
   final Map<Object, _AdaptiveEntry<T>> _entryByKey = {};
+  final Map<Object, _ShiftAnimation> _shiftAnimations = {};
   Object? _hoveringKey;
+  _ActiveDrag? _activeDrag;
 
   static final Object _trailingDropMarker = Object();
 
@@ -335,6 +359,10 @@ class _AdaptiveReorderableListState<T> extends State<AdaptiveReorderableList<T>>
     for (final entry in _entries) {
       entry.controller.dispose();
     }
+    for (final shift in _shiftAnimations.values) {
+      shift.dispose();
+    }
+    _shiftAnimations.clear();
     super.dispose();
   }
 
@@ -406,46 +434,71 @@ class _AdaptiveReorderableListState<T> extends State<AdaptiveReorderableList<T>>
     required int visibleCount,
   }) {
     final child = _buildAnimatedChild(entry, visibleIndex, visibleCount);
+    final draggingPlaceholder = widget.draggingChildOpacity < 1
+        ? Opacity(opacity: widget.draggingChildOpacity, child: child)
+        : child;
+    final visibleChild = entry.dropAnimating
+        ? IgnorePointer(child: Opacity(opacity: 0, child: child))
+        : child;
 
-    return DragTarget<Object>(
-      onWillAcceptWithDetails: (details) {
-        final data = details.data;
-        if (data == entry.key) {
-          return false;
-        }
-        _setHovering(entry.key);
-        return true;
-      },
-      onLeave: (_) => _clearHovering(entry.key),
-      onAcceptWithDetails: (details) {
-        _clearHovering(entry.key);
-        _handleDrop(details.data, entry.key);
-      },
-      builder: (context, candidateData, rejectedData) {
-        final isHovering =
-            candidateData.isNotEmpty || _hoveringKey == entry.key;
-        final scale = isHovering ? 1.02 : 1.0;
+    return KeyedSubtree(
+      key: entry.tileKey,
+      child: DragTarget<Object>(
+        onWillAcceptWithDetails: (details) {
+          final data = details.data;
+          if (data == entry.key) {
+            return false;
+          }
+          _setHovering(entry.key);
+          return true;
+        },
+        onLeave: (_) => _clearHovering(entry.key),
+        onAcceptWithDetails: (details) {
+          _clearHovering(entry.key);
+          _handleDrop(details.data, entry.key);
+        },
+        builder: (context, candidateData, rejectedData) {
+          final isHovering =
+              candidateData.isNotEmpty || _hoveringKey == entry.key;
+          final scale = isHovering ? 1.02 : 1.0;
 
-        final displayChild = IgnorePointer(
-          ignoring: entry.removed,
-          child: child,
-        );
+          final displayChild = IgnorePointer(
+            ignoring: entry.removed,
+            child: visibleChild,
+          );
 
-        return AnimatedScale(
-          duration: const Duration(milliseconds: 120),
-          scale: scale,
-          child: SizedBox(
-            width: width,
-            child: LongPressDraggable<Object>(
-              data: entry.key,
-              dragAnchorStrategy: childDragAnchorStrategy,
-              feedback: _buildDragFeedback(displayChild, width),
-              childWhenDragging: Opacity(opacity: 0.2, child: displayChild),
-              child: displayChild,
+          return AnimatedScale(
+            duration: const Duration(milliseconds: 120),
+            scale: scale,
+            child: SizedBox(
+              width: width,
+              child: LongPressDraggable<Object>(
+                data: entry.key,
+                dragAnchorStrategy: childDragAnchorStrategy,
+                feedback: _buildDragFeedback(
+                  entry,
+                  width,
+                  visibleIndex,
+                  visibleCount,
+                ),
+                childWhenDragging: draggingPlaceholder,
+                onDragStarted: () => _onDragStarted(entry),
+                onDragEnd: (details) {
+                  if (!details.wasAccepted) {
+                    _cancelActiveDrag();
+                    if (mounted) {
+                      setState(() {
+                        entry.dropAnimating = false;
+                      });
+                    }
+                  }
+                },
+                child: displayChild,
+              ),
             ),
-          ),
-        );
-      },
+          );
+        },
+      ),
     );
   }
 
@@ -500,21 +553,27 @@ class _AdaptiveReorderableListState<T> extends State<AdaptiveReorderableList<T>>
     int visibleIndex,
     int visibleCount,
   ) {
-    final baseChild = widget.itemBuilder(
-      context,
-      entry.item,
+    Widget child = _buildChildContent(
+      entry,
       visibleIndex,
-      entry.animation,
+      visibleCount,
+      animation: entry.animation,
     );
-    final child = widget.separated && visibleIndex < visibleCount - 1
-        ? Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              baseChild,
-              widget.separatorBuilder!(context, visibleIndex),
-            ],
-          )
-        : baseChild;
+
+    final shift = _shiftAnimations[entry.key];
+    if (shift != null) {
+      child = AnimatedBuilder(
+        animation: shift.animation,
+        builder: (context, animatedChild) {
+          final offset = shift.animation.value;
+          if (offset == Offset.zero) {
+            return animatedChild!;
+          }
+          return Transform.translate(offset: offset, child: animatedChild);
+        },
+        child: child,
+      );
+    }
 
     return _AnimatedEntry(
       key: ValueKey(entry.key),
@@ -523,13 +582,84 @@ class _AdaptiveReorderableListState<T> extends State<AdaptiveReorderableList<T>>
     );
   }
 
-  Widget _buildDragFeedback(Widget child, double width) {
+  Widget _buildChildContent(
+    _AdaptiveEntry<T> entry,
+    int visibleIndex,
+    int visibleCount, {
+    required Animation<double> animation,
+  }) {
+    final baseChild = widget.itemBuilder(
+      context,
+      entry.item,
+      visibleIndex,
+      animation,
+    );
+
+    if (!widget.separated || visibleIndex >= visibleCount - 1) {
+      return baseChild;
+    }
+
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [baseChild, widget.separatorBuilder!(context, visibleIndex)],
+    );
+  }
+
+  void _onDragStarted(_AdaptiveEntry<T> entry) {
+    _activeDrag = _ActiveDrag(key: entry.key, startRect: _rectForEntry(entry));
+  }
+
+  void _cancelActiveDrag() {
+    _activeDrag = null;
+  }
+
+  Map<Object, Rect> _captureEntryRects() {
+    final rects = <Object, Rect>{};
+    for (final entry in _entries) {
+      final rect = _rectForEntry(entry);
+      if (rect != null) {
+        rects[entry.key] = rect;
+      }
+    }
+    return rects;
+  }
+
+  Rect? _rectForEntry(_AdaptiveEntry<T> entry) {
+    final context = entry.tileKey.currentContext;
+    if (context == null) {
+      return null;
+    }
+    final renderBox = context.findRenderObject() as RenderBox?;
+    if (renderBox == null || !renderBox.hasSize) {
+      return null;
+    }
+    final origin = renderBox.localToGlobal(Offset.zero);
+    return origin & renderBox.size;
+  }
+
+  Widget _buildDragFeedback(
+    _AdaptiveEntry<T> entry,
+    double width,
+    int visibleIndex,
+    int visibleCount,
+  ) {
+    final content = _buildChildContent(
+      entry,
+      visibleIndex,
+      visibleCount,
+      animation: const AlwaysStoppedAnimation<double>(1),
+    );
+
+    final feedback = widget.draggingChildOpacity < 1
+        ? Opacity(opacity: widget.draggingChildOpacity, child: content)
+        : content;
+
     return Material(
       color: Colors.transparent,
       elevation: 6,
       child: ConstrainedBox(
         constraints: BoxConstraints.tightFor(width: width),
-        child: child,
+        child: feedback,
       ),
     );
   }
@@ -543,30 +673,49 @@ class _AdaptiveReorderableListState<T> extends State<AdaptiveReorderableList<T>>
       return;
     }
 
+    final previousRects = _captureEntryRects();
+
     final oldIndex = _entries.indexOf(dragged);
     if (oldIndex == -1) {
       return;
     }
 
     final oldVisibleIndex = _visibleIndexFor(dragged);
+    final activeDrag = _activeDrag;
+    _activeDrag = null;
+
+    final matchingDrag = activeDrag != null && activeDrag.key == dragged.key
+        ? activeDrag
+        : null;
 
     setState(() {
       _hoveringKey = null;
 
-      var insertIndex = targetKey == null
-          ? _entries.length
-          : _entries.indexWhere((element) => element.key == targetKey);
-      if (insertIndex == -1) {
+      final entry = _entries.removeAt(oldIndex);
+
+      final int insertIndex;
+      if (targetKey == null) {
         insertIndex = _entries.length;
+      } else {
+        final targetIndex = _entries.indexWhere(
+          (element) => element.key == targetKey,
+        );
+
+        if (targetIndex == -1) {
+          insertIndex = _entries.length;
+        } else if (targetIndex >= oldIndex) {
+          insertIndex = math.min(targetIndex + 1, _entries.length);
+        } else {
+          insertIndex = targetIndex;
+        }
       }
 
-      final entry = _entries.removeAt(oldIndex);
-      if (targetKey != null && oldIndex < insertIndex) {
-        insertIndex -= 1;
-      }
-      insertIndex = insertIndex.clamp(0, _entries.length);
-      _entries.insert(insertIndex, entry);
+      final clampedIndex = insertIndex.clamp(0, _entries.length).toInt();
+      entry.dropAnimating = matchingDrag != null && clampedIndex != oldIndex;
+      _entries.insert(clampedIndex, entry);
     });
+
+    _scheduleShiftAnimations(previousRects, dragged.key);
 
     final newVisibleIndex = _visibleIndexFor(dragged);
     final filtered = _entries
@@ -575,6 +724,216 @@ class _AdaptiveReorderableListState<T> extends State<AdaptiveReorderableList<T>>
         .toList(growable: false);
     widget.onReorder?.call(oldVisibleIndex, newVisibleIndex);
     widget.onReorderComplete?.call(filtered);
+
+    if (matchingDrag == null || oldVisibleIndex == newVisibleIndex) {
+      if (dragged.dropAnimating) {
+        _completeDropWithoutOverlay(dragged);
+      }
+      return;
+    }
+
+    _startDropAnimation(dragged, matchingDrag);
+  }
+
+  void _scheduleShiftAnimations(
+    Map<Object, Rect> previousRects,
+    Object draggedKey,
+  ) {
+    if (previousRects.isEmpty) {
+      return;
+    }
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) {
+        return;
+      }
+
+      final currentRects = <Object, Rect>{};
+      for (final entry in _entries) {
+        final rect = _rectForEntry(entry);
+        if (rect != null) {
+          currentRects[entry.key] = rect;
+        }
+      }
+
+      final newShifts = <Object, _ShiftAnimation>{};
+
+      for (final entry in _entries) {
+        final key = entry.key;
+        if (key == draggedKey) {
+          continue;
+        }
+        final oldRect = previousRects[key];
+        final newRect = currentRects[key];
+        if (oldRect == null || newRect == null) {
+          continue;
+        }
+
+        final delta = Offset(
+          oldRect.left - newRect.left,
+          oldRect.top - newRect.top,
+        );
+        if (delta.distanceSquared < 0.25) {
+          continue;
+        }
+
+        final controller = AnimationController(
+          vsync: this,
+          duration: widget.dropAnimationDuration,
+        );
+        final animation = controller.drive(
+          Tween<Offset>(
+            begin: delta,
+            end: Offset.zero,
+          ).chain(CurveTween(curve: widget.insertCurve)),
+        );
+        final shift = _ShiftAnimation(
+          controller: controller,
+          animation: animation,
+        );
+
+        late final AnimationStatusListener listener;
+        listener = (status) {
+          if (status == AnimationStatus.completed ||
+              status == AnimationStatus.dismissed) {
+            controller.removeStatusListener(listener);
+            if (!mounted) {
+              shift.dispose();
+              _shiftAnimations.remove(key);
+              return;
+            }
+            setState(() {
+              final removed = _shiftAnimations.remove(key);
+              removed?.dispose();
+            });
+          }
+        };
+        controller.addStatusListener(listener);
+
+        newShifts[key] = shift;
+      }
+
+      if (newShifts.isEmpty) {
+        return;
+      }
+
+      setState(() {
+        for (final entry in newShifts.entries) {
+          final previous = _shiftAnimations.remove(entry.key);
+          previous?.dispose();
+          _shiftAnimations[entry.key] = entry.value;
+        }
+      });
+
+      for (final shift in newShifts.values) {
+        shift.controller.forward();
+      }
+    });
+  }
+
+  void _startDropAnimation(_AdaptiveEntry<T> entry, _ActiveDrag dragInfo) {
+    final Rect? startRect = dragInfo.startRect ?? _rectForEntry(entry);
+    if (startRect == null) {
+      if (entry.dropAnimating && mounted) {
+        _completeDropWithoutOverlay(entry);
+      }
+      return;
+    }
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) {
+        return;
+      }
+      final Rect? endRect = _rectForEntry(entry);
+      if (endRect == null) {
+        if (entry.dropAnimating) {
+          _completeDropWithoutOverlay(entry);
+        }
+        return;
+      }
+
+      final overlayState = Overlay.maybeOf(context);
+      if (overlayState == null) {
+        if (entry.dropAnimating) {
+          _completeDropWithoutOverlay(entry);
+        }
+        return;
+      }
+
+      final capturedChild = InheritedTheme.captureAll(
+        context,
+        Material(
+          type: MaterialType.transparency,
+          child: SizedBox(
+            width: endRect.width,
+            height: endRect.height,
+            child: _buildChildContent(
+              entry,
+              _visibleIndexFor(entry),
+              _visibleItemCount,
+              animation: const AlwaysStoppedAnimation<double>(1),
+            ),
+          ),
+        ),
+      );
+
+      final controller = AnimationController(
+        vsync: this,
+        duration: widget.dropAnimationDuration,
+      );
+      final curved = CurvedAnimation(
+        parent: controller,
+        curve: widget.insertCurve,
+      );
+
+      late OverlayEntry overlayEntry;
+      overlayEntry = OverlayEntry(
+        builder: (overlayContext) {
+          final t = curved.value;
+          final rect = Rect.lerp(startRect, endRect, t) ?? endRect;
+          return Positioned(
+            left: rect.left,
+            top: rect.top,
+            width: rect.width,
+            height: rect.height,
+            child: IgnorePointer(child: capturedChild),
+          );
+        },
+      );
+
+      void handleComplete() {
+        overlayEntry.remove();
+        controller.dispose();
+        if (mounted) {
+          _completeDropWithoutOverlay(entry);
+        }
+      }
+
+      curved.addListener(() {
+        overlayEntry.markNeedsBuild();
+      });
+      curved.addStatusListener((status) {
+        if (status == AnimationStatus.completed ||
+            status == AnimationStatus.dismissed) {
+          handleComplete();
+        }
+      });
+
+      overlayState.insert(overlayEntry);
+      controller.forward();
+    });
+  }
+
+  void _completeDropWithoutOverlay(_AdaptiveEntry<T> entry) {
+    if (!mounted) {
+      return;
+    }
+    setState(() {
+      entry.dropAnimating = false;
+    });
+    entry.controller
+      ..stop()
+      ..forward(from: 0);
   }
 
   void _setHovering(Object key) {
@@ -647,6 +1006,19 @@ class _AdaptiveEntry<T> {
 
   bool removed = false;
   bool markedForRemoval = false;
+  final GlobalKey tileKey = GlobalKey(debugLabel: 'adaptive_reorderable_tile');
+  bool dropAnimating = false;
+}
+
+class _ShiftAnimation {
+  _ShiftAnimation({required this.controller, required this.animation});
+
+  final AnimationController controller;
+  final Animation<Offset> animation;
+
+  void dispose() {
+    controller.dispose();
+  }
 }
 
 class _AnimatedEntry extends StatelessWidget {
@@ -667,6 +1039,13 @@ class _AnimatedEntry extends StatelessWidget {
       child: ScaleTransition(scale: animation.drive(scaleTween), child: child),
     );
   }
+}
+
+class _ActiveDrag {
+  const _ActiveDrag({required this.key, this.startRect});
+
+  final Object key;
+  final Rect? startRect;
 }
 
 class _WaterfallSliver extends SliverMultiBoxAdaptorWidget {

@@ -24,11 +24,13 @@ void main() async {
     'Views - Widgets': [],
   };
 
+  final skipDartFiles = [RegExp(r'\.(g|freezed)\.dart$')];
+
   await for (final entity in Directory('lib/src').list(recursive: true)) {
     if (entity is File && entity.path.endsWith('.dart')) {
       // Skip the l10n directory and l10n.dart file.
       if (entity.path.startsWith('l10n')) continue;
-      if (entity.path.endsWith('.g.dart')) continue;
+      if (skipDartFiles.any(entity.path.contains)) continue;
       if (entity.path == 'lib/src/res/l10n.dart') continue;
 
       // If first line starts with `part of`, skip it.

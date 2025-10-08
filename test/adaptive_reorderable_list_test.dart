@@ -1,4 +1,4 @@
-import 'package:fl_lib/src/view/widget/adaptive_reorderable_list.dart';
+import 'package:fl_lib/src/view/widget/adaptive_list.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';

@@ -13,11 +13,12 @@ class AdaptiveReorderableListPage extends StatefulWidget {
 
 class _AdaptiveReorderableListPageState
     extends State<AdaptiveReorderableListPage> {
-  static const _minHeight = 80.0;
-  static const _maxHeight = 220.0;
+  static const _minHeight = 180.0;
+  static const _maxHeight = 270.0;
 
   final math.Random _random = math.Random(4);
   late List<_DemoTile> _tiles;
+  bool _dimDraggedTile = true;
 
   @override
   void initState() {
@@ -94,11 +95,22 @@ class _AdaptiveReorderableListPageState
                   icon: const Icon(Icons.auto_fix_high),
                   label: const Text('Shuffle heights'),
                 ),
+                FilterChip(
+                  selected: _dimDraggedTile,
+                  showCheckmark: false,
+                  avatar: Icon(
+                    _dimDraggedTile ? Icons.visibility : Icons.visibility_off,
+                  ),
+                  label: const Text('Dim while dragging'),
+                  onSelected: (value) =>
+                      setState(() => _dimDraggedTile = value),
+                ),
               ],
             ),
           ),
           Expanded(
             child: AdaptiveReorderableList.builder(
+              draggingChildOpacity: _dimDraggedTile ? 0.2 : 1.0,
               padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
               items: _tiles,
               columnWidth: 170,
@@ -144,9 +156,12 @@ class _WaterfallCard extends StatelessWidget {
       curve: Curves.easeInOut,
       height: tile.height,
       decoration: BoxDecoration(
-        color: tile.color.withOpacity(0.12),
+        color: tile.color.withValues(alpha: 0.12),
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: tile.color.withOpacity(0.45), width: 1.5),
+        border: Border.all(
+          color: tile.color.withValues(alpha: 0.45),
+          width: 1.5,
+        ),
       ),
       padding: const EdgeInsets.all(16),
       child: Column(
