@@ -119,8 +119,8 @@ class _AdaptiveReorderableListPageState
               itemKey: (tile) => tile.index,
               onReorder: _onReorder,
               itemBuilder: (context, tile, index, animation) {
-                return SizeTransition(
-                  sizeFactor: animation,
+                return FadeTransition(
+                  opacity: animation,
                   child: _WaterfallCard(tile: tile, index: index),
                 );
               },

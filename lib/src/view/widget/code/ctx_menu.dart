@@ -4,9 +4,7 @@ import 'package:re_editor/re_editor.dart';
 
 /// Material Design implementation of [SelectionToolbarController]
 class AdaptiveSelectionToolbarController extends SelectionToolbarController {
-  AdaptiveSelectionToolbarController({
-    this.animationConfig = SelectionToolbarAnimationConfig.material,
-  });
+  AdaptiveSelectionToolbarController({this.animationConfig = SelectionToolbarAnimationConfig.material});
 
   final SelectionToolbarAnimationConfig animationConfig;
   OverlayEntry? _overlayEntry;
@@ -53,21 +51,20 @@ class AdaptiveSelectionToolbarController extends SelectionToolbarController {
 
   @override
   void hide(BuildContext context) {
-    if (_overlayEntry != null && _isVisible) {
-      final overlayEntry = _overlayEntry!;
+    if (!_isVisible) return;
+    if (_overlayEntry == null) {
+      dprint('No overlay entry to hide');
       _isVisible = false;
-
-      if (overlayEntry.mounted) {
-        Future.delayed(animationConfig.duration, () {
-          if (overlayEntry.mounted) {
-            overlayEntry.remove();
-          }
-          _overlayEntry = null;
-        });
-      } else {
-        _overlayEntry = null;
-      }
+      return;
     }
+
+    final overlayEntry = _overlayEntry!;
+
+    if (overlayEntry.mounted) {
+      overlayEntry.remove();
+    }
+    _isVisible = false;
+    _overlayEntry = null;
   }
 
   bool get isVisible => _isVisible;
@@ -103,29 +100,20 @@ class _AnimatedCodeLineSelectionToolbarState extends State<_AnimatedCodeLineSele
   void initState() {
     super.initState();
 
-    _animationController = AnimationController(
-      duration: widget.animationConfig.duration,
-      vsync: this,
-    );
+    _animationController = AnimationController(duration: widget.animationConfig.duration, vsync: this);
 
     _fadeAnimation = widget.animationConfig.enableFade
         ? Tween<double>(
             begin: 0.0,
             end: 1.0,
-          ).animate(CurvedAnimation(
-            parent: _animationController,
-            curve: widget.animationConfig.curve,
-          ))
+          ).animate(CurvedAnimation(parent: _animationController, curve: widget.animationConfig.curve))
         : const AlwaysStoppedAnimation(1.0);
 
     _scaleAnimation = widget.animationConfig.enableScale
         ? Tween<double>(
             begin: widget.animationConfig.scaleBegin,
             end: 1.0,
-          ).animate(CurvedAnimation(
-            parent: _animationController,
-            curve: widget.animationConfig.curve,
-          ))
+          ).animate(CurvedAnimation(parent: _animationController, curve: widget.animationConfig.curve))
         : const AlwaysStoppedAnimation(1.0);
 
     _animationController.forward();
@@ -145,33 +133,35 @@ class _AnimatedCodeLineSelectionToolbarState extends State<_AnimatedCodeLineSele
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedBuilder(
-      animation: _animationController,
-      builder: (context, child) {
-        Widget toolbarWidget = _CodeLineSelectionToolbar(
-          controller: widget.controller,
-          anchors: widget.anchors,
-          renderRect: widget.renderRect,
-          layerLink: widget.layerLink,
-          onHide: _hideWithAnimation,
-        );
+    final textDirection = Directionality.of(context);
 
-        if (widget.animationConfig.enableScale) {
-          toolbarWidget = ScaleTransition(
-            scale: _scaleAnimation,
-            child: toolbarWidget,
-          );
-        }
+    return CodeEditorTapRegion(
+      child: Directionality(
+        textDirection: textDirection,
+        child: AnimatedBuilder(
+          animation: _animationController,
+          child: _CodeLineSelectionToolbar(
+            controller: widget.controller,
+            anchors: widget.anchors,
+            renderRect: widget.renderRect,
+            layerLink: widget.layerLink,
+            onHide: _hideWithAnimation,
+          ),
+          builder: (context, child) {
+            Widget toolbarWidget = child!;
 
-        if (widget.animationConfig.enableFade) {
-          toolbarWidget = FadeTransition(
-            opacity: _fadeAnimation,
-            child: toolbarWidget,
-          );
-        }
+            if (widget.animationConfig.enableScale) {
+              toolbarWidget = ScaleTransition(scale: _scaleAnimation, child: toolbarWidget);
+            }
 
-        return toolbarWidget;
-      },
+            if (widget.animationConfig.enableFade) {
+              toolbarWidget = FadeTransition(opacity: _fadeAnimation, child: toolbarWidget);
+            }
+
+            return toolbarWidget;
+          },
+        ),
+      ),
     );
   }
 }
@@ -209,61 +199,48 @@ class _CodeLineSelectionToolbarState extends State<_CodeLineSelectionToolbar> {
     final bool hasSelection = !widget.controller.selection.isCollapsed;
 
     if (hasSelection) {
-      items.add(ContextMenuButtonItem(
-        onPressed: () async {
-          try {
-            // cut() internally calls copy() which is async, but cut() returns void
-            // We need to add a small delay to ensure copy completes before delete
+      items.add(
+        ContextMenuButtonItem(
+          onPressed: () {
             widget.controller.cut();
-            await Future.delayed(const Duration(milliseconds: 100));
-          } catch (e) {
-            dprint('Cut operation failed: $e');
-          }
-          widget.onHide();
-        },
-        type: ContextMenuButtonType.cut,
-      ));
+            widget.onHide();
+          },
+          type: ContextMenuButtonType.cut,
+        ),
+      );
     }
 
-    items.add(ContextMenuButtonItem(
-      onPressed: () async {
-        try {
+    items.add(
+      ContextMenuButtonItem(
+        onPressed: () async {
           await widget.controller.copy();
-        } catch (e) {
-          dprint('Copy operation failed: $e');
-        }
-        widget.onHide();
-      },
-      type: ContextMenuButtonType.copy,
-    ));
-
-    items.add(ContextMenuButtonItem(
-      onPressed: () async {
-        try {
-          // paste() is internally async but returns void
-          // Add a small delay to ensure paste operation completes
-          widget.controller.paste();
-          await Future.delayed(const Duration(milliseconds: 100));
-        } catch (e) {
-          dprint('Paste operation failed: $e');
-        }
-        widget.onHide();
-      },
-      type: ContextMenuButtonType.paste,
-    ));
-
-    if (!widget.controller.isAllSelected) {
-      items.add(ContextMenuButtonItem(
-        onPressed: () {
-          try {
-            widget.controller.selectAll();
-          } catch (e) {
-            dprint('Select all operation failed: $e');
-          }
           widget.onHide();
         },
-        type: ContextMenuButtonType.selectAll,
-      ));
+        type: ContextMenuButtonType.copy,
+      ),
+    );
+
+    items.add(
+      ContextMenuButtonItem(
+        onPressed: () async {
+          widget.controller.paste();
+          await Future.delayed(const Duration(milliseconds: 100));
+          widget.onHide();
+        },
+        type: ContextMenuButtonType.paste,
+      ),
+    );
+
+    if (!widget.controller.isAllSelected) {
+      items.add(
+        ContextMenuButtonItem(
+          onPressed: () {
+            widget.controller.selectAll();
+            widget.onHide();
+          },
+          type: ContextMenuButtonType.selectAll,
+        ),
+      );
     }
 
     return items;
@@ -272,21 +249,14 @@ class _CodeLineSelectionToolbarState extends State<_CodeLineSelectionToolbar> {
   @override
   Widget build(BuildContext context) {
     if (widget.layerLink != null) {
-      return CompositedTransformFollower(
-        link: widget.layerLink!,
-        showWhenUnlinked: false,
-        child: _buildToolbar(context),
-      );
+      return CompositedTransformFollower(link: widget.layerLink!, showWhenUnlinked: false, child: _buildToolbar(context));
     }
 
     return _buildToolbar(context);
   }
 
   Widget _buildToolbar(BuildContext context) {
-    return AdaptiveTextSelectionToolbar.buttonItems(
-      anchors: widget.anchors,
-      buttonItems: _buttonItems,
-    );
+    return AdaptiveTextSelectionToolbar.buttonItems(anchors: widget.anchors, buttonItems: _buttonItems);
   }
 }
 

@@ -9,6 +9,7 @@ import 'preview/loading_widget.dart';
 import 'preview/color_picker_widget.dart';
 import 'preview/error_widget.dart';
 import 'preview/custom_appbar_page.dart';
+import 'preview/editor_code_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -44,7 +45,7 @@ class MainPage extends StatelessWidget {
       _PreviewEntry('Search Page', const PreviewSearchPage()),
       _PreviewEntry('Image Page', const PreviewImagePage()),
       _PreviewEntry('Scan Page', const BarcodeScannerPage()),
-      _PreviewEntry('Editor Code Page', const EditorPage()),
+      _PreviewEntry('Editor Code Page', const PreviewEditorCodePage()),
       _PreviewEntry('Editor Plain Page', const PlainEditPage()),
       _PreviewEntry(
         'Editor KV Page',
