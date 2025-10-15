@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:fl_lib/fl_lib.dart';
@@ -93,5 +94,16 @@ abstract final class SystemUIs {
         windowManager.addListener(listener);
       }
     });
+  }
+}
+
+void withTextFieldController(FutureOr<Object?> Function(TextEditingController) callback) async {
+  final controller = TextEditingController();
+  try {
+    await callback(controller);
+    // Wait a moment to ensure any UI updates are processed
+    await Future.delayed(const Duration(seconds: 3));
+  } finally {
+    controller.dispose();
   }
 }
