@@ -97,7 +97,7 @@ abstract final class SystemUIs {
   }
 }
 
-void withTextFieldController(FutureOr<Object?> Function(TextEditingController) callback) async {
+void withTextFieldController(FutureOr<void>? Function(TextEditingController) callback) async {
   final controller = TextEditingController();
   try {
     await callback(controller);
