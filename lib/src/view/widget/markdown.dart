@@ -28,6 +28,7 @@ final class SimpleMarkdown extends StatelessWidget {
         onOpenFail?.call();
       },
       selectable: selectable,
+      extensionSet: MarkdownUtils.extensionSet,
       styleSheet: styleSheet?.copyWith(a: TextStyle(color: UIs.colorSeed)) ??
           MarkdownStyleSheet(a: TextStyle(color: UIs.colorSeed)),
     );
