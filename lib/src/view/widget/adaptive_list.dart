@@ -380,6 +380,10 @@ class _AdaptiveReorderableListState<T> extends State<AdaptiveReorderableList<T>>
           0.0,
           maxWidth - resolvedPadding.horizontal,
         );
+        // Allow embedding inside unconstrained parents (e.g. Column) without throwing.
+        final shouldShrinkWrap = !constraints.hasBoundedHeight;
+        final bool? primary =
+            widget.primary ?? (shouldShrinkWrap ? false : null);
         final columnCount = _calculateColumnCount(availableWidth);
         final tileWidth = _computeTileWidth(availableWidth, columnCount);
 
@@ -416,7 +420,8 @@ class _AdaptiveReorderableListState<T> extends State<AdaptiveReorderableList<T>>
         return CustomScrollView(
           controller: widget.scrollController,
           physics: widget.physics,
-          primary: widget.primary,
+          primary: primary,
+          shrinkWrap: shouldShrinkWrap,
           reverse: widget.reverse,
           keyboardDismissBehavior: widget.keyboardDismissBehavior,
           restorationId: widget.restorationId,

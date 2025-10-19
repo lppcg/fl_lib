@@ -9,19 +9,21 @@ void main() {
 
     await tester.pumpWidget(
       MaterialApp(
-        home: SizedBox(
-          width: 1200,
-          child: AdaptiveReorderableList.builder(
-            items: items,
-            itemKey: (item) => item,
-            columnWidth: 200,
-            onReorder: (oldIndex, newIndex) {},
-            itemBuilder: (context, item, index, animation) => FadeTransition(
-              key: ValueKey('item-$item'),
-              opacity: animation,
-              child: SizedBox(
-                height: 40,
-                child: Center(child: Text('Item $item')),
+        home: Material(
+          child: SizedBox(
+            width: 1200,
+            child: AdaptiveReorderableList.builder(
+              items: items,
+              itemKey: (item) => item,
+              columnWidth: 200,
+              onReorder: (oldIndex, newIndex) {},
+              itemBuilder: (context, item, index, animation) => FadeTransition(
+                key: ValueKey('item-$item'),
+                opacity: animation,
+                child: SizedBox(
+                  height: 40,
+                  child: Center(child: Text('Item $item')),
+                ),
               ),
             ),
           ),
@@ -41,19 +43,21 @@ void main() {
   ) async {
     await tester.pumpWidget(
       MaterialApp(
-        home: SizedBox(
-          width: 280,
-          child: AdaptiveReorderableList.separated(
-            items: const [1, 2, 3],
-            itemKey: (item) => item,
-            columnWidth: 300,
-            onReorder: (oldIndex, newIndex) {},
-            separatorBuilder: (context, index) =>
-                Divider(key: ValueKey('sep-$index')),
-            itemBuilder: (context, item, index, animation) => FadeTransition(
-              key: ValueKey('item-$item'),
-              opacity: animation,
-              child: ListTile(title: Text('Item $item')),
+        home: Material(
+          child: SizedBox(
+            width: 280,
+            child: AdaptiveReorderableList.separated(
+              items: const [1, 2, 3],
+              itemKey: (item) => item,
+              columnWidth: 300,
+              onReorder: (oldIndex, newIndex) {},
+              separatorBuilder: (context, index) =>
+                  Divider(key: ValueKey('sep-$index')),
+              itemBuilder: (context, item, index, animation) => FadeTransition(
+                key: ValueKey('item-$item'),
+                opacity: animation,
+                child: ListTile(title: Text('Item $item')),
+              ),
             ),
           ),
         ),
@@ -73,25 +77,27 @@ void main() {
       MaterialApp(
         home: StatefulBuilder(
           builder: (context, setState) {
-            return SizedBox(
-              width: 280,
-              child: AdaptiveReorderableList.builder(
-                items: List<int>.from(items),
-                itemKey: (item) => item,
-                columnWidth: 320,
-                onReorder: (oldIndex, newIndex) {
-                  setState(() {
-                    final value = items.removeAt(oldIndex);
-                    items.insert(newIndex, value);
-                  });
-                },
-                onReorderComplete: (ordered) =>
-                    recordedOrders.add(List<int>.from(ordered)),
-                itemBuilder: (context, item, index, animation) => ListTile(
-                  key: ValueKey('tile-$item'),
-                  title: FadeTransition(
-                    opacity: animation,
-                    child: Text('Item $item'),
+            return Material(
+              child: SizedBox(
+                width: 280,
+                child: AdaptiveReorderableList.builder(
+                  items: List<int>.from(items),
+                  itemKey: (item) => item,
+                  columnWidth: 320,
+                  onReorder: (oldIndex, newIndex) {
+                    setState(() {
+                      final value = items.removeAt(oldIndex);
+                      items.insert(newIndex, value);
+                    });
+                  },
+                  onReorderComplete: (ordered) =>
+                      recordedOrders.add(List<int>.from(ordered)),
+                  itemBuilder: (context, item, index, animation) => ListTile(
+                    key: ValueKey('tile-$item'),
+                    title: FadeTransition(
+                      opacity: animation,
+                      child: Text('Item $item'),
+                    ),
                   ),
                 ),
               ),
