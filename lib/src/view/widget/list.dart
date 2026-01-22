@@ -75,24 +75,26 @@ final class _MultiListState extends State<MultiList> {
       final totalBetweenPadding = widget.betweenPadding * (len - 1);
       final columnWidth = (cons.maxWidth - widget.outerPadding.horizontal - totalBetweenPadding) / widget.widthDivider;
 
-      return ListView.separated(
-        padding: widget.outerPadding,
+      return Scrollbar(
         controller: _horizonScroll,
-        scrollDirection: Axis.horizontal,
-        itemCount: len,
-        separatorBuilder: (_, _) => SizedBox(width: widget.betweenPadding),
-        itemBuilder: (_, i) {
-          final col = widget.children[i];
+        child: ListView.separated(
+          padding: widget.outerPadding,
+          controller: _horizonScroll,
+          scrollDirection: Axis.horizontal,
+          itemCount: len,
+          separatorBuilder: (_, _) => SizedBox(width: widget.betweenPadding),
+          itemBuilder: (_, i) {
+            final col = widget.children[i];
 
-          return SizedBox(
-            width: columnWidth,
-            child: ListView.builder(
-              // key: PageStorageKey(i), // Keep independent scroll position
-              itemCount: col.length,
-              itemBuilder: (_, index) => col[index],
-            ),
-          );
-        },
+            return SizedBox(
+              width: columnWidth,
+              child: ListView.builder(
+                itemCount: col.length,
+                itemBuilder: (_, index) => col[index],
+              ),
+            );
+          },
+        ),
       );
     });
   }
