@@ -46,8 +46,15 @@ final class _MultiListState extends State<MultiList> {
   @override
   void didUpdateWidget(covariant MultiList oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (!identical(oldWidget.children, widget.children)) {
+    if (oldWidget.children.length != widget.children.length) {
       setState(() {});
+      return;
+    }
+    for (var i = 0; i < widget.children.length; i++) {
+      if (!identical(oldWidget.children[i], widget.children[i])) {
+        setState(() {});
+        return;
+      }
     }
   }
 
@@ -146,9 +153,10 @@ class _AutoMultiListState extends State<AutoMultiList> {
   @override
   void didUpdateWidget(covariant AutoMultiList oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (!identical(widget.children, oldWidget.children) ||
+    final needsUpdate = oldWidget.children.length != widget.children.length ||
         oldWidget.columnWidth != widget.columnWidth ||
-        oldWidget.outerPadding != widget.outerPadding) {
+        oldWidget.outerPadding != widget.outerPadding;
+    if (needsUpdate) {
       _updateDistribution(forceUpdate: true);
       setState(() {});
     }
