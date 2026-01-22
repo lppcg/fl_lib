@@ -63,6 +63,7 @@ final class AppRoute<Ret, Arg extends Object> extends AppRouteIface {
   @override
   Widget toWidget({Key? key, Arg? args}) {
     return VirtualWindowFrame(
+      showCaption: WindowFrameConfig.showCaption,
       child: page(key: key, args: args),
     );
   }
@@ -94,7 +95,10 @@ final class AppRouteArg<Ret, Arg extends Object> extends AppRouteIface {
 
     final route_ = route ??
         MaterialPageRoute<Ret>(
-          builder: (_) => VirtualWindowFrame(child: page(key: key, args: args)),
+          builder: (_) => VirtualWindowFrame(
+            showCaption: WindowFrameConfig.showCaption,
+            child: page(key: key, args: args),
+          ),
           settings: routeSettings,
         );
     return Navigator.push<Ret>(context, route_);
@@ -106,6 +110,7 @@ final class AppRouteArg<Ret, Arg extends Object> extends AppRouteIface {
       throw ArgumentError('args cannot be null');
     }
     return VirtualWindowFrame(
+      showCaption: WindowFrameConfig.showCaption,
       child: page(key: key, args: args),
     );
   }
@@ -136,7 +141,10 @@ final class AppRouteNoArg<Ret> extends AppRouteIface {
 
     final route_ = route ??
         MaterialPageRoute<Ret>(
-          builder: (_) => VirtualWindowFrame(child: page(key: key)),
+          builder: (_) => VirtualWindowFrame(
+            showCaption: WindowFrameConfig.showCaption,
+            child: page(key: key),
+          ),
           settings: routeSettings,
         );
     return Navigator.push<Ret>(context, route_);
@@ -145,6 +153,7 @@ final class AppRouteNoArg<Ret> extends AppRouteIface {
   @override
   Widget toWidget({Key? key}) {
     return VirtualWindowFrame(
+      showCaption: WindowFrameConfig.showCaption,
       child: page(key: key),
     );
   }
