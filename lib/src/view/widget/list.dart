@@ -163,25 +163,30 @@ class _AutoMultiListState extends State<AutoMultiList> {
   }
 
   void _updateDistribution({bool forceUpdate = false}) {
-    final currentChildrenHashCode = widget.children.hashCode;
     final currentWidth = _totalWidth;
     final availableWidth = currentWidth - widget.outerPadding.horizontal;
     final newColumnCount = availableWidth / widget.columnWidth;
+    final clampedColumnCount = newColumnCount.floor().clamp(1, 10);
 
+    final currentChildrenHashCode = _computeChildrenHashCode(widget.children);
     final widthChanged = (_lastTotalWidth - currentWidth).abs() > 1.0;
     final needsUpdate = forceUpdate ||
         widthChanged ||
         _lastChildrenHashCode != currentChildrenHashCode ||
-        _actualColumnCount != newColumnCount.floor();
+        _actualColumnCount != clampedColumnCount;
 
     if (!needsUpdate) {
       return;
     }
 
-    _actualColumnCount = newColumnCount.floor().clamp(1, 10);
+    _actualColumnCount = clampedColumnCount;
     _distributedChildren = _distributeChildrenToColumns(widget.children, _actualColumnCount);
     _lastTotalWidth = currentWidth;
     _lastChildrenHashCode = currentChildrenHashCode;
+  }
+
+  int _computeChildrenHashCode(List<Widget> children) {
+    return Object.hashAll(children);
   }
 
   @override
