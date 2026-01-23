@@ -291,36 +291,67 @@ final class HivePropDefault<T extends Object> extends StorePropDefault<T> implem
   void delete() => remove();
 }
 
+class _BoxListenerManager {
+  _BoxListenerManager(this.box);
+
+  final Box<dynamic> box;
+  StreamSubscription<BoxEvent>? _subscription;
+  final Map<String, Set<VoidCallback>> _keyListeners = {};
+
+  void _ensureSubscription() {
+    _subscription ??= box.watch().listen((event) {
+      final callbacks = _keyListeners[event.key];
+      if (callbacks != null) {
+        final snapshot = List<VoidCallback>.of(callbacks);
+        for (final callback in snapshot) {
+          callback();
+        }
+      }
+    });
+  }
+
+  void addListener(String key, VoidCallback listener) {
+    _ensureSubscription();
+    _keyListeners.putIfAbsent(key, () => {}).add(listener);
+  }
+
+  void removeListener(String key, VoidCallback listener) {
+    final callbacks = _keyListeners[key];
+    if (callbacks != null) {
+      callbacks.remove(listener);
+      if (callbacks.isEmpty) {
+        _keyListeners.remove(key);
+        if (_keyListeners.isEmpty) {
+          _subscription?.cancel();
+          _subscription = null;
+        }
+      }
+    }
+  }
+}
+
+final _boxListenerManagers = Expando<_BoxListenerManager>();
+
 class HivePropListenable<T extends Object> extends ValueListenable<T?> {
   HivePropListenable(this.prop, this.key);
 
   final HiveProp<T> prop;
   final String key;
 
-  final List<VoidCallback> _listeners = [];
-  StreamSubscription<BoxEvent>? _subscription;
+  _BoxListenerManager get _manager {
+    final box = prop.store.box;
+    _boxListenerManagers[box] ??= _BoxListenerManager(box);
+    return _boxListenerManagers[box]!;
+  }
 
   @override
   void addListener(VoidCallback listener) {
-    _subscription ??= prop.store.box.watch().listen((event) {
-      if (key == event.key) {
-        for (var listener in _listeners) {
-          listener();
-        }
-      }
-    });
-
-    _listeners.add(listener);
+    _manager.addListener(key, listener);
   }
 
   @override
   void removeListener(VoidCallback listener) {
-    _listeners.remove(listener);
-
-    if (_listeners.isEmpty) {
-      _subscription?.cancel();
-      _subscription = null;
-    }
+    _manager.removeListener(key, listener);
   }
 
   @override
@@ -334,30 +365,20 @@ class HivePropDefaultListenable<T extends Object> extends ValueListenable<T> {
   final String key;
   T defaultValue;
 
-  final List<VoidCallback> _listeners = [];
-  StreamSubscription<BoxEvent>? _subscription;
+  _BoxListenerManager get _manager {
+    final box = prop.store.box;
+    _boxListenerManagers[box] ??= _BoxListenerManager(box);
+    return _boxListenerManagers[box]!;
+  }
 
   @override
   void addListener(VoidCallback listener) {
-    _subscription ??= prop.store.box.watch().listen((event) {
-      if (key == event.key) {
-        for (var listener in _listeners) {
-          listener();
-        }
-      }
-    });
-
-    _listeners.add(listener);
+    _manager.addListener(key, listener);
   }
 
   @override
   void removeListener(VoidCallback listener) {
-    _listeners.remove(listener);
-
-    if (_listeners.isEmpty) {
-      _subscription?.cancel();
-      _subscription = null;
-    }
+    _manager.removeListener(key, listener);
   }
 
   @override

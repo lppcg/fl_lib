@@ -139,9 +139,21 @@ abstract final class Cryptor {
     }
   }
 
-  /// Checks if two lists are equal (constant time comparison to prevent timing attacks)
+  /// Compares two lists for equality using constant-time comparison
+  /// to prevent timing attacks
   static bool _listEquals(List<int> a, List<int> b) {
-    if (a.length != b.length) return false;
+    if (a.length != b.length) {
+      final lengthResult = a.length ^ b.length;
+      int result = lengthResult;
+      final count = a.length > b.length ? a.length : b.length;
+      for (int i = 0; i < count; i++) {
+        final aByte = i < a.length ? a[i] : 0;
+        final bByte = i < b.length ? b[i] : 0;
+        result |= aByte ^ bByte;
+      }
+      return result == 0;
+    }
+
     int result = 0;
     for (int i = 0; i < a.length; i++) {
       result |= a[i] ^ b[i];
