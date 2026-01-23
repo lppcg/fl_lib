@@ -1,7 +1,59 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:fl_lib/fl_lib.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+
+class RateLimitExceededException implements Exception {
+  final String message;
+  final int remaining;
+
+  RateLimitExceededException(this.message, {required this.remaining});
+
+  @override
+  String toString() => message;
+}
+
+class _SlidingWindowRateLimiter {
+  final int maxRequests;
+  final Duration windowSize;
+  final List<int> _timestamps = [];
+
+  _SlidingWindowRateLimiter({required this.maxRequests, required this.windowSize});
+
+  bool allowRequest() {
+    final now = DateTime.now().millisecondsSinceEpoch;
+    final windowStart = now - windowSize.inMilliseconds;
+
+    _timestamps.removeWhere((ts) => ts < windowStart);
+
+    if (_timestamps.length >= maxRequests) {
+      return false;
+    }
+
+    _timestamps.add(now);
+    return true;
+  }
+
+  int get remainingRequests => maxRequests - _timestamps.length;
+}
+
+final class _RateLimiter {
+  static final _readLimiter = _SlidingWindowRateLimiter(
+    maxRequests: 60,
+    windowSize: const Duration(seconds: 30),
+  );
+
+  static final _writeLimiter = _SlidingWindowRateLimiter(
+    maxRequests: 10,
+    windowSize: const Duration(seconds: 30),
+  );
+
+  static bool canRead() => _readLimiter.allowRequest();
+  static bool canWrite() => _writeLimiter.allowRequest();
+  static int readRemaining() => _readLimiter.remainingRequests;
+  static int writeRemaining() => _writeLimiter.remainingRequests;
+}
 
 /// Secure Store Properties
 abstract final class SecureStoreProps {
@@ -121,12 +173,28 @@ final class SecureProp {
   const SecureProp(this.key, {this.storage = SecureStore.storage});
 
   /// Reads the value of the property.
+  /// Throws [RateLimitExceededException] if rate limit is exceeded.
   Future<String?> read() async {
+    if (!_RateLimiter.canRead()) {
+      dprint('SecureProp read rate limit exceeded');
+      throw RateLimitExceededException(
+        'Read rate limit exceeded. Try again later.',
+        remaining: _RateLimiter.readRemaining(),
+      );
+    }
     return storage.read(key: key);
   }
 
   /// Writes the value of the property.
+  /// Throws [RateLimitExceededException] if rate limit is exceeded.
   Future<void> write(String? value) {
+    if (!_RateLimiter.canWrite()) {
+      dprint('SecureProp write rate limit exceeded');
+      throw RateLimitExceededException(
+        'Write rate limit exceeded. Try again later.',
+        remaining: _RateLimiter.writeRemaining(),
+      );
+    }
     return storage.write(key: key, value: value);
   }
 }
