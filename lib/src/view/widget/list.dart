@@ -44,21 +44,6 @@ final class _MultiListState extends State<MultiList> {
   }
 
   @override
-  void didUpdateWidget(covariant MultiList oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    if (oldWidget.children.length != widget.children.length) {
-      setState(() {});
-      return;
-    }
-    for (var i = 0; i < widget.children.length; i++) {
-      if (!identical(oldWidget.children[i], widget.children[i])) {
-        setState(() {});
-        return;
-      }
-    }
-  }
-
-  @override
   void dispose() {
     _horizonScroll.dispose();
     super.dispose();
@@ -158,7 +143,6 @@ class _AutoMultiListState extends State<AutoMultiList> {
         oldWidget.outerPadding != widget.outerPadding;
     if (needsUpdate) {
       _updateDistribution(forceUpdate: true);
-      setState(() {});
     }
   }
 
