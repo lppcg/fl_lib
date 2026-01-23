@@ -302,7 +302,8 @@ class _BoxListenerManager {
     _subscription ??= box.watch().listen((event) {
       final callbacks = _keyListeners[event.key];
       if (callbacks != null) {
-        for (final callback in callbacks) {
+        final snapshot = List<VoidCallback>.of(callbacks);
+        for (final callback in snapshot) {
           callback();
         }
       }
@@ -329,18 +330,18 @@ class _BoxListenerManager {
   }
 }
 
+final _boxListenerManagers = Expando<_BoxListenerManager>();
+
 class HivePropListenable<T extends Object> extends ValueListenable<T?> {
   HivePropListenable(this.prop, this.key);
 
   final HiveProp<T> prop;
   final String key;
 
-  static final _managerMap = Expando<_BoxListenerManager>();
-
   _BoxListenerManager get _manager {
     final box = prop.store.box;
-    _managerMap[box] ??= _BoxListenerManager(box);
-    return _managerMap[box]!;
+    _boxListenerManagers[box] ??= _BoxListenerManager(box);
+    return _boxListenerManagers[box]!;
   }
 
   @override
@@ -364,12 +365,10 @@ class HivePropDefaultListenable<T extends Object> extends ValueListenable<T> {
   final String key;
   T defaultValue;
 
-  static final _managerMap = Expando<_BoxListenerManager>();
-
   _BoxListenerManager get _manager {
     final box = prop.store.box;
-    _managerMap[box] ??= _BoxListenerManager(box);
-    return _managerMap[box]!;
+    _boxListenerManagers[box] ??= _BoxListenerManager(box);
+    return _boxListenerManagers[box]!;
   }
 
   @override
