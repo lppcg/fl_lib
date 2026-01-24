@@ -32,7 +32,9 @@ class _MyFadeInState extends State<FadeIn> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    _controller.forward();
+    if (_controller.status != AnimationStatus.completed) {
+      _controller.forward();
+    }
     return FadeTransition(
       opacity: _animation,
       child: widget.child,

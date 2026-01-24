@@ -33,13 +33,11 @@ final class AutoHideState extends State<AutoHide> {
     super.initState();
     widget.scrollController.addListener(_scrollListener);
     _setupTimer();
-    _controller.addListener(_onControllerUpdate);
   }
 
   @override
   void dispose() {
     widget.scrollController.removeListener(_scrollListener);
-    _controller.removeListener(_onControllerUpdate);
     if (widget.hideController == null) {
       _controller.dispose();
     }
@@ -47,10 +45,6 @@ final class AutoHideState extends State<AutoHide> {
     _scrollDebouncer?.cancel();
     _timer = _scrollDebouncer = null;
     super.dispose();
-  }
-
-  void _onControllerUpdate() {
-    if (mounted) setState(() {});
   }
 
   void _setupTimer() {
@@ -96,25 +90,35 @@ final class AutoHideState extends State<AutoHide> {
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedContainer(
-      duration: Durations.medium1,
-      curve: Curves.easeInOutCubic,
-      transform: _transform,
-      child: widget.child,
+    return AnimatedBuilder(
+      animation: _controller,
+      builder: (context, child) {
+        final visible = _controller.visible;
+        final transform = _getTransform(visible);
+        return Transform(
+          transform: transform,
+          transformHitTests: false,
+          child: AnimatedContainer(
+            duration: Durations.medium1,
+            curve: Curves.easeInOutCubic,
+            child: widget.child,
+          ),
+        );
+      },
     );
   }
 
-  Matrix4? get _transform {
-    final visible = _controller.visible;
+  Matrix4 _getTransform(bool visible) {
+    if (visible) return Matrix4.identity();
     switch (widget.direction) {
       case AxisDirection.down:
-        return visible ? Matrix4.identity() : Matrix4.translationValues(0, widget.offset, 0);
+        return Matrix4.translationValues(0, widget.offset, 0);
       case AxisDirection.up:
-        return visible ? Matrix4.identity() : Matrix4.translationValues(0, -widget.offset, 0);
+        return Matrix4.translationValues(0, -widget.offset, 0);
       case AxisDirection.left:
-        return visible ? Matrix4.identity() : Matrix4.translationValues(-widget.offset, 0, 0);
+        return Matrix4.translationValues(-widget.offset, 0, 0);
       case AxisDirection.right:
-        return visible ? Matrix4.identity() : Matrix4.translationValues(widget.offset, 0, 0);
+        return Matrix4.translationValues(widget.offset, 0, 0);
     }
   }
 }
