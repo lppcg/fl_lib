@@ -26,15 +26,38 @@ class _ColorPickerState extends State<ColorPicker> {
   late var _g = widget.color.green255;
   late var _b = widget.color.blue255;
 
+  late final _rVN = widget.color.red255.vn;
+  late final _gVN = widget.color.green255.vn;
+  late final _bVN = widget.color.blue255.vn;
+
   final ctrl = TextEditingController();
 
-  /// Get the color from the current RGB values.
   Color get _color => Color.fromARGB(255, _r, _g, _b);
 
   @override
   void initState() {
     super.initState();
     ctrl.text = widget.color.toHexRGB;
+  }
+
+  @override
+  void didUpdateWidget(covariant ColorPicker oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.color != widget.color) {
+      _r = widget.color.red255;
+      _g = widget.color.green255;
+      _b = widget.color.blue255;
+      _rVN.value = _r;
+      _gVN.value = _g;
+      _bVN.value = _b;
+      ctrl.text = widget.color.toHexRGB;
+    }
+  }
+
+  @override
+  void dispose() {
+    ctrl.dispose();
+    super.dispose();
   }
 
   @override
@@ -66,14 +89,14 @@ class _ColorPickerState extends State<ColorPicker> {
           icon: Icons.colorize,
           suggestion: false,
         ),
-        _buildProgress(_ColorPropType.r, 'R', _r.toDouble()),
-        _buildProgress(_ColorPropType.g, 'G', _g.toDouble()),
-        _buildProgress(_ColorPropType.b, 'B', _b.toDouble()),
+        _buildProgress(_ColorPropType.r, 'R', _r.toDouble(), _rVN),
+        _buildProgress(_ColorPropType.g, 'G', _g.toDouble(), _gVN),
+        _buildProgress(_ColorPropType.b, 'B', _b.toDouble(), _bVN),
       ],
     );
   }
 
-  Widget _buildProgress(_ColorPropType type, String title, double value) {
+  Widget _buildProgress(_ColorPropType type, String title, double value, ValueNotifier<int> vn) {
     return Row(
       children: [
         Text(
@@ -84,32 +107,37 @@ class _ColorPickerState extends State<ColorPicker> {
           ),
         ),
         Expanded(
-          child: Slider(
-            value: value,
-            onChanged: (v) {
-              setState(() {
-                switch (type) {
-                  case _ColorPropType.r:
-                    _r = v.toInt();
-                    break;
-                  case _ColorPropType.g:
-                    _g = v.toInt();
-                    break;
-                  case _ColorPropType.b:
-                    _b = v.toInt();
-                    break;
-                }
-              });
+          child: ValBuilder(
+            listenable: vn,
+            builder: (val) {
+              return Slider(
+                value: val.toDouble(),
+                onChanged: (v) {
+                  final intValue = v.toInt();
+                  switch (type) {
+                    case _ColorPropType.r:
+                      _r = intValue;
+                      break;
+                    case _ColorPropType.g:
+                      _g = intValue;
+                      break;
+                    case _ColorPropType.b:
+                      _b = intValue;
+                      break;
+                  }
+                  vn.value = intValue;
+                },
+                onChangeEnd: (value) {
+                  final c = _color;
+                  ctrl.text = c.toHexRGB;
+                  widget.onColorChanged(_color);
+                },
+                min: 0,
+                max: 255,
+                divisions: 255,
+                label: val.toString(),
+              );
             },
-            onChangeEnd: (value) {
-              final c = _color;
-              ctrl.text = c.toHexRGB;
-              widget.onColorChanged(_color);
-            },
-            min: 0,
-            max: 255,
-            divisions: 255,
-            label: value.toInt().toString(),
           ),
         ),
       ],

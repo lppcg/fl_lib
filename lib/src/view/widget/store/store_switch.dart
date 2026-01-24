@@ -31,7 +31,6 @@ class StoreSwitch extends StatefulWidget {
 
 class _StoreSwitchState extends State<StoreSwitch> {
   bool isBusy = false;
-  bool wasRecentlyBusy = false;
 
   @override
   Widget build(BuildContext context) {
@@ -39,16 +38,7 @@ class _StoreSwitchState extends State<StoreSwitch> {
       listenable: widget.prop.listenable(),
       builder: (value) {
         if (isBusy) return SizedLoading.medium.paddingOnly(right: 17);
-
-        final switcher = Switch(value: value, onChanged: _handleChange);
-
-        // Apply fade-in animation when transitioning from busy to ready state
-        if (wasRecentlyBusy) {
-          wasRecentlyBusy = false;
-          return FadeIn(child: switcher);
-        }
-
-        return switcher;
+        return Switch(value: value, onChanged: _handleChange);
       },
     );
   }
@@ -63,7 +53,6 @@ class _StoreSwitchState extends State<StoreSwitch> {
     if (!valid) {
       setStateSafe(() {
         isBusy = false;
-        // wasRecentlyBusy is not set to true, so no fade-in for invalid attempts.
       });
       return;
     }
@@ -74,7 +63,6 @@ class _StoreSwitchState extends State<StoreSwitch> {
     } finally {
       setStateSafe(() {
         isBusy = false;
-        wasRecentlyBusy = true;
       });
     }
   }
