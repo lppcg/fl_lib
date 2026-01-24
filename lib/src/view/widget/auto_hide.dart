@@ -94,31 +94,34 @@ final class AutoHideState extends State<AutoHide> {
       animation: _controller,
       builder: (context, child) {
         final visible = _controller.visible;
-        final transform = _getTransform(visible);
-        return Transform(
-          transform: transform,
-          transformHitTests: false,
-          child: AnimatedContainer(
-            duration: Durations.medium1,
-            curve: Curves.easeInOutCubic,
-            child: widget.child,
-          ),
+        return LayoutBuilder(
+          builder: (context, constraints) {
+            final offset = _getOffset(visible, constraints);
+            return AnimatedSlide(
+              offset: offset,
+              duration: Durations.medium1,
+              curve: Curves.easeInOutCubic,
+              child: child,
+            );
+          },
         );
       },
+      child: widget.child,
     );
   }
 
-  Matrix4 _getTransform(bool visible) {
-    if (visible) return Matrix4.identity();
+  Offset _getOffset(bool visible, BoxConstraints constraints) {
+    if (visible) return Offset.zero;
+    final offsetPx = widget.offset;
     switch (widget.direction) {
       case AxisDirection.down:
-        return Matrix4.translationValues(0, widget.offset, 0);
+        return Offset(0, offsetPx / (constraints.maxHeight > 0 ? constraints.maxHeight : 1));
       case AxisDirection.up:
-        return Matrix4.translationValues(0, -widget.offset, 0);
+        return Offset(0, -offsetPx / (constraints.maxHeight > 0 ? constraints.maxHeight : 1));
       case AxisDirection.left:
-        return Matrix4.translationValues(-widget.offset, 0, 0);
+        return Offset(-offsetPx / (constraints.maxWidth > 0 ? constraints.maxWidth : 1), 0);
       case AxisDirection.right:
-        return Matrix4.translationValues(widget.offset, 0, 0);
+        return Offset(offsetPx / (constraints.maxWidth > 0 ? constraints.maxWidth : 1), 0);
     }
   }
 }
