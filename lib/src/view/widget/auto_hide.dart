@@ -33,13 +33,11 @@ final class AutoHideState extends State<AutoHide> {
     super.initState();
     widget.scrollController.addListener(_scrollListener);
     _setupTimer();
-    _controller.addListener(_onControllerUpdate);
   }
 
   @override
   void dispose() {
     widget.scrollController.removeListener(_scrollListener);
-    _controller.removeListener(_onControllerUpdate);
     if (widget.hideController == null) {
       _controller.dispose();
     }
@@ -47,10 +45,6 @@ final class AutoHideState extends State<AutoHide> {
     _scrollDebouncer?.cancel();
     _timer = _scrollDebouncer = null;
     super.dispose();
-  }
-
-  void _onControllerUpdate() {
-    if (mounted) setState(() {});
   }
 
   void _setupTimer() {
@@ -96,26 +90,42 @@ final class AutoHideState extends State<AutoHide> {
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedContainer(
-      duration: Durations.medium1,
-      curve: Curves.easeInOutCubic,
-      transform: _transform,
+    return AnimatedBuilder(
+      animation: _controller,
+      builder: (context, child) {
+        final visible = _controller.visible;
+        return LayoutBuilder(
+          builder: (context, constraints) {
+            final offset = _getOffset(visible, constraints);
+            return AnimatedSlide(
+              offset: offset,
+              duration: Durations.medium1,
+              curve: Curves.easeInOutCubic,
+              child: child,
+            );
+          },
+        );
+      },
       child: widget.child,
     );
   }
 
-  Matrix4? get _transform {
-    final visible = _controller.visible;
-    switch (widget.direction) {
-      case AxisDirection.down:
-        return visible ? Matrix4.identity() : Matrix4.translationValues(0, widget.offset, 0);
-      case AxisDirection.up:
-        return visible ? Matrix4.identity() : Matrix4.translationValues(0, -widget.offset, 0);
-      case AxisDirection.left:
-        return visible ? Matrix4.identity() : Matrix4.translationValues(-widget.offset, 0, 0);
-      case AxisDirection.right:
-        return visible ? Matrix4.identity() : Matrix4.translationValues(widget.offset, 0, 0);
-    }
+  Offset _getOffset(bool visible, BoxConstraints constraints) {
+    if (visible) return Offset.zero;
+    final offsetPx = widget.offset;
+    final denom = switch (widget.direction) {
+      AxisDirection.down || AxisDirection.up =>
+        constraints.maxHeight.isFinite && constraints.maxHeight > 0 ? constraints.maxHeight : widget.offset,
+      AxisDirection.left || AxisDirection.right =>
+        constraints.maxWidth.isFinite && constraints.maxWidth > 0 ? constraints.maxWidth : widget.offset,
+    };
+    final fraction = offsetPx / (denom == 0 ? 1 : denom);
+    return switch (widget.direction) {
+      AxisDirection.down => Offset(0, fraction),
+      AxisDirection.up => Offset(0, -fraction),
+      AxisDirection.left => Offset(-fraction, 0),
+      AxisDirection.right => Offset(fraction, 0),
+    };
   }
 }
 

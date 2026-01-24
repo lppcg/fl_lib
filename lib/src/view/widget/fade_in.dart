@@ -25,6 +25,16 @@ class _MyFadeInState extends State<FadeIn> with SingleTickerProviderStateMixin {
   ).animate(_controller);
 
   @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted && _controller.status == AnimationStatus.dismissed) {
+        _controller.forward();
+      }
+    });
+  }
+
+  @override
   void dispose() {
     _controller.dispose();
     super.dispose();
@@ -32,7 +42,6 @@ class _MyFadeInState extends State<FadeIn> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    _controller.forward();
     return FadeTransition(
       opacity: _animation,
       child: widget.child,
