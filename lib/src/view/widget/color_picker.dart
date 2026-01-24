@@ -57,6 +57,9 @@ class _ColorPickerState extends State<ColorPicker> {
   @override
   void dispose() {
     ctrl.dispose();
+    _rVN.dispose();
+    _gVN.dispose();
+    _bVN.dispose();
     super.dispose();
   }
 
