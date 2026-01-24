@@ -71,14 +71,20 @@ class _ColorPickerState extends State<ColorPicker> {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Container(
-          height: 37,
-          width: 77,
-          decoration: BoxDecoration(
-            color: Color.fromARGB(255, _r, _g, _b),
-            border: Border.all(color: Colors.grey),
-            borderRadius: BorderRadius.circular(8),
-          ),
+        AnimatedBuilder(
+          animation: Listenable.merge([_rVN, _gVN, _bVN]),
+          builder: (context, _) {
+            final color = Color.fromARGB(255, _rVN.value, _gVN.value, _bVN.value);
+            return Container(
+              height: 37,
+              width: 77,
+              decoration: BoxDecoration(
+                color: color,
+                border: Border.all(color: Colors.grey),
+                borderRadius: BorderRadius.circular(8),
+              ),
+            );
+          },
         ),
         UIs.height13,
         Input(
@@ -89,14 +95,14 @@ class _ColorPickerState extends State<ColorPicker> {
           icon: Icons.colorize,
           suggestion: false,
         ),
-        _buildProgress(_ColorPropType.r, 'R', _r.toDouble(), _rVN),
-        _buildProgress(_ColorPropType.g, 'G', _g.toDouble(), _gVN),
-        _buildProgress(_ColorPropType.b, 'B', _b.toDouble(), _bVN),
+        _buildProgress(_ColorPropType.r, 'R', _rVN),
+        _buildProgress(_ColorPropType.g, 'G', _gVN),
+        _buildProgress(_ColorPropType.b, 'B', _bVN),
       ],
     );
   }
 
-  Widget _buildProgress(_ColorPropType type, String title, double value, ValueNotifier<int> vn) {
+  Widget _buildProgress(_ColorPropType type, String title, ValueNotifier<int> vn) {
     return Row(
       children: [
         Text(

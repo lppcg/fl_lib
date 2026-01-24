@@ -113,16 +113,19 @@ final class AutoHideState extends State<AutoHide> {
   Offset _getOffset(bool visible, BoxConstraints constraints) {
     if (visible) return Offset.zero;
     final offsetPx = widget.offset;
-    switch (widget.direction) {
-      case AxisDirection.down:
-        return Offset(0, offsetPx / (constraints.maxHeight > 0 ? constraints.maxHeight : 1));
-      case AxisDirection.up:
-        return Offset(0, -offsetPx / (constraints.maxHeight > 0 ? constraints.maxHeight : 1));
-      case AxisDirection.left:
-        return Offset(-offsetPx / (constraints.maxWidth > 0 ? constraints.maxWidth : 1), 0);
-      case AxisDirection.right:
-        return Offset(offsetPx / (constraints.maxWidth > 0 ? constraints.maxWidth : 1), 0);
-    }
+    final denom = switch (widget.direction) {
+      AxisDirection.down || AxisDirection.up =>
+        constraints.maxHeight.isFinite && constraints.maxHeight > 0 ? constraints.maxHeight : widget.offset,
+      AxisDirection.left || AxisDirection.right =>
+        constraints.maxWidth.isFinite && constraints.maxWidth > 0 ? constraints.maxWidth : widget.offset,
+    };
+    final fraction = offsetPx / (denom == 0 ? 1 : denom);
+    return switch (widget.direction) {
+      AxisDirection.down => Offset(0, fraction),
+      AxisDirection.up => Offset(0, -fraction),
+      AxisDirection.left => Offset(-fraction, 0),
+      AxisDirection.right => Offset(fraction, 0),
+    };
   }
 }
 
