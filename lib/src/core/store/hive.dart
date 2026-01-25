@@ -84,12 +84,10 @@ class HiveStore extends Store {
   }) {
     updateLastUpdateTsOnSet ??= this.updateLastUpdateTsOnSet;
     if (toObj != null) {
-      final str = toObj(val);
-      if (str is String) {
-        box.put(key, str);
-        if (updateLastUpdateTsOnSet) updateLastUpdateTs(key: key);
-        return true;
-      }
+      final converted = toObj(val);
+      box.put(key, converted);
+      if (updateLastUpdateTsOnSet) updateLastUpdateTs(key: key);
+      return true;
     }
     box.put(key, val);
     if (updateLastUpdateTsOnSet) updateLastUpdateTs(key: key);
