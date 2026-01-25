@@ -34,6 +34,7 @@ final class ChoiceWidget<T> extends StatelessWidget {
             final item = items.elementAtOrNull(index);
             if (item == null) return UIs.placeholder;
             return ChoiceChipX<T>(
+              key: ValueKey(item),
               label: display?.call(item) ?? item.toString(),
               state: state,
               value: item,
