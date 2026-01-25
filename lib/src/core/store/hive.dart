@@ -83,17 +83,27 @@ class HiveStore extends Store {
     bool? updateLastUpdateTsOnSet,
   }) {
     updateLastUpdateTsOnSet ??= this.updateLastUpdateTsOnSet;
-    if (toObj != null) {
-      final str = toObj(val);
-      if (str is String) {
-        box.put(key, str);
+    try {
+      if (toObj != null) {
+        final converted = toObj(val);
+        if (converted == null) {
+          dprintWarn('set("$key")', 'toObj returned null');
+          return false;
+        }
+        box.put(key, converted);
         if (updateLastUpdateTsOnSet) updateLastUpdateTs(key: key);
         return true;
       }
+      box.put(key, val);
+      if (updateLastUpdateTsOnSet) updateLastUpdateTs(key: key);
+      return true;
+    } on HiveError catch (e) {
+      dprintWarn('set("$key")', 'HiveError: $e');
+      return false;
+    } catch (e) {
+      dprintWarn('set("$key")', 'toObj or put failed: $e');
+      return false;
     }
-    box.put(key, val);
-    if (updateLastUpdateTsOnSet) updateLastUpdateTs(key: key);
-    return true;
   }
 
   @override
