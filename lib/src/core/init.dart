@@ -14,7 +14,7 @@ abstract final class Inits {
   /// - [computerCounts] is the number of workers to run in parallel.
   /// - [appName] is the name of the app.
   /// - [bakName] is the name of the backup file.
-  Future<void> initFlLibMain({
+  static Future<void> initFlLibMain({
     int computerCounts = 3,
     required String appName,
     String? bakName,
@@ -49,7 +49,7 @@ abstract final class Inits {
   /// Wrap the [body] in a zone to catch all errors.
   ///
   /// - [body] is the function to run in the zone. Commonly the main function.
-  void runInZone(void Function() body) {
+  static void runInZone(void Function() body) {
     final zoneSpec = ZoneSpecification(
       print: (Zone self, ZoneDelegate parent, Zone zone, String line) {
         parent.print(zone, line);

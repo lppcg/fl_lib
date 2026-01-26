@@ -50,6 +50,7 @@ class Input extends StatefulWidget {
   /// If null, it uses the [AdaptiveTextSelectionToolbar.editableText].
   final EditableTextContextMenuBuilder? contextMenuBuilder;
   final int? maxLength;
+  final bool? enabled;
 
   const Input({
     super.key,
@@ -77,6 +78,7 @@ class Input extends StatefulWidget {
     this.onTapOutside,
     this.contextMenuBuilder,
     this.maxLength,
+    this.enabled,
   }) : assert(
           !(obscureText && suffix != null),
           'suffix != null && obscureText',
@@ -132,6 +134,7 @@ class _InputState extends State<Input> {
         onTap: widget.onTap,
         onTapOutside: widget.onTapOutside,
         maxLength: widget.maxLength,
+        enabled: widget.enabled,
         contextMenuBuilder: widget.contextMenuBuilder ?? _ctxMenuBuilder,
       );
     });
